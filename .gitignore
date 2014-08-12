@@ -4,4 +4,4 @@ bin/
 
 # ignore all libs directories
 # matches "libs" in any subfolder
-# libs/
+libs/
