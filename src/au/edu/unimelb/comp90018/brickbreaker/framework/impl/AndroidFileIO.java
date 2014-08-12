@@ -14,8 +14,16 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import au.edu.unimelb.comp90018.brickbreaker.framework.FileIO;
 
+/**
+ * 
+ * @author Oscar
+ * 
+ *         TODO: Note that we do not check if the external storage is available.
+ *         If it’s not available, or if we forget to add the proper permission
+ *         to the manifest file, we’ll get an exception!
+ */
 public class AndroidFileIO implements FileIO {
-	
+
 	Context context;
 	AssetManager assets;
 	String externalStoragePath;
