@@ -13,7 +13,9 @@ import java.util.List;
  *         collector in short intervals. In order to avoid this, we implement a
  *         concept known as instance pooling. Instead of repeatedly creating new
  *         instances of a class, we simply reuse previously created instances.
- *         
+ *         Please note that you must be careful to fully reinitialize reused
+ *         objects when they’re fetched from the Pool.
+ * 
  * @param <T>
  */
 public class Pool<T> {
