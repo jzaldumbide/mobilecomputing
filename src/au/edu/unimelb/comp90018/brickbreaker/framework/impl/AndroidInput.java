@@ -11,16 +11,16 @@ public class AndroidInput implements Input {
 
 	AccelerometerHandler accelHandler;
 	TouchHandler touchHandler;
-	
+
 	public AndroidInput(Context context, View view, float scaleX, float scaleY) {
 		accelHandler = new AccelerometerHandler(context);
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ECLAIR) {
-			touchHandler = new SingleTouchHandler(view, scaleX, scaleY);			
+			touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
 		} else {
-			touchHandler = new MultiTouchHandler();
+			touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
 		}
 	}
-	
+
 	@Override
 	public boolean isTouchDown(int pointer) {
 		// TODO Auto-generated method stub
