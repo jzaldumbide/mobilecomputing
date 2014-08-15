@@ -1,0 +1,19 @@
+<GameLevel>
+   <Bricks>
+      <Brick x="5" y="5" w="8" t="none"/>
+      <Brick x="5" y="6" w="8" t="none"/>
+      <Brick x="5" y="7" w="8" t="none"/>
+      <Brick x="5" y="8" w="8" t="none"/>
+      <Brick x="5" y="9" w="8" t="none"/>
+      <Brick x="5" y="10" w="8" t="none"/>
+      <Brick x="6" y="5" w="8" t="none"/>
+      <Brick x="6" y="6" w="8" t="none"/>
+      <Brick x="6" y="7" w="8" t="none"/>
+      <Brick x="6" y="8" w="8" t="none"/>
+      <Brick x="6" y="9" w="8" t="none"/>
+      <Brick x="6" y="10" w="8" t="none"/>
+      <Brick x="6" y="11" w="8" t="none"/>
+   </Bricks>
+   <Paddle speed="1" x="10" y="5" w="10" />
+   <Ball radius="1" speed="1" />
+</GameLevel>
