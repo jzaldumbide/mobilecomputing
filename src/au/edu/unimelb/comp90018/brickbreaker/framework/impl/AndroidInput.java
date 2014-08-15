@@ -7,13 +7,29 @@ import android.os.Build;
 import android.view.View;
 import au.edu.unimelb.comp90018.brickbreaker.framework.Input;
 
+/**
+ * 
+ * @author Oscar
+ * 
+ *         The Input implementation of our game framework ties together all the
+ *         handlers we have developed. Any method calls are delegated to the
+ *         corresponding handler. The only interesting part of this
+ *         implementation is choosing which TouchHandler implementation to use,
+ *         based on the Android version the device is running.
+ */
 public class AndroidInput implements Input {
 
 	AccelerometerHandler accelHandler;
 	TouchHandler touchHandler;
 
 	public AndroidInput(Context context, View view, float scaleX, float scaleY) {
+
 		accelHandler = new AccelerometerHandler(context);
+
+		// Not sure if ECLAIR corresponds to SDK = 5 (Android version 2.0)
+		// This technique is called FRAGMENTATION (a sophisticated name for a
+		// simple selection of the appropriate handler :) )
+
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ECLAIR) {
 			touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
 		} else {
@@ -23,44 +39,37 @@ public class AndroidInput implements Input {
 
 	@Override
 	public boolean isTouchDown(int pointer) {
-		// TODO Auto-generated method stub
-		return false;
+		return touchHandler.isTouchDown(pointer);
 	}
 
 	@Override
 	public int getTouchX(int pointer) {
-		// TODO Auto-generated method stub
-		return 0;
+		return touchHandler.getTouchX(pointer);
 	}
 
 	@Override
 	public int getTouchY(int pointer) {
-		// TODO Auto-generated method stub
-		return 0;
+		return touchHandler.getTouchY(pointer);
 	}
 
 	@Override
 	public float getAccelX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return accelHandler.getAccelX();
 	}
 
 	@Override
 	public float getAccelY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return accelHandler.getAccelY();
 	}
 
 	@Override
 	public float getAccelZ() {
-		// TODO Auto-generated method stub
-		return 0;
+		return accelHandler.getAccelZ();
 	}
 
 	@Override
 	public List<TouchEvent> getTouchEvents() {
-		// TODO Auto-generated method stub
-		return null;
+		return touchHandler.getTouchEvents();
 	}
 
 }
