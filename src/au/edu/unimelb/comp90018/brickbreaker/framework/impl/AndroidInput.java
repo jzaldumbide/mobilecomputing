@@ -15,7 +15,7 @@ public class AndroidInput implements Input {
 	public AndroidInput(Context context, View view, float scaleX, float scaleY) {
 		accelHandler = new AccelerometerHandler(context);
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ECLAIR) {
-			touchHandler = new SingleTouchHandler();			
+			touchHandler = new SingleTouchHandler(view, scaleX, scaleY);			
 		} else {
 			touchHandler = new MultiTouchHandler();
 		}
