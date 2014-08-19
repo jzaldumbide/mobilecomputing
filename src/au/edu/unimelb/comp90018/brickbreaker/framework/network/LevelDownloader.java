@@ -25,15 +25,29 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.model.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.framework.model.Paddle;
 
 /**
+ * This class handles the Network interaction in order to download the levels from a web server
  * @author achaves
  *
  */
 public class LevelDownloader {
+	/**
+	 * String with the URI prefix where the levels are allocated
+	 */
 	private static String URIPREFIX = "http://192.168.1.1/";
+	/**
+	 * Default class constructor
+	 */
 	public LevelDownloader(){
 		
 	}
 	
+	/**
+	 * Make an http request to the web server
+	 * @param levelName Name of the desired level
+	 * @return A string with the web server's result (a XML)
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
 	public String makeHttpRequest (String levelName) throws ClientProtocolException, IOException{
 	    HttpClient httpclient = new DefaultHttpClient();
 	    HttpResponse response = httpclient.execute(new HttpGet(URIPREFIX+levelName));
@@ -52,6 +66,14 @@ public class LevelDownloader {
 	        throw new IOException(statusLine.getReasonPhrase());
 	    }
 	}
+	/**
+	 * Downloads the game and generate the proper model classes that represents the XML
+	 * @param levelName Name of the desired level
+	 * @return A model with all the parameters of the level
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws XmlPullParserException
+	 */
 	public GameLevel downloadGame(String levelName) throws ClientProtocolException, IOException, XmlPullParserException{
 		String response = makeHttpRequest(levelName);
 		GameLevel gameLevel = new GameLevel();
