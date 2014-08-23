@@ -1,93 +1,25 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
-import au.edu.unimelb.comp90018.brickbreaker.BrickBreakerGame;
-import au.edu.unimelb.comp90018.brickbreaker.framework.Collideable;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.DynamicGameObject;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-@Deprecated
-public class Brick extends Actor implements Collideable {
-	private ShapeRenderer shapeRenderer;
-	private Fixture fixture;
-	private boolean isDying = false;
-	private Sound hitSound;
-	private Vector2 worldToScreen;
+public class Brick extends DynamicGameObject {
 
-	public Brick(World world, BrickBreakerGame game, Vector2 scale) {
-		worldToScreen = scale;
-		shapeRenderer = new ShapeRenderer();
-		//hitSound = game.getAssetManager().get("shake.ogg", Sound.class);
-		setColor(Color.WHITE);
-		setSize(50, 20);
+	public static final float PADDLE_WIDTH = Assets.paddle.getRegionWidth();
+	public static final float PADDLE_HEIGHT = Assets.paddle.getRegionHeight();
 
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.StaticBody;
-		bodyDef.position.set(10, 5);
-		Body body = world.createBody(bodyDef);
-		PolygonShape brickShape = new PolygonShape();
-		brickShape.setAsBox(2.5f, 1f);
-		body.setUserData(this);
-		fixture = body.createFixture(brickShape, 0.0f);
-
-		brickShape.dispose();
+	public Brick(TextureRegion texture, float x, float y, float velocityX) {
+		super(texture, x, y);
+		velocity.x = velocityX;
 	}
 
-	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-		batch.end();
+	public void update(float deltaTime) {
 
-		shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-		shapeRenderer.setTransformMatrix(batch.getTransformMatrix());
-		shapeRenderer.translate(getX() * worldToScreen.x - getWidth() / 2, getY() * worldToScreen.y - getHeight() / 2, 0);
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(getColor());
-		shapeRenderer.rect(0, 0, getWidth(), getHeight());
-		shapeRenderer.end();
+		
 
-		batch.begin();
 	}
 
-	@Override
-	public float getWidth() {
-		return super.getWidth() * BrickBreakerGame.scale.x;
-	}
 	
-	@Override
-	public float getHeight() {
-		return super.getHeight() * BrickBreakerGame.scale.y;
-	}
-
-	@Override
-	public void setPosition(float x, float y) {
-		super.setPosition(x, y);
-		fixture.getBody().setTransform(x, y, 0);
-	}
-
-	@Override
-	public void contact(Collideable other) {
-		isDying = true;
-		this.remove();
-	}
-
-	@Override
-	public boolean isDying() {
-		return isDying;
-	}
-
-	@Override
-	public void playHitSound() {
-		//hitSound.play();
-	}
 }

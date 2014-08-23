@@ -34,6 +34,9 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GameScreen extends ScreenAdapter {
 	
+	static final float GAME_WIDTH = Assets.backgroundRegion.getRegionWidth();
+	static final float GAME_HEIGHT = Assets.backgroundRegion.getRegionHeight();	
+	
 	static final int GAME_READY = 0;
 	static final int GAME_RUNNING = 1;
 	static final int GAME_PAUSED = 2;
@@ -59,9 +62,9 @@ public class GameScreen extends ScreenAdapter {
 
 		state = GAME_READY;
 		
-		guiCam = new OrthographicCamera(320, 480);
-		guiCam.position.set(320 / 2, 480 / 2, 0);
-		
+		guiCam = new OrthographicCamera(GAME_WIDTH, GAME_HEIGHT);
+		guiCam.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0);
+
 		//guiCam = new OrthographicCamera(BrickBreakerGame.WIDTH,BrickBreakerGame.HEIGHT);
 		//guiCam.position.set(320 / 2, 480 / 2, 0);
 		//guiCam.setToOrtho(true);

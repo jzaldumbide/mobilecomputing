@@ -49,8 +49,8 @@ public class Assets  {
 
 		items = loadTexture("textures/items.png");
 		red_ball = new TextureRegion(items, 0, 0, 32, 32);
-		brick = new TextureRegion(items, 32, 0, 32, 32);
 		paddle = new TextureRegion(items, 64, 0, 64, 16);
+		brick = new TextureRegion(items, 32,0,32,32);
 
 		//Animation example
 		//brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64, 160, 64, 16), new TextureRegion(items, 64, 176, 64, 16),
