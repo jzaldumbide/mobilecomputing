@@ -1,107 +1,78 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetErrorListener;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Assets implements Disposable, AssetErrorListener {
 
-	public static final String TAG = Assets.class.getName();
+public class Assets  {
 
-	public static final Assets instance = new Assets();
-
-	private AssetManager assetManager;
-
-	public AssetImages images;
-	
-	public AssetSounds sounds;
-	
-	public AssetMusic music;
-
-	// singleton: prevent instantiation from other classes
-	private Assets() {
-	}
-
-	public class AssetImages {
-		//public final Texture xxx;
-
-		public AssetImages() {
-			//xxx = new Texture(Gdx.files.internal("xxx.png"));
-		}
-	}
-
-	public class AssetSounds {
-		public final Sound step,click,correct,incorrect,shake;
-
-		public AssetSounds(AssetManager am) {
-			step = am.get("sound/step.ogg", Sound.class);
-			click = am.get("sound/click.ogg", Sound.class);
-			correct = am.get("sound/correct.ogg", Sound.class);
-			incorrect = am.get("sound/incorrect.ogg", Sound.class);
-			shake = am.get("sound/shake.ogg", Sound.class);
-		}
-	}
-
-	public class AssetMusic {
-		//public final Music yyy;
-
-		public AssetMusic(AssetManager am) {
-			//yyy = am.get("yyy.mp3", Music.class);
-		}
-	}
+	public static Texture background; 
+	public static TextureRegion backgroundRegion;
 
 	
-	public void init(AssetManager assetManager) {
-		this.assetManager = assetManager;
-		// Set asset manager error handler
-		assetManager.setErrorListener(this);
+	/*Textures*/
+	public static Texture items;
+	
+	/*Texture regions*/
+	public static TextureRegion blue_ball;
+	public static TextureRegion grey_ball;
+	public static TextureRegion orange_ball;
+	public static TextureRegion red_ball;
+	public static TextureRegion yellow_ball;
+	public static TextureRegion paddle;
+	public static TextureRegion brick;
 
-		/* Here load all Textures: */
-		//assetManager.load("xxx.png", Texture.class);
+	/*Animations*/
+	//public static Animation coinAnim; //example
+	
+	/*BitmapFonts*/
+	//public static BitmapFont font; //example
+
+	/*Sounds & Music*/
+	public static Music music;
+	public static Sound stepSound;
+	public static Sound clickSound;
+	public static Sound correctSound;
+	public static Sound incorrectSound;
+	public static Sound shakeSound;
+
+	public static Texture loadTexture (String file) {
+		return new Texture(Gdx.files.internal(file));
+	}
+
+	public static void load () {
+		background = loadTexture("backgrounds/background.png"); 
+		backgroundRegion = new TextureRegion(background, 0, 0, 320, 480); 
+
+		items = loadTexture("textures/items.png");
+		red_ball = new TextureRegion(items, 0, 0, 32, 32);
+		brick = new TextureRegion(items, 32, 0, 32, 32);
+		paddle = new TextureRegion(items, 64, 0, 64, 16);
+
+		//Animation example
+		//brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64, 160, 64, 16), new TextureRegion(items, 64, 176, 64, 16),
+		//new TextureRegion(items, 64, 192, 64, 16), new TextureRegion(items, 64, 208, 64, 16));
+
+		/*BitmapFont example*/
+		//font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
+		music.setLooping(true);
+		music.setVolume(0.5f);
 		
-		/* Here load all Sounds: */
-		assetManager.load("sound/step.ogg", Sound.class);
-		assetManager.load("sound/click.ogg", Sound.class);
-		assetManager.load("sound/correct.ogg", Sound.class);
-		assetManager.load("sound/incorrect.ogg", Sound.class);
-		assetManager.load("sound/shake.ogg", Sound.class);
+		if (Settings.soundEnabled) music.play();
 		
-		/* Here load all Music: */
-		//assetManager.load("yyy.mp3", Music.class);
-
-		/* Start loading assets and wait until finished, this method is very important, 
-		allows to load assets otherwise the "Asset not loaded" will ceash the app.*/
-		assetManager.finishLoading();
-
-		Gdx.app.debug(TAG,
-				"# of assets loaded: " + assetManager.getAssetNames().size);
-		for (String a : assetManager.getAssetNames()) {
-			Gdx.app.debug(TAG, "asset: " + a);
-		}
-
-		// Create game resource objects
-		images = new AssetImages();
-		sounds = new AssetSounds(assetManager);
-		music = new AssetMusic(assetManager);
+		stepSound = Gdx.audio.newSound(Gdx.files.internal("sound/step.ogg"));
+		clickSound = Gdx.audio.newSound(Gdx.files.internal("sound/click.ogg"));
+		correctSound = Gdx.audio.newSound(Gdx.files.internal("sound/correct.ogg"));
+		incorrectSound = Gdx.audio.newSound(Gdx.files.internal("sound/incorrect.ogg"));
+		shakeSound = Gdx.audio.newSound(Gdx.files.internal("sound/shake.ogg"));
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void error(AssetDescriptor asset, Throwable throwable) {
-		Gdx.app.error(TAG, "Couldn't load asset '" + asset + "'",
-				(Exception) throwable);
-
+	public static void playSound (Sound sound) {
+		if (Settings.soundEnabled) sound.play(1);
 	}
-
-	@Override
-	public void dispose() {
-		System.out.println("Assets disposing...");
-		assetManager.dispose();
-	}
-
 }

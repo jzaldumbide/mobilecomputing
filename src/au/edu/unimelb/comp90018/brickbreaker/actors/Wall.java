@@ -1,6 +1,5 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
-import au.edu.unimelb.comp90018.brickbreaker.BrickBreakerGame;
 import au.edu.unimelb.comp90018.brickbreaker.framework.Collideable;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
@@ -9,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-
+@Deprecated
 public class Wall implements Collideable {
 	
 	private BodyDef bodyDef;
@@ -17,7 +16,7 @@ public class Wall implements Collideable {
 	private PolygonShape rectangle;
 	private World world;
 
-	public Wall(World world, BrickBreakerGame game) {
+	public Wall(World world) {
 		this.world = world;
 	}
 
@@ -51,6 +50,6 @@ public class Wall implements Collideable {
 
 	@Override
 	public void playHitSound() {
-		Assets.instance.sounds.step.play();
+		Assets.playSound(Assets.stepSound);
 	}
 }

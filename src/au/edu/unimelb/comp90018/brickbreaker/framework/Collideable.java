@@ -6,6 +6,7 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
  * 
  *         Collideable is responsible for dealing with collisions between objects
  */
+@Deprecated
 public interface Collideable {
 	public boolean isDying();
 
