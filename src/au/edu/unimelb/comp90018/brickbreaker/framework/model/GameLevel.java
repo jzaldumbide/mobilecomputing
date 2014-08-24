@@ -13,7 +13,7 @@ public class GameLevel {
 	private Paddle paddle;
 	private Ball ball;
 	private int speed;
-	private static int ROWS = 6;
+	private static int ROWS = 15;
 	
 	public GameLevel(){
 		bricks = new Brick[ROWS][ROWS];

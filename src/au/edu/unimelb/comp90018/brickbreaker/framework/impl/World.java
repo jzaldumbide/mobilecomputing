@@ -1,12 +1,18 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.client.ClientProtocolException;
+import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
+import au.edu.unimelb.comp90018.brickbreaker.framework.model.GameLevel;
+import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 public class World {
@@ -49,21 +55,46 @@ public class World {
 
 	private void generateLevel () {
 		
-		/*Here you should generate the game level using the configurations loaded from XMl file
-		 * note that all parameters from paddle example are constants, some of them could be part of the xml file.
-		 */
-		this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 - Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,500);
-		this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 - Assets.paddle.getRegionWidth()/2,40,600);
-		
-		//Generate example bricks
-		
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 8; x++) {
-				Brick brick = new Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()), GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()),600);
-				this.bricks.add(brick);				
+		LevelDownloader ld = new LevelDownloader();
+		GameLevel gameLevel = null;
+		try {
+			gameLevel = ld.downloadGame("brickbreaker_level1.xml");
+			/*Here you should generate the game level using the configurations loaded from XMl file
+			 * note that all parameters from paddle example are constants, some of them could be part of the xml file.
+			 */
+			this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 - Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,gameLevel.getBall().getSpeed());
+			this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 - Assets.paddle.getRegionWidth()/2,40,gameLevel.getPaddle().getSpeed());
+			
+			au.edu.unimelb.comp90018.brickbreaker.framework.model.Brick modelBricks[][] = gameLevel.getBricks();
+			
+			for ( int i = 0; i < modelBricks.length; i++ ){
+				for ( int j = 0; j < modelBricks[i].length; j++ ){
+					if (modelBricks[i][j]!=null){
+						int x = modelBricks[i][j].getX();
+						int y = modelBricks[i][j].getY();
+						Brick brick = new Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()), 
+								GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()),
+								gameLevel.getPaddle().getSpeed());
+						this.bricks.add(brick);
+					}
+				}
 			}
-		}
 
+		} catch (IOException | XmlPullParserException  | NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 - Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,500);
+			this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 - Assets.paddle.getRegionWidth()/2,40,600);
+			//Generate example bricks
+			
+			for (int y = 0; y < 3; y++) {
+				for (int x = 0; x < 8; x++) {
+					Brick brick = new Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()), GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()),600);
+					this.bricks.add(brick);				
+				}
+			}
+
+		}		
 	}
 
 	public void update (float deltaTime, float accelX) {
