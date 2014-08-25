@@ -4,12 +4,17 @@ package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 public class Settings {
 	
 	/*Set here default game properties*/
-	public static boolean soundEnabled = true;
+	public static boolean soundEnabled = false;
 	
 	/*Set here screens Width and Heights*/
 	public static int GAME_WIDTH = 320;
 	public static int GAME_HEIGHT = 480;
 	public static final float GAME_ASPECT_RATIO = (float)GAME_WIDTH/(float)GAME_HEIGHT;
+	
+	
+	public static int LEFT_WALL_SPAN = 20;
+	public static int RIGHT_WALL_SPAN = 20;
+	public static int TOP_WALL_SPAN = 40;
 	
 	
 	/*Define default paddle velocity*/

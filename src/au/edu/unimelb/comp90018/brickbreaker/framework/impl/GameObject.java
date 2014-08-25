@@ -1,75 +1,145 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.impl;
 
 import com.badlogic.gdx.math.Rectangle;
-
+import com.badlogic.gdx.math.Vector2;
 
 /**
- * Every GameObject has associated position, texture and bounds. Bounds helps to keep track of collisions
+ * Every GameObject has associated position and bounds. Bounds helps to keep
+ * track of collisions.
+ * 
  * @author Diego
  *
  */
 public class GameObject {
-	public final Rectangle position;
-	//public final Rectangle bounds;
+	public final Vector2 position;
+	public final Rectangle bounds;
 
-	public GameObject () {	
-		//this.position = new Vector2();
-		this.position = new Rectangle();
+	public GameObject(float x, float y, float width, float height) {
+		this.position = new Vector2(x, y);
+		this.bounds = new Rectangle(x, y, width, height);
 	}
-	
-	public GameObject (float x, float y, float width, float height) {
-		
-		this.position = new Rectangle(x, y,width, height);
-		//this.bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
-	}
-	
-	
+
+	/**
+	 * Set the new position of the object and update the bounds coord.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(float x, float y) {
 		position.x = x;
 		position.y = y;
+		updateBounds();
 	}
-	
+
+	/**
+	 * Set the new x position of the object and update the bounds coord.
+	 * 
+	 * @param x
+	 */
 	public void setX(float x) {
 		position.x = x;
+		updateBounds();
 	}
-	
+
+	/**
+	 * Set the new y position of the object and update the bounds coord.
+	 * 
+	 * @param y
+	 */
 	public void setY(float y) {
 		position.y = y;
-	}	
-	
+		updateBounds();
+	}
+
+	/**
+	 * Set the bounds width parameter
+	 * 
+	 * @param width
+	 */
 	public void setWidth(float width) {
-		position.width = width;
+		bounds.width = width;
 	}
-	
+
+	/**
+	 * Set the bounds height parameter
+	 * 
+	 * @param height
+	 */
 	public void setHeight(float height) {
-		position.height = height;
+		bounds.height = height;
 	}
-	
+
+	/**
+	 * Return position x of the Object
+	 * 
+	 * @return position.x
+	 */
 	public float getX() {
 		return position.x;
 	}
-	
+
+	/**
+	 * Return position y of the Object
+	 * 
+	 * @return position.y
+	 */
 	public float getY() {
 		return position.y;
-	}	
-	
+	}
+
+	/**
+	 * Return bounds width of the Rectangle
+	 * 
+	 * @return bounds.width
+	 */
 	public float getWidth() {
-		return position.width;
+		return bounds.width;
 	}
-	
+
+	/**
+	 * Return bounds width of the Rectangle
+	 * 
+	 * @return position.y
+	 */
 	public float getHeight() {
-		return position.height;
-	}	
-	
-	public Rectangle getRectangle() {
-		return position;
+		return bounds.height;
 	}
-	
+
+	/**
+	 * Returns the bounds rectangle
+	 * 
+	 * @return bounds
+	 */
+	public Rectangle getRectangle() {
+		return bounds;
+	}
+
+	/**
+	 * Adds new amount to the position x of the object
+	 * 
+	 * @param amount
+	 */
 	public void addToX(float amount) {
 		this.position.x += amount;
+		updateBounds();
 	}
-	
+
+	/**
+	 * Adds new amount to the position y of the object
+	 * 
+	 * @param amount
+	 */
 	public void addToY(float amount) {
 		this.position.y += amount;
+		updateBounds();
+	}
+
+	/**
+	 * It's necessary to keep the x and y bounds synchronized with the position
+	 * in x and y
+	 */
+	public void updateBounds() {
+		bounds.x = position.x;
+		bounds.y = position.y;
 	}
 }

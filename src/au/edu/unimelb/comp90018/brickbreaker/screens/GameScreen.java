@@ -22,13 +22,10 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.impl.WorldRenderer;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 
@@ -51,6 +48,7 @@ public class GameScreen extends ScreenAdapter {
 	World world;
 	WorldListener worldListener;
 	WorldRenderer renderer;
+	
 	//Rectangle pauseBounds;
 	//Rectangle resumeBounds;
 	//Rectangle quitBounds;
@@ -64,10 +62,6 @@ public class GameScreen extends ScreenAdapter {
 		
 		guiCam = new OrthographicCamera(GAME_WIDTH, GAME_HEIGHT);
 		guiCam.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0);
-
-		//guiCam = new OrthographicCamera(BrickBreakerGame.WIDTH,BrickBreakerGame.HEIGHT);
-		//guiCam.position.set(320 / 2, 480 / 2, 0);
-		//guiCam.setToOrtho(true);
 		
 		touchPoint = new Vector3();
 		
@@ -134,28 +128,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void updateRunning (float deltaTime) {
-
-		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-		}	
-		
-		world.update(deltaTime, 0);
-		
-		}
-		
-//		ApplicationType appType = Gdx.app.getType();
-//		
-//		// should work also with Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
-//		if (appType == ApplicationType.Android || appType == ApplicationType.iOS) {
-//			//world.update(deltaTime, Gdx.input.getAccelerometerX());
-//		} else {
-//			float accel = 0;
-//			if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) accel = 5f;
-//			if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) accel = -5f;
-//			//world.update(deltaTime, accel);
-//		}
-		
-
+		world.update(deltaTime, guiCam);
 		
 		/*
 		if (world.score != lastScore) {
@@ -175,7 +148,8 @@ public class GameScreen extends ScreenAdapter {
 			Settings.save();
 		}
 		*/
-	//}
+	}
+
 
 	private void updatePaused () {
 		if (Gdx.input.justTouched()) {
@@ -212,7 +186,6 @@ public class GameScreen extends ScreenAdapter {
 
 	public void draw () {
 		GL20 gl = Gdx.gl;
-		//gl.glClearColor(1, 1, 1, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		/*Render Objects in screen*/

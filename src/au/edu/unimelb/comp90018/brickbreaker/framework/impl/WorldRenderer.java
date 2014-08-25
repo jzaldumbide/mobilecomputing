@@ -52,11 +52,10 @@ public class WorldRenderer {
 		batch.end();
 	}
 
-	private void renderWall() {
+	private void renderBall() {
 
 		Ball ball = world.ball;
 		batch.draw(ball.texture, ball.position.x, ball.position.y);
-
 	}
 
 	private void renderPaddle() {
@@ -75,14 +74,10 @@ public class WorldRenderer {
 			batch.draw(brick.texture, brick.position.x, brick.position.y);
 
 		}
-
-		Paddle paddle = world.paddle;
-		batch.draw(paddle.texture, paddle.position.x, paddle.position.y);
-		
 	}
 
 
-	private void renderBall () {
+	private void renderWall () {
 
 	}
 }
