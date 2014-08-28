@@ -18,6 +18,9 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import android.util.Log;
 import au.edu.unimelb.comp90018.brickbreaker.framework.model.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.framework.model.Brick;
@@ -107,7 +110,7 @@ public class LevelDownloader {
             	   else if (tagName.equals("Ball")){
                 	   int radius = Integer.valueOf(xpp.getAttributeValue("", "radius"));
                 	   int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-            		   Ball ball = new Ball(speed, radius);
+            		   Ball ball = new Ball(radius,speed);
             		   gameLevel.setBall(ball);
             	   }
                }
@@ -116,6 +119,11 @@ public class LevelDownloader {
         }
 
 		return gameLevel;
-		
+	}
+	private void persistGame (String levelName, String xml){
+		FileHandle filehandle = Gdx.files.external(levelName);
+
+		filehandle.writeString(xml, false);
+
 	}
 }
