@@ -7,77 +7,73 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class WorldRenderer {
 
-	static final float DEVICE_WIDTH = Gdx.graphics.getWidth();
-	static final float DEVICE_HEIGHT = Gdx.graphics.getHeight();
-	
-	static final float GAME_WIDTH = Assets.backgroundRegion.getRegionWidth();
-	static final float GAME_HEIGHT = Assets.backgroundRegion.getRegionHeight();
-	
+	static final float FRUSTUM_WIDTH = 20;
+	static final float FRUSTUM_HEIGHT = 30;
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
 
-	public WorldRenderer (SpriteBatch batch, World world) {
+	public WorldRenderer(SpriteBatch batch, World world) {
 		this.world = world;
-		this.cam = new OrthographicCamera(DEVICE_WIDTH, DEVICE_HEIGHT);
-		this.cam.position.set(DEVICE_WIDTH/2,DEVICE_HEIGHT/2,0);
+		this.cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
+		this.cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
 		this.batch = batch;
 	}
 
-	public void render () {
+	public void render() {
+		// if (world.bob.position.y > cam.position.y) cam.position.y =
+		// world.bob.position.y;
+		cam.update();
+		batch.setProjectionMatrix(cam.combined);
 		renderBackground();
 		renderObjects();
 	}
 
-	public void renderBackground () {
+	public void renderBackground() {
 		batch.disableBlending();
 		batch.begin();
-		batch.draw(Assets.backgroundRegion, 0, 0, GAME_WIDTH,GAME_HEIGHT);
+		batch.draw(Assets.backgroundRegion, cam.position.x - FRUSTUM_WIDTH / 2, cam.position.y - FRUSTUM_HEIGHT / 2,
+				FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.end();
 	}
 
-	public void renderObjects () {
+	public void renderObjects() {
 		batch.enableBlending();
 		batch.begin();
-		renderWall();
-		renderPaddle();
 		renderBricks();
 		renderBall();
+		renderPaddle();
 		batch.end();
 	}
 
 	private void renderBall() {
 
 		Ball ball = world.ball;
-		batch.draw(ball.texture, ball.position.x, ball.position.y);
+		batch.draw(Assets.redBall, ball.position.x - Ball.BALL_WIDTH / 2, ball.position.y - Ball.BALL_HEIGHT / 2,
+				Ball.BALL_WIDTH, Ball.BALL_HEIGHT);
 	}
 
 	private void renderPaddle() {
 
 		Paddle paddle = world.paddle;
-		batch.draw(paddle.texture, paddle.position.x, paddle.position.y);
+		batch.draw(Assets.paddle, paddle.position.x - Paddle.PADDLE_WIDTH / 2, paddle.position.y - Paddle.PADDLE_HEIGHT
+				/ 2, Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT);
 	}
 
-	private void renderBricks () {
-		
+	private void renderBricks() {
+
 		List<Brick> bricks = world.bricks;
+		int len = bricks.size();
 
-		for (int x = 0; x < 24; x++) {
-
-			Brick brick = bricks.get(x);
-			batch.draw(brick.texture, brick.position.x, brick.position.y);
-
+		for (int i = 0; i < len; i++) {
+			batch.draw(Assets.brick1, bricks.get(i).position.x, bricks.get(i).position.y, Brick.BRICK_WIDTH,
+					Brick.BRICK_HEIGHT);
 		}
 	}
 
-
-	private void renderWall () {
-
-	}
 }

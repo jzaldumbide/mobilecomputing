@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".BrickBreaker"
+            android:name=".AndroidLauncher"
             android:label="@string/title_activity_brick_breaker" 
             android:screenOrientation="portrait"
         	android:configChanges="keyboard|keyboardHidden|orientation">

@@ -1,27 +1,19 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.DynamicGameObject;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
-import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.GameObject;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+public class Brick extends GameObject {
 
-public class Brick extends DynamicGameObject {
+	public static final float BRICK_WIDTH = 1;
+	public static final float BRICK_HEIGHT = 1;
 
-	public static final float BRICK_WIDTH = Assets.paddle.getRegionWidth();
-	public static final float BRICK_HEIGHT = Assets.paddle.getRegionHeight();
-
-	public Brick(TextureRegion texture, float x, float y) {
-		super(texture, x, y);
+	public Brick(float x, float y) {
+		super(x, y, BRICK_WIDTH, BRICK_HEIGHT);
 	}
 
-	public void update(float deltaTime,World world) {
+	public void update(float deltaTime) {
 
+		
+	}
 
-	}
-	
-	public void dispose(){
-		this.dispose();
-	}
-	
 }

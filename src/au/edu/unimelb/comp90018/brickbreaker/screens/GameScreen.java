@@ -16,7 +16,7 @@
 
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
-import au.edu.unimelb.comp90018.brickbreaker.BrickBreakerGame;
+import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
 import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.impl.WorldRenderer;
@@ -26,13 +26,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 
 public class GameScreen extends ScreenAdapter {
 	
-	static final float GAME_WIDTH = Assets.backgroundRegion.getRegionWidth();
-	static final float GAME_HEIGHT = Assets.backgroundRegion.getRegionHeight();	
+//	static final float GAME_WIDTH = Assets.backgroundRegion.getRegionWidth();
+//	static final float GAME_HEIGHT = Assets.backgroundRegion.getRegionHeight();	
 	
 	static final int GAME_READY = 0;
 	static final int GAME_RUNNING = 1;
@@ -40,28 +41,30 @@ public class GameScreen extends ScreenAdapter {
 	static final int GAME_LEVEL_END = 3;
 	static final int GAME_OVER = 4;
 
-	BrickBreakerGame game;
+	BrickBreaker game;
 
 	int state;
 	OrthographicCamera guiCam;
 	Vector3 touchPoint;
 	World world;
 	WorldListener worldListener;
-	WorldRenderer renderer;
-	
-	//Rectangle pauseBounds;
-	//Rectangle resumeBounds;
-	//Rectangle quitBounds;
+	WorldRenderer renderer;	
+	Rectangle pauseBounds;
+	Rectangle resumeBounds;
+	Rectangle quitBounds;
 	//int lastScore;
 	//String scoreString;
 
-	public GameScreen (BrickBreakerGame game) {
+	public GameScreen (BrickBreaker game) {
 		this.game = game;
 
 		state = GAME_READY;
 		
-		guiCam = new OrthographicCamera(GAME_WIDTH, GAME_HEIGHT);
-		guiCam.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0);
+		// We need to have a target resolution, e.g. 320 x 480
+		guiCam = new OrthographicCamera(320, 480);
+		guiCam.position.set(320 / 2, 480 / 2, 0);
+//		guiCam = new OrthographicCamera(GAME_WIDTH, GAME_HEIGHT);
+//		guiCam.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0);
 		
 		touchPoint = new Vector3();
 		
@@ -128,7 +131,8 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void updateRunning (float deltaTime) {
-		world.update(deltaTime, guiCam);
+//		world.update(deltaTime, guiCam);
+		world.update(deltaTime, Gdx.input.getAccelerometerX());
 		
 		/*
 		if (world.score != lastScore) {
