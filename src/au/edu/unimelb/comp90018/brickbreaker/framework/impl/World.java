@@ -8,15 +8,17 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2.RectangleSide;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
 
 	public static final float WORLD_WIDTH = 20;
 	public static final float WORLD_HEIGHT = 30;
-	
+
 	public static final float BUTTON_SPAN_X = 0.2f;
 	public static final float BUTTON_SPAN_Y = 0.1f;
 
@@ -172,8 +174,9 @@ public class World {
 
 		if (ball.velocity.y > 0)
 			return;
-
-		if (ball.bounds.overlaps(paddle.bounds)) {
+		
+		if (ball.bounds.overlaps(paddle.bounds)) {			
+//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
 			ball.hitPaddle(paddle.velocity.x);
 			Assets.playSound(Assets.clickSound);
 			// listener.jump();
@@ -189,7 +192,9 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-				ball.hitBrick();
+				ball.hitBrick(bricks.get(i).bounds);
+				bricks.remove(i);
+				break;
 			}
 		}
 	}
