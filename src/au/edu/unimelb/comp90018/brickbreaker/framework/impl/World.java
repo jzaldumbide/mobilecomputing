@@ -7,7 +7,9 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2.RectangleSide;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
@@ -156,8 +158,9 @@ public class World {
 
 		if (ball.velocity.y > 0)
 			return;
-
-		if (ball.bounds.overlaps(paddle.bounds)) {
+		
+		if (ball.bounds.overlaps(paddle.bounds)) {			
+//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
 			ball.hitPaddle(paddle.velocity.x);
 			// listener.jump();
 			// if (rand.nextFloat() > 0.5f) {
@@ -172,7 +175,9 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-				ball.hitBrick();
+				ball.hitBrick(bricks.get(i).bounds);
+				bricks.remove(i);
+				break;
 			}
 		}
 	}

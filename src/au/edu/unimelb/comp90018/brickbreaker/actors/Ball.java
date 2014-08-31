@@ -1,6 +1,10 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
+import java.util.List;
+
 import au.edu.unimelb.comp90018.brickbreaker.framework.impl.DynamicGameObject;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2;
+import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2.RectangleSide;
 import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
 
 import com.badlogic.gdx.math.Vector2;
@@ -25,7 +29,7 @@ public class Ball extends DynamicGameObject {
 		if (position.x < BALL_WIDTH / 2 || position.x > (World.WORLD_WIDTH - BALL_WIDTH / 2)) {
 			velocity.x *= -1;
 		}
-		
+
 		if (position.y > (World.WORLD_HEIGHT - BALL_HEIGHT / 2)) {
 			velocity.y *= -1;
 		}
@@ -37,8 +41,13 @@ public class Ball extends DynamicGameObject {
 		velocity.y *= -1;
 	}
 
-	public void hitBrick() {
-//		velocity.x += paddleVelX;
-//		velocity.y *= -1;		
+	public void hitBrick(Rectangle2 brickBounds) {
+
+		List<RectangleSide> sides = bounds.whichSidesOverlapMe(brickBounds);
+
+		if (sides.contains(RectangleSide.Right) || sides.contains(RectangleSide.Left))
+			velocity.x *= -1;
+		if (sides.contains(RectangleSide.Top) || sides.contains(RectangleSide.Bottom))
+			velocity.y *= -1;
 	}
 }
