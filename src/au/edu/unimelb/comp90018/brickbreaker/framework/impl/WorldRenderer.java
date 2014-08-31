@@ -22,6 +22,7 @@ public class WorldRenderer {
 		this.world = world;
 		this.cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+//		this.cam.zoom = 2f;
 		this.batch = batch;
 	}
 

@@ -33,6 +33,7 @@ public class Ball extends DynamicGameObject {
 
 	public void hitPaddle(float paddleVelX) {
 		velocity.x += paddleVelX;
+		// TODO: Consider side of the collision
 		velocity.y *= -1;
 	}
 

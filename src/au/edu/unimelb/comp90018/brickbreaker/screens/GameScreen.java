@@ -63,6 +63,7 @@ public class GameScreen extends ScreenAdapter {
 		// We need to have a target resolution, e.g. 320 x 480
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
+		
 //		guiCam = new OrthographicCamera(GAME_WIDTH, GAME_HEIGHT);
 //		guiCam.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0);
 		
