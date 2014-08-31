@@ -4,6 +4,7 @@ import java.util.List;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
@@ -17,6 +18,7 @@ public class WorldRenderer {
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
+	String scoreLabel;
 
 	public WorldRenderer(SpriteBatch batch, World world) {
 		this.world = world;
@@ -27,8 +29,6 @@ public class WorldRenderer {
 	}
 
 	public void render() {
-		// if (world.bob.position.y > cam.position.y) cam.position.y =
-		// world.bob.position.y;
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		renderBackground();
@@ -49,6 +49,10 @@ public class WorldRenderer {
 		renderBricks();
 		renderBall();
 		renderPaddle();
+		renderScore();
+		renderSoundButton();
+		renderPauseButton();
+		renderSettingsButton();
 		batch.end();
 	}
 
@@ -75,6 +79,42 @@ public class WorldRenderer {
 			batch.draw(Assets.brick1, bricks.get(i).position.x, bricks.get(i).position.y, Brick.BRICK_WIDTH,
 					Brick.BRICK_HEIGHT);
 		}
+	}
+	
+	private void renderPauseButton() {
+
+		Button pauseButton = world.pauseButton;
+		batch.draw(Assets.pauseMenu,
+				pauseButton.position.x,
+				pauseButton.position.y,
+				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+
+	}
+	
+	private void renderSoundButton() {
+
+		Button soundButton = world.soundButton;
+		batch.draw(Assets.soundOn,
+				soundButton.position.x,
+				soundButton.position.y,
+				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+
+	}
+	
+	private void renderSettingsButton() {
+
+		Button settingsButton = world.settingsButton;
+		batch.draw(Assets.settingsMenu,
+				settingsButton.position.x,
+				settingsButton.position.y,
+				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+
+	}
+	
+	private void renderScore() {
+		//TODO: the score doesnt render
+//		this.scoreLabel = world.scoreLabel;
+//		Assets.font.draw(batch, scoreLabel, 5, 5);
 	}
 
 }

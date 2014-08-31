@@ -5,8 +5,10 @@ import java.util.List;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -14,6 +16,9 @@ public class World {
 
 	public static final float WORLD_WIDTH = 20;
 	public static final float WORLD_HEIGHT = 30;
+	
+	public static final float BUTTON_SPAN_X = 0.2f;
+	public static final float BUTTON_SPAN_Y = 0.1f;
 
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_NEXT_LEVEL = 1;
@@ -22,8 +27,10 @@ public class World {
 	public Ball ball;
 	public Paddle paddle;
 	public List<Brick> bricks;
+	public Button pauseButton,soundButton,settingsButton;
 
 	public final WorldListener listener;
+	public String scoreLabel;
 	public int score;
 	public int state;
 
@@ -35,7 +42,11 @@ public class World {
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 				new Vector2(5, 5));
 		bricks = new ArrayList<Brick>();
-
+		
+		settingsButton = new Button(WORLD_WIDTH-BUTTON_SPAN_X-Button.BUTTON_WIDTH,WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
+		soundButton = new Button(WORLD_WIDTH-(2*BUTTON_SPAN_X)-(2*Button.BUTTON_WIDTH),WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
+		pauseButton = new Button(WORLD_WIDTH-(3*BUTTON_SPAN_X)-(3*Button.BUTTON_WIDTH),WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
+		
 		this.listener = listener;
 
 		/*
@@ -43,6 +54,10 @@ public class World {
 		 * loader file
 		 */
 		generateLevel();
+		
+		//this.score = 0;
+		this.state = WORLD_STATE_RUNNING;
+		this.scoreLabel = "SCORE: ";
 	}
 
 	private void generateLevel() {
@@ -150,6 +165,7 @@ public class World {
 	private void checkCollisions() {
 		checkPaddleCollision();
 		checkBrickCollision();
+		checkLoseLives();
 	}
 
 	private void checkPaddleCollision() {
@@ -159,6 +175,7 @@ public class World {
 
 		if (ball.bounds.overlaps(paddle.bounds)) {
 			ball.hitPaddle(paddle.velocity.x);
+			Assets.playSound(Assets.clickSound);
 			// listener.jump();
 			// if (rand.nextFloat() > 0.5f) {
 			// platform.pulverize();
@@ -176,4 +193,13 @@ public class World {
 			}
 		}
 	}
+	
+	private void checkLoseLives(){
+		
+		if (ball.position.y <= 0){
+			this.state = WORLD_STATE_GAME_OVER;
+		}
+		
+	}
+
 }

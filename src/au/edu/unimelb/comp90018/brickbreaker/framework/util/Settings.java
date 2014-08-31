@@ -6,7 +6,8 @@ import com.badlogic.gdx.files.FileHandle;
 public class Settings {
 
 	/* Set here default game properties */
-	public static boolean soundEnabled = false;
+	public static boolean soundEnabled = true;
+	public static boolean accelerometerEnabled = false;
 	public final static int[] highscores = new int[] { 100, 80, 50, 30, 10 };
 	public final static String file = ".brickbreaker";
 
