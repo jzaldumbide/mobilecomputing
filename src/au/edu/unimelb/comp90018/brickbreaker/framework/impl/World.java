@@ -57,15 +57,15 @@ public class World {
 		 */
 		generateLevel();
 		
-		//this.score = 0;
+		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-		this.scoreLabel = "SCORE: ";
+		this.scoreLabel = "SCORE: "+score;
 	}
 
 	private void generateLevel() {
 
 		float x = 5.5f;
-		float y = 24.5f;
+		float y = 20.5f;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
 				bricks.add(new Brick(x, y));
@@ -159,15 +159,14 @@ public class World {
 	}
 
 	private void checkGameOver() {
-		// if (heightSoFar - 7.5f > bob.position.y) {
-		// state = WORLD_STATE_GAME_OVER;
-		// }
+		if (ball.position.y <= 0){
+			this.state = WORLD_STATE_GAME_OVER;
+		}
 	}
 
 	private void checkCollisions() {
 		checkPaddleCollision();
 		checkBrickCollision();
-		checkLoseLives();
 	}
 
 	private void checkPaddleCollision() {
@@ -194,17 +193,9 @@ public class World {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
 				ball.hitBrick(bricks.get(i).bounds);
 				bricks.remove(i);
+				score ++;
 				break;
 			}
 		}
 	}
-	
-	private void checkLoseLives(){
-		
-		if (ball.position.y <= 0){
-			this.state = WORLD_STATE_GAME_OVER;
-		}
-		
-	}
-
 }

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class Assets {
 
@@ -42,7 +44,8 @@ public class Assets {
 	// public static Animation coinAnim; //example
 
 	/* BitmapFonts */
-	 public static BitmapFont font; //example
+	 public static BitmapFont font;
+	 public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
 
 	/* Sounds & Music */
 	public static Music music;
@@ -108,8 +111,16 @@ public class Assets {
 		// 64, 208, 64, 16));
 
 		/* BitmapFont example */
-		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
-		//font.setScale(0.5f, 1.5f);
+		
+		
+		
+		//font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+		
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/arial.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 15;
+		font = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
 		music.setLooping(true);

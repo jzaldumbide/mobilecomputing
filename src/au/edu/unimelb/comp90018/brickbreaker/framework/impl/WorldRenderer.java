@@ -8,6 +8,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -113,8 +114,9 @@ public class WorldRenderer {
 	
 	private void renderScore() {
 		//TODO: the score doesnt render
-//		this.scoreLabel = world.scoreLabel;
-//		Assets.font.draw(batch, scoreLabel, 5, 5);
+		this.scoreLabel = world.scoreLabel;
+		//Assets.font.setScale(0.5f,0.5f);
+		//Assets.font.draw(batch, scoreLabel, 0f, World.WORLD_HEIGHT-10f);
 	}
 
 }
