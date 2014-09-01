@@ -41,33 +41,6 @@ public class HelpScreen extends ScreenAdapter {
 
 		backBounds = new Rectangle(0, 0, 320, 50);
 		btnback = new Texture("buttons/btn_back.png");
-		lvl1Bs = new Rectangle(32, 400, btnSize, btnSize);
-		lvl2Bs = new Rectangle(32 + (btnSeparation + btnSize), 400, btnSize,
-				btnSize);
-		lvl3Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize), 400,
-				btnSize, btnSize);
-		lvl4Bs = new Rectangle(32, 400 - (btnSeparation + btnSize), btnSize,
-				btnSize);
-		lvl5Bs = new Rectangle(32 + (btnSeparation + btnSize),
-				400 - (btnSeparation + btnSize), btnSize, btnSize);
-		lvl6Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize),
-				400 - (btnSeparation + btnSize), btnSize, btnSize);
-		lvl7Bs = new Rectangle(32, 400 - 2 * (btnSeparation + btnSize),
-				btnSize, btnSize);
-		lvl8Bs = new Rectangle(32 + (btnSeparation + btnSize),
-				400 - 2 * (btnSeparation + btnSize), btnSize, btnSize);
-		lvl9Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize),
-				400 - 2 * (btnSeparation + btnSize), btnSize, btnSize);
-
-		btnlvl1 = new Texture("levelbtn/1.png");
-		btnlvl2 = new Texture("levelbtn/2.png");
-		btnlvl3 = new Texture("levelbtn/3.png");
-		btnlvl4 = new Texture("levelbtn/4.png");
-		btnlvl5 = new Texture("levelbtn/5.png");
-		btnlvl6 = new Texture("levelbtn/6.png");
-		btnlvl7 = new Texture("levelbtn/7.png");
-		btnlvl8 = new Texture("levelbtn/8.png");
-		btnlvl9 = new Texture("levelbtn/9.png");
 
 	}
 
@@ -95,7 +68,7 @@ public class HelpScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.helpScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 0, 0, 320, 50);
 

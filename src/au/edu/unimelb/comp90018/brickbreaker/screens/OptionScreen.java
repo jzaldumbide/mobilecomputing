@@ -159,7 +159,7 @@ public class OptionScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.optionScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 0, 0, 320, 50);
 		// level buttons

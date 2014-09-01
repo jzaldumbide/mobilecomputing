@@ -159,7 +159,7 @@ public class ScoreScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.scoresScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 0, 0, 320, 50);
 		// level buttons
