@@ -2,12 +2,10 @@ package au.edu.unimelb.comp90018.brickbreaker;
 
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
-import au.edu.unimelb.comp90018.brickbreaker.screens.GameScreen;
+import au.edu.unimelb.comp90018.brickbreaker.screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-
 
 /**
  * BrickBreakerGame class that extends Game, which implements
@@ -33,8 +31,9 @@ public class BrickBreaker extends Game {
 		 * This is the call to the main screen. here you should call the
 		 * MainMenuScreen and call GameScreen from there
 		 */
-		// setScreen(new MainMenuScreen(this));
-		setScreen(new GameScreen(this));
+		// setScreen(new MenuScreen(this));
+		setScreen(new SplashScreen(this));// in order to call first to the
+											// splash screen
 	}
 
 	@Override
