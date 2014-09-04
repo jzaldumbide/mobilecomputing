@@ -29,7 +29,7 @@ public class LevelScreen extends ScreenAdapter {
 		screenWidth = 320;
 		screenHeight = 480;
 		btnSize = 64;
-		btnSeparation = btnSize / 2;
+		btnSeparation = 32;
 
 		this.game = game;
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
@@ -39,7 +39,7 @@ public class LevelScreen extends ScreenAdapter {
 		// nextBounds = new Rectangle(320 - 64, 0, 64, 64);
 		touchPoint = new Vector3();
 
-		backBounds = new Rectangle(0, 0, 320, 50);
+		backBounds = new Rectangle(10, 10, 32, 32);
 		btnback = new Texture("buttons/btn_back.png");
 		lvl1Bs = new Rectangle(32, 400, btnSize, btnSize);
 		lvl2Bs = new Rectangle(32 + (btnSeparation + btnSize), 400, btnSize,
@@ -81,6 +81,7 @@ public class LevelScreen extends ScreenAdapter {
 				// llamar al level 1
 				// game.setScreen(new MenuScreen(game));
 				Gdx.app.log("level 1", "level 1");
+				game.setScreen(new GameScreen(game));
 				return;
 			}
 			if (lvl2Bs.contains(touchPoint.x, touchPoint.y)) {
@@ -142,7 +143,7 @@ public class LevelScreen extends ScreenAdapter {
 
 			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
 
-				game.setScreen(new MenuScreen(game));
+				game.setScreen(new SelectScreen(game));
 				Gdx.app.log("", "click para regresar");
 				return;
 			}
@@ -161,7 +162,7 @@ public class LevelScreen extends ScreenAdapter {
 		game.batcher.begin();
 		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
 
-		game.batcher.draw(btnback, 0, 0, 320, 50);
+		game.batcher.draw(btnback, 10, 10, 32, 32);
 		// level buttons
 		game.batcher.draw(btnlvl1, lvl1Bs.x, lvl1Bs.y, btnSize, btnSize);
 		game.batcher.draw(btnlvl2, lvl2Bs.x, lvl2Bs.y, btnSize, btnSize);

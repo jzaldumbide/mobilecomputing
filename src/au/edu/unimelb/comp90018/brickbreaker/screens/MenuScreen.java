@@ -36,41 +36,29 @@ public class MenuScreen extends ScreenAdapter {
 		screenWidth = 320;
 		screenHeight = 480;
 		btnsizeWidth = 300;
-		btnsizeHeight = 36;
-		btnseparation = btnsizeHeight / 4;
+		btnsizeHeight = 32;
+		btnseparation = 8;
 
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
-		soundBounds = new Rectangle(0, 0, 64, 64);
+		// soundBounds = new Rectangle(0, 0, 64, 64);
 
-		playBounds = new Rectangle((screenWidth / 2) - (btnsizeWidth / 2),
-				300 - (btnsizeHeight), btnsizeWidth, btnsizeHeight);
-
-		levelsBounds = new Rectangle(playBounds.x, playBounds.y - btnsizeHeight
-				- btnseparation, btnsizeWidth, btnsizeHeight);
-
-		scoresBounds = new Rectangle(playBounds.x, levelsBounds.y
-				- btnsizeHeight - btnseparation, btnsizeWidth, btnsizeHeight);
-
-		optionsBounds = new Rectangle(playBounds.x, scoresBounds.y
-				- btnsizeHeight - btnseparation, btnsizeWidth, btnsizeHeight);
-
-		helpBounds = new Rectangle(playBounds.x, optionsBounds.y
-				- btnsizeHeight - btnseparation, btnsizeWidth, btnsizeHeight);
-
-		exitBounds = new Rectangle(playBounds.x, helpBounds.y - btnsizeHeight
-				- btnseparation, btnsizeWidth, btnsizeHeight);
+		playBounds = new Rectangle(10, 264, 300, 30);
+		scoresBounds = new Rectangle(10, 220, 300, 30);
+		optionsBounds = new Rectangle(10, 176, 300, 30);
+		helpBounds = new Rectangle(60, 10, 32, 32);
+		exitBounds = new Rectangle(260 - 32, 10, 32, 32);
 
 		touchPoint = new Vector3();
 
 		btnplay = new Texture("buttons/btn_play.png");
-		btnlevels = new Texture("buttons/btn_levels.png");
+		// btnlevels = new Texture("buttons/btn_levels.png");
 		btnscores = new Texture("buttons/btn_scores.png");
 		btnoptions = new Texture("buttons/btn_options.png");
 		btnhelp = new Texture("buttons/btn_help.png");
 		btnexit = new Texture("buttons/btn_exit.png");
 
-		btnback = new Texture("buttons/btn_back.png");
+		// btnback = new Texture("buttons/btn_back.png");
 
 	}
 
@@ -81,15 +69,11 @@ public class MenuScreen extends ScreenAdapter {
 
 			if (playBounds.contains(touchPoint.x, touchPoint.y)) {
 				// Assets.playSound(Assets.clickSound);
-				game.setScreen(new GameScreen(game));
+				// game.setScreen(new GameScreen(game));
+				game.setScreen(new SelectScreen(game));
 				return;
 			}
 
-			if (levelsBounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
-				game.setScreen(new LevelScreen(game));
-				return;
-			}
 			if (scoresBounds.contains(touchPoint.x, touchPoint.y)) {
 				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new ScoreScreen(game));
@@ -113,14 +97,14 @@ public class MenuScreen extends ScreenAdapter {
 				return;
 			}
 
-			if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
-				// Settings.soundEnabled = !Settings.soundEnabled;
-				// if (Settings.soundEnabled)
-				// Assets.music.play();
-				// else
-				// Assets.music.pause();
-			}
+			// if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
+			// // Assets.playSound(Assets.clickSound);
+			// // Settings.soundEnabled = !Settings.soundEnabled;
+			// // if (Settings.soundEnabled)
+			// // Assets.music.play();
+			// // else
+			// // Assets.music.pause();
+			// }
 		}
 	}
 
@@ -136,8 +120,8 @@ public class MenuScreen extends ScreenAdapter {
 		game.batcher.draw(Assets.menuScreen, 0, 0, 320, 480);
 		game.batcher.draw(btnplay, playBounds.x, playBounds.y,
 				playBounds.width, playBounds.height);
-		game.batcher.draw(btnlevels, levelsBounds.x, levelsBounds.y,
-				levelsBounds.width, levelsBounds.height);
+		// game.batcher.draw(btnlevels, levelsBounds.x, levelsBounds.y,
+		// levelsBounds.width, levelsBounds.height);
 		game.batcher.draw(btnscores, scoresBounds.x, scoresBounds.y,
 				scoresBounds.width, scoresBounds.height);
 		game.batcher.draw(btnoptions, optionsBounds.x, optionsBounds.y,
@@ -149,6 +133,8 @@ public class MenuScreen extends ScreenAdapter {
 
 		// Gdx.app.log("tanano de la panatalla", "height: " + screenHeight
 		// + " width: " + screenWidth);
+		Gdx.app.log("Coordenadas con botones", "x: " + Gdx.input.getX()
+				+ " y: " + Gdx.input.getY());
 		game.batcher.end();
 
 		game.batcher.enableBlending();

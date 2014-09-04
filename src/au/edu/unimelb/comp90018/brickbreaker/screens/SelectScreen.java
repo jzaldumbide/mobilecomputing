@@ -11,21 +11,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class OptionScreen extends ScreenAdapter {
+public class SelectScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
-
-	Rectangle soundBounds, musicBounds, gyrosBounds, backBounds;
+	Rectangle soundBounds;
+	Rectangle oneBounds, multiBounds, backBounds;
 
 	Vector3 touchPoint;
 
-	public static Texture btnsound, btnmusic, btngyros, btnback;
+	public static Texture btnone, btnback, btnmulti;
 	public int screenWidth, screenHeight, btnsizeWidth, btnsizeHeight,
 			btnseparation;
 
 	/* BUTTONS */
 
-	public OptionScreen(BrickBreaker game) {
+	public SelectScreen(BrickBreaker game) {
 		this.game = game;
 		screenWidth = 320;
 		screenHeight = 480;
@@ -35,16 +35,14 @@ public class OptionScreen extends ScreenAdapter {
 
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
-		soundBounds = new Rectangle(10, 264, 300, 30);
-		musicBounds = new Rectangle(10, 220, 300, 30);
-		gyrosBounds = new Rectangle(10, 176, 300, 30);
+		oneBounds = new Rectangle(10, 264, 300, 30);
+		multiBounds = new Rectangle(10, 220, 300, 30);
 		backBounds = new Rectangle(10, 10, 32, 32);
 
 		touchPoint = new Vector3();
 
-		btnsound = new Texture("buttons/btn_sound.png");
-		btnmusic = new Texture("buttons/btn_music.png");
-		btngyros = new Texture("buttons/btn_gyros.png");
+		btnone = new Texture("buttons/btn_oneplayer.png");
+		btnmulti = new Texture("buttons/btn_multiplayer.png");
 		btnback = new Texture("buttons/btn_back.png");
 
 	}
@@ -54,25 +52,20 @@ public class OptionScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),
 					0));
 
-			if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
-				Gdx.app.log("deactivate sound", "deactivate sound");
+			if (oneBounds.contains(touchPoint.x, touchPoint.y)) {
+				// Assets.playSound(Assets.clickSound);
 
+				game.setScreen(new LevelScreen(game));
 				return;
 			}
 
-			if (musicBounds.contains(touchPoint.x, touchPoint.y)) {
-				Gdx.app.log("deactivate music", "deactivate music");
-
+			if (multiBounds.contains(touchPoint.x, touchPoint.y)) {
+				// Assets.playSound(Assets.clickSound);
+				game.setScreen(new MultiplayerScreen(game));
 				return;
 			}
-			if (gyrosBounds.contains(touchPoint.x, touchPoint.y)) {
-
-				Gdx.app.log("deactivate gyros", "deactivate gyros");
-				return;
-			}
-
 			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
-
+				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
@@ -98,12 +91,10 @@ public class OptionScreen extends ScreenAdapter {
 		game.batcher.disableBlending();
 		game.batcher.begin();
 		game.batcher.draw(Assets.menuScreen, 0, 0, 320, 480);
-		game.batcher.draw(btnsound, soundBounds.x, soundBounds.y,
-				soundBounds.width, soundBounds.height);
-		game.batcher.draw(btnmusic, musicBounds.x, musicBounds.y,
-				musicBounds.width, musicBounds.height);
-		game.batcher.draw(btngyros, gyrosBounds.x, gyrosBounds.y,
-				gyrosBounds.width, gyrosBounds.height);
+		game.batcher.draw(btnone, oneBounds.x, oneBounds.y, oneBounds.width,
+				oneBounds.height);
+		game.batcher.draw(btnmulti, multiBounds.x, multiBounds.y,
+				multiBounds.width, multiBounds.height);
 		game.batcher.draw(btnback, backBounds.x, backBounds.y,
 				backBounds.width, backBounds.height);
 		game.batcher.end();

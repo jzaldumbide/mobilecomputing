@@ -8,35 +8,42 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-public class HelpScreen extends ScreenAdapter {
+public class MultiplayerScreen extends ScreenAdapter {
 	BrickBreaker game;
-
 	OrthographicCamera guiCam;
-	Rectangle backBounds;
+
+	Rectangle serverBounds, joinBounds, backBounds;
+
 	Vector3 touchPoint;
 
-	TextureRegion helpRegion;
-	public static Texture btnback;
-	public int screenWidth, screenHeight, btnSize, btnSeparation;
-	String helpString;
+	public static Texture btnserver, btnjoin, btnback;
+	public int screenWidth, screenHeight, btnsizeWidth, btnsizeHeight,
+			btnseparation;
 
-	public HelpScreen(BrickBreaker game) {
+	/* BUTTONS */
+
+	public MultiplayerScreen(BrickBreaker game) {
+		this.game = game;
 		screenWidth = 320;
 		screenHeight = 480;
-		btnSize = 64;
-		btnSeparation = btnSize / 2;
-		helpString = "probando la cadena para ver como muestra";
-		this.game = game;
+		btnsizeWidth = 300;
+		btnsizeHeight = 32;
+		btnseparation = 8;
+
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
+		serverBounds = new Rectangle(10, 264, 300, 30);
+		joinBounds = new Rectangle(10, 220, 300, 30);
+		// gyrosBounds = new Rectangle(10, 176, 300, 30);
+		backBounds = new Rectangle(10, 10, 32, 32);
 
 		touchPoint = new Vector3();
 
-		backBounds = new Rectangle(0, 0, 32, 32);
+		btnserver = new Texture("buttons/btn_server.png");
+		btnjoin = new Texture("buttons/btn_join.png");
 		btnback = new Texture("buttons/btn_back.png");
 
 	}
@@ -46,10 +53,21 @@ public class HelpScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),
 					0));
 
+			if (serverBounds.contains(touchPoint.x, touchPoint.y)) {
+				Gdx.app.log("starting server", "startin server");
+
+				return;
+			}
+
+			if (joinBounds.contains(touchPoint.x, touchPoint.y)) {
+				Gdx.app.log("joining", "joining");
+
+				return;
+			}
+
 			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
 
-				game.setScreen(new MenuScreen(game));
-				Gdx.app.log("", "click para regresar");
+				game.setScreen(new SelectScreen(game));
 				return;
 			}
 
@@ -61,31 +79,34 @@ public class HelpScreen extends ScreenAdapter {
 		gl.glClearColor(1, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		guiCam.update();
-
 		game.batcher.setProjectionMatrix(guiCam.combined);
+
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.helpScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.menuScreen, 0, 0, 320, 480);
+		game.batcher.draw(btnserver, serverBounds.x, serverBounds.y,
+				serverBounds.width, serverBounds.height);
+		game.batcher.draw(btnjoin, joinBounds.x, joinBounds.y,
+				joinBounds.width, joinBounds.height);
 
-		game.batcher.draw(btnback, 10, 10, 32, 32);
-		Assets.font.draw(game.batcher, helpString, 10, 200);
-		//
+		game.batcher.draw(btnback, backBounds.x, backBounds.y,
+				backBounds.width, backBounds.height);
 		game.batcher.end();
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
+
 		game.batcher.end();
 	}
 
 	@Override
 	public void render(float delta) {
-		draw();
 		update();
+		draw();
 	}
 
 	@Override
-	public void hide() {
-		// helpImage.dispose();
-		super.dispose();
+	public void pause() {
+		// Settings.save();
 	}
 }
