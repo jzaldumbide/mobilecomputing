@@ -8,6 +8,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -23,21 +24,29 @@ public class HelpScreen extends ScreenAdapter {
 	public static Texture btnback;
 	public int screenWidth, screenHeight, btnSize, btnSeparation;
 	String helpString;
+	BitmapFont font;
 
 	public HelpScreen(BrickBreaker game) {
+		//
+		font = new BitmapFont(Gdx.files.internal("fonts/test/Arial-12.fnt"),
+				Gdx.files.internal("fonts/test/fontgame.png"), false);
+		//
+
 		screenWidth = 320;
 		screenHeight = 480;
 		btnSize = 64;
 		btnSeparation = btnSize / 2;
-		helpString = "probando la cadena para ver como muestra";
+		helpString = "Aqui texto de ayuda";
 		this.game = game;
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
+		guiCam.setToOrtho(false, 320, 480);
 
 		touchPoint = new Vector3();
 
-		backBounds = new Rectangle(0, 0, 32, 32);
+		backBounds = new Rectangle(10, 10, 32, 32);
 		btnback = new Texture("buttons/btn_back.png");
+		// font.setScale(3, 3);
 
 	}
 
@@ -68,8 +77,11 @@ public class HelpScreen extends ScreenAdapter {
 		game.batcher.draw(Assets.helpScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 10, 10, 32, 32);
-		Assets.font.draw(game.batcher, helpString, 10, 200);
+
+		// Assets.font.draw(game.batcher, helpString, 10, 200);
 		//
+		font.draw(game.batcher, helpString, 10, 300);
+
 		game.batcher.end();
 
 		game.batcher.enableBlending();
@@ -88,4 +100,5 @@ public class HelpScreen extends ScreenAdapter {
 		// helpImage.dispose();
 		super.dispose();
 	}
+
 }

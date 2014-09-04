@@ -8,6 +8,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -25,23 +26,28 @@ public class ScoreScreen extends ScreenAdapter {
 	String scoreString;
 	public static Texture btnback;
 	public int screenWidth, screenHeight, btnSize, btnSeparation;
+	BitmapFont font;
 
 	public ScoreScreen(BrickBreaker game) {
+		font = new BitmapFont(Gdx.files.internal("fonts/test/Arial-12.fnt"),
+				Gdx.files.internal("fonts/test/fontgame.png"), false);
+
 		screenWidth = 320;
 		screenHeight = 480;
 		btnSize = 64;
 		btnSeparation = btnSize / 2;
-		scoreString = "1.-/n2.-/n3.-/n4.-/n5.-/n6.-/n7.-/n8.-/n9.-/n10.-";
+		scoreString = "1  2  3  4  5  6  7  8  9";
 		this.game = game;
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
 
-		// guiCam.setToOrtho(false, 320, 480);
+		guiCam.setToOrtho(false, 320, 480);
 		// nextBounds = new Rectangle(320 - 64, 0, 64, 64);
 		touchPoint = new Vector3();
 
-		backBounds = new Rectangle(0, 0, 32, 32);
+		backBounds = new Rectangle(10, 10, 32, 32);
 		btnback = new Texture("buttons/btn_back.png");
+		scoreString = "Aqui scores 1.- 1000";
 
 	}
 
@@ -74,7 +80,8 @@ public class ScoreScreen extends ScreenAdapter {
 		game.batcher.draw(btnback, 10, 10, 32, 32);
 
 		//
-		Assets.font.draw(game.batcher, scoreString, 10, 200);
+		// Assets.font.draw(game.batcher, scoreString, 10, 10);
+		font.draw(game.batcher, scoreString, 10, 300);
 
 		game.batcher.end();
 
