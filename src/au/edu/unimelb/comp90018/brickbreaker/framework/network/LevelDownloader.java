@@ -18,14 +18,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import au.edu.unimelb.comp90018.brickbreaker.framework.model.GameLevel;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-
-import android.util.Log;
-import au.edu.unimelb.comp90018.brickbreaker.framework.model.Ball;
-import au.edu.unimelb.comp90018.brickbreaker.framework.model.Brick;
-import au.edu.unimelb.comp90018.brickbreaker.framework.model.GameLevel;
-import au.edu.unimelb.comp90018.brickbreaker.framework.model.Paddle;
 
 /**
  * This class handles the Network interaction in order to download the levels from a web server
@@ -95,8 +91,8 @@ public class LevelDownloader {
             	   int y = Integer.valueOf(xpp.getAttributeValue("", "y"));
             	   int w = Integer.valueOf(xpp.getAttributeValue("", "w"));
             	   String type = xpp.getAttributeValue("", "t");
-            	   Brick brick = new Brick(w,x,y,type);
-            	   gameLevel.addBrick(x,y,brick);
+//            	   Brick brick = new Brick(w,x,y,type);
+//            	   gameLevel.addBrick(x,y,brick);
                }
                else{
             	   if (tagName.equals("Paddle")){
@@ -104,14 +100,14 @@ public class LevelDownloader {
                 	   int y = Integer.valueOf(xpp.getAttributeValue("", "y"));
                 	   int w = Integer.valueOf(xpp.getAttributeValue("", "w"));
                 	   int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-                	   Paddle paddle = new Paddle(w,x,y,speed);
-                	   gameLevel.setPaddle(paddle);
+//                	   Paddle paddle = new Paddle(w,x,y,speed);
+//                	   gameLevel.setPaddle(paddle);
             	   }
             	   else if (tagName.equals("Ball")){
                 	   int radius = Integer.valueOf(xpp.getAttributeValue("", "radius"));
                 	   int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-            		   Ball ball = new Ball(radius,speed);
-            		   gameLevel.setBall(ball);
+//            		   Ball ball = new Ball(radius,speed);
+//            		   gameLevel.setBall(ball);
             	   }
                }
             }

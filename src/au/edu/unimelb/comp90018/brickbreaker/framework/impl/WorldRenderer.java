@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class WorldRenderer {
 
-	static final float FRUSTUM_WIDTH = 20;
-	static final float FRUSTUM_HEIGHT = 30;
+	static final float FRUSTUM_WIDTH = 320;
+	static final float FRUSTUM_HEIGHT = 480;
 	World world;
 	OrthographicCamera cam;
 	SpriteBatch batch;
@@ -53,7 +53,7 @@ public class WorldRenderer {
 		renderScore();
 		renderSoundButton();
 		renderPauseButton();
-		renderSettingsButton();
+//		renderSettingsButton();
 		batch.end();
 	}
 
@@ -86,8 +86,8 @@ public class WorldRenderer {
 
 		Button pauseButton = world.pauseButton;
 		batch.draw(Assets.pauseMenu,
-				pauseButton.position.x,
-				pauseButton.position.y,
+				pauseButton.position.x - Button.BUTTON_WIDTH / 2,
+				pauseButton.position.y - Button.BUTTON_HEIGHT / 2,
 				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
 
 	}
@@ -96,27 +96,26 @@ public class WorldRenderer {
 
 		Button soundButton = world.soundButton;
 		batch.draw(Assets.soundOn,
-				soundButton.position.x,
-				soundButton.position.y,
+				soundButton.position.x - Button.BUTTON_WIDTH / 2,
+				soundButton.position.y - Button.BUTTON_HEIGHT / 2,
 				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
 
 	}
 	
-	private void renderSettingsButton() {
-
-		Button settingsButton = world.settingsButton;
-		batch.draw(Assets.settingsMenu,
-				settingsButton.position.x,
-				settingsButton.position.y,
-				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
-
-	}
+//	private void renderSettingsButton() {
+//
+//		Button settingsButton = world.settingsButton;
+//		batch.draw(Assets.settingsMenu,
+//				settingsButton.position.x - Button.BUTTON_WIDTH / 2,
+//				settingsButton.position.y - Button.BUTTON_HEIGHT / 2,
+//				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+//
+//	}
 	
 	private void renderScore() {
-		//TODO: the score doesnt render
-		this.scoreLabel = world.scoreLabel;
-		//Assets.font.setScale(0.5f,0.5f);
-		//Assets.font.draw(batch, scoreLabel, 0f, World.WORLD_HEIGHT-10f);
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "SCORE: " + world.score, 0, World.WORLD_HEIGHT);
 	}
 
 }

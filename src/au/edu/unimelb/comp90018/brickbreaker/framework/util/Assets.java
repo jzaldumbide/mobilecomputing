@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class Assets {
 
@@ -115,9 +113,9 @@ public class Assets {
 		backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
 		// background for screens end
 		items = loadTexture("textures/items.png");
-		redBall = new TextureRegion(items, 0, 0, 36, 36);
-		paddle = new TextureRegion(items, 72, 0, 128, 20);
-		brick1 = new TextureRegion(items, 36, 0, 36, 36);
+		redBall = new TextureRegion(items, 0, 0, 32, 32);
+		paddle = new TextureRegion(items, 64, 0, 128, 16);
+		brick1 = new TextureRegion(items, 32, 0, 32, 32);
 
 		Texture pauseR = loadTexture("buttons/pause.png");
 		pauseMenu = new TextureRegion(pauseR, 0, 0, 128, 128);
@@ -146,15 +144,14 @@ public class Assets {
 
 		/* BitmapFont example */
 
-		// font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"),
-		// Gdx.files.internal("fonts/font.png"), false);
-
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-				Gdx.files.internal("fonts/arial.ttf"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 15;
-		font = generator.generateFont(parameter); // font size 12 pixels
-		generator.dispose();
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+		
+//		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
+//				Gdx.files.internal("fonts/arial.ttf"));
+//		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+//		parameter.size = 15;
+//		font = generator.generateFont(parameter); // font size 12 pixels
+//		generator.dispose();
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
 		music.setLooping(true);

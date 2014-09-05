@@ -16,8 +16,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class World {
 
-	public static final float WORLD_WIDTH = 20;
-	public static final float WORLD_HEIGHT = 30;
+	public static final float WORLD_WIDTH = 320;
+	public static final float WORLD_HEIGHT = 480;
 
 	public static final float BUTTON_SPAN_X = 0.2f;
 	public static final float BUTTON_SPAN_Y = 0.1f;
@@ -29,10 +29,9 @@ public class World {
 	public Ball ball;
 	public Paddle paddle;
 	public List<Brick> bricks;
-	public Button pauseButton,soundButton,settingsButton;
+	public Button pauseButton, soundButton;
 
 	public final WorldListener listener;
-	public String scoreLabel;
 	public int score;
 	public int state;
 
@@ -40,15 +39,16 @@ public class World {
 
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		paddle = new Paddle(WORLD_WIDTH / 2, 2);
+		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.1f);
+		
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
-				new Vector2(5, 5));
+				new Vector2(WORLD_WIDTH * 0.25f, WORLD_HEIGHT * 0.25f));
+		
 		bricks = new ArrayList<Brick>();
 		
-		settingsButton = new Button(WORLD_WIDTH-BUTTON_SPAN_X-Button.BUTTON_WIDTH,WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
-		soundButton = new Button(WORLD_WIDTH-(2*BUTTON_SPAN_X)-(2*Button.BUTTON_WIDTH),WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
-		pauseButton = new Button(WORLD_WIDTH-(3*BUTTON_SPAN_X)-(3*Button.BUTTON_WIDTH),WORLD_HEIGHT-BUTTON_SPAN_Y-Button.BUTTON_HEIGHT);
-		
+		soundButton = new Button(Button.BUTTON_WIDTH / 2, Button.BUTTON_HEIGHT / 2);
+		pauseButton = new Button(WORLD_WIDTH - 0.5f * Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT / 2);
+				
 		this.listener = listener;
 
 		/*
@@ -59,20 +59,19 @@ public class World {
 		
 		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
-		this.scoreLabel = "SCORE: "+score;
 	}
 
 	private void generateLevel() {
 
-		float x = 5.5f;
-		float y = 20.5f;
+		float x = 76;
+		float y = 240;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
 				bricks.add(new Brick(x, y));
-				x += 1.25f;
+				x += 24;
 			}
-			x = 5.5f;
-			y += 1.25f;
+			x = 76;
+			y += 24;
 		}
 
 		// this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 -

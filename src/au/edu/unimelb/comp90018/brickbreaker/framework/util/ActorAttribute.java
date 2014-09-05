@@ -1,7 +1,7 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+//import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Defines own characteristics of an Actor.
@@ -19,7 +19,7 @@ public class ActorAttribute {
 	private float linearVelocityX;
 	private float linearVelocityY;
 	private boolean isDying;
-	private World world;
+//	private World world;
 	private Vector2 scale;
 
 	
@@ -92,13 +92,13 @@ public class ActorAttribute {
 		this.isDying = isDying;
 	}
 
-	public World getWorld() {
-		return world;
-	}
-
-	public void setWorld(World world) {
-		this.world = world;
-	}
+//	public World getWorld() {
+//		return world;
+//	}
+//
+//	public void setWorld(World world) {
+//		this.world = world;
+//	}
 
 	public Vector2 getScale() {
 		return scale;

@@ -3,6 +3,10 @@
  */
 package au.edu.unimelb.comp90018.brickbreaker.framework.model;
 
+import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
+
 /**
  * @author achaves
  *

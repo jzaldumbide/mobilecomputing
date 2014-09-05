@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Ball extends DynamicGameObject {
 
-	public static final float BALL_WIDTH = 1;
-	public static final float BALL_HEIGHT = 1;
+	public static final float BALL_WIDTH = 16;
+	public static final float BALL_HEIGHT = 16;
 
 	public Ball(float x, float y, Vector2 velocity) {
 		super(x, y, BALL_WIDTH, BALL_HEIGHT);

@@ -108,7 +108,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			
 			//Ensure we are working in the same world coordinate system:
-			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
+//			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
   		    guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
@@ -138,13 +138,13 @@ public class GameScreen extends ScreenAdapter {
 			if (Gdx.input.isTouched()) {
 				
 				//Ensure we are working in the same world coordinate system:
-				guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
+//				guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
 	  		    guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 	  		    
 	  		    if (touchPoint.x < world.paddle.position.x){ //is moving to the left
-	  		    	accel = 6f;
+	  		    	accel = World.WORLD_WIDTH * 2;
 	  		    }else if(touchPoint.x > world.paddle.position.x){ //is moving to the right
-	  		    	accel = -6f;
+	  		    	accel = World.WORLD_WIDTH * -2;
 	  		    }	  		    
   		 
 			}
@@ -154,21 +154,21 @@ public class GameScreen extends ScreenAdapter {
 		world.update(deltaTime, accel);
 		
 		
-		if (world.score != lastScore) {
-			lastScore = world.score;
-			scoreString = "SCORE: " + lastScore;
-		}
-		if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
-			//game.setScreen(new WinScreen(game));
-		}
+//		if (world.score != lastScore) {
+//			lastScore = world.score;
+//			scoreString = "SCORE: " + lastScore;
+//		}
+//		if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
+//			//game.setScreen(new WinScreen(game));
+//		}
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
-			if (lastScore >= Settings.highscores[4])
-				scoreString = "NEW HIGHSCORE: " + lastScore;
-			else
-				scoreString = "SCORE: " + lastScore;
-			Settings.addScore(lastScore);
-			Settings.save();
+//			if (lastScore >= Settings.highscores[4])
+//				scoreString = "NEW HIGHSCORE: " + lastScore;
+//			else
+//				scoreString = "SCORE: " + lastScore;
+//			Settings.addScore(lastScore);
+//			Settings.save();
 		}
 	}
 
@@ -177,7 +177,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			
 			//Ensure we are working in the same world coordinate system:
-			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
+//			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 		
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
@@ -257,7 +257,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void presentRunning () {
 		//game.batcher.draw(Assets.soundOn, 320 - 64, 480 - 64, 64, 64);
-		//Assets.font.draw(game.batcher, scoreString, 1, 480 - 5);
+//		Assets.font.draw(game.batcher, scoreString, 1, 480 - 5);
 	}
 
 	private void presentPaused () {
