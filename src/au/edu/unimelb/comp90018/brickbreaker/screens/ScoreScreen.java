@@ -17,8 +17,7 @@ public class ScoreScreen extends ScreenAdapter {
 	BrickBreaker game;
 
 	OrthographicCamera guiCam;
-	Rectangle backBounds, lvl1Bs, lvl2Bs, lvl3Bs, lvl4Bs, lvl5Bs, lvl6Bs,
-			lvl7Bs, lvl8Bs, lvl9Bs;
+	Rectangle backBounds;
 	Vector3 touchPoint;
 	Texture btnlvl1, btnlvl2, btnlvl3, btnlvl4, btnlvl5, btnlvl6, btnlvl7,
 			btnlvl8, btnlvl9;
@@ -36,7 +35,7 @@ public class ScoreScreen extends ScreenAdapter {
 		screenHeight = 480;
 		btnSize = 64;
 		btnSeparation = btnSize / 2;
-		scoreString = "1  2  3  4  5  6  7  8  9";
+
 		this.game = game;
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
@@ -47,7 +46,7 @@ public class ScoreScreen extends ScreenAdapter {
 
 		backBounds = new Rectangle(10, 10, 32, 32);
 		btnback = new Texture("buttons/btn_back.png");
-		scoreString = "Aqui scores 1.- 1000";
+		scoreString = "Scores\n\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
 
 	}
 
@@ -81,7 +80,7 @@ public class ScoreScreen extends ScreenAdapter {
 
 		//
 		// Assets.font.draw(game.batcher, scoreString, 10, 10);
-		font.draw(game.batcher, scoreString, 10, 300);
+		font.drawMultiLine(game.batcher, scoreString, 140, 300);
 
 		game.batcher.end();
 
