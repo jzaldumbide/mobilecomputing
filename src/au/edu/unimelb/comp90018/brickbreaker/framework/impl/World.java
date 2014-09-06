@@ -42,7 +42,7 @@ public class World {
 		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.1f);
 		
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
-				new Vector2(WORLD_WIDTH * 0.25f, WORLD_HEIGHT * 0.25f));
+				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
 		
 		bricks = new ArrayList<Brick>();
 		
@@ -63,14 +63,14 @@ public class World {
 
 	private void generateLevel() {
 
-		float x = 76;
+		float x = 20;
 		float y = 240;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
 				bricks.add(new Brick(x, y));
-				x += 24;
+				x += 35;
 			}
-			x = 76;
+			x = 20;
 			y += 24;
 		}
 

@@ -107,15 +107,12 @@ public class Assets {
 		splashScreen = new TextureRegion(backgroundSplash, 0, 0, 320, 480);
 
 		background = loadTexture("backgrounds/background.png");
-		backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
-
-		background = loadTexture("backgrounds/background.png");
-		backgroundRegion = new TextureRegion(background, 0, 0, 320, 480);
+		backgroundRegion = new TextureRegion(background, 0, 0, 800, 1280);
 		// background for screens end
 		items = loadTexture("textures/items.png");
-		redBall = new TextureRegion(items, 0, 0, 32, 32);
-		paddle = new TextureRegion(items, 64, 0, 128, 16);
-		brick1 = new TextureRegion(items, 32, 0, 32, 32);
+		redBall = new TextureRegion(items, 0, 0, 64, 64);
+		paddle = new TextureRegion(items, 96, 0, 128, 32);
+		brick1 = new TextureRegion(items, 64, 16, 32, 16);
 
 		Texture pauseR = loadTexture("buttons/pause.png");
 		pauseMenu = new TextureRegion(pauseR, 0, 0, 128, 128);

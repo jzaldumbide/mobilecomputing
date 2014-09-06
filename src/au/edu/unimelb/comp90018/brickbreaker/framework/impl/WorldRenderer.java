@@ -113,9 +113,9 @@ public class WorldRenderer {
 //	}
 	
 	private void renderScore() {
-		Assets.font.setScale(0.5f, 0.5f);
+		Assets.font.setScale(0.6f, 0.6f);
 		// TODO: Review String object creation
-		Assets.font.draw(batch, "SCORE: " + world.score, 0, World.WORLD_HEIGHT);
+		Assets.font.draw(batch, "SCORE: " + world.score, 5, World.WORLD_HEIGHT-5);
 	}
 
 }

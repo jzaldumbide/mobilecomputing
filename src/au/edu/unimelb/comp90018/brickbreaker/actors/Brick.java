@@ -4,7 +4,7 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.impl.GameObject;
 
 public class Brick extends GameObject {
 
-	public static final float BRICK_WIDTH = 16;
+	public static final float BRICK_WIDTH = 32;
 	public static final float BRICK_HEIGHT = 16;
 
 	public Brick(float x, float y) {

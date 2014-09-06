@@ -5,8 +5,8 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
 
 public class Paddle extends DynamicGameObject {
 
-	public static final float PADDLE_WIDTH = 64;
-	public static final float PADDLE_HEIGHT = 8;
+	public static final float PADDLE_WIDTH = 96;
+	public static final float PADDLE_HEIGHT = 16;
 
 	public Paddle(float x, float y) {
 		super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
