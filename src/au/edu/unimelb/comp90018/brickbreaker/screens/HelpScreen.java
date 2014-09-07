@@ -72,15 +72,14 @@ public class HelpScreen extends ScreenAdapter {
 		guiCam.update();
 
 		game.batcher.setProjectionMatrix(guiCam.combined);
-		game.batcher.disableBlending();
+		// game.batcher.disableBlending();
 		game.batcher.begin();
 		game.batcher.draw(Assets.helpScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 10, 10, 32, 32);
 
-		// Assets.font.draw(game.batcher, helpString, 10, 200);
-		//
-		font.draw(game.batcher, helpString, 10, 300);
+		Assets.font.drawMultiLine(game.batcher, helpString, 10, 200);
+		// font.draw(game.batcher, helpString, 10, 300);
 
 		game.batcher.end();
 

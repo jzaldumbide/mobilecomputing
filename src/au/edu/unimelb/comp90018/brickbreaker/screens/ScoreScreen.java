@@ -40,7 +40,7 @@ public class ScoreScreen extends ScreenAdapter {
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
 
-		guiCam.setToOrtho(false, 320, 480);
+		// guiCam.setToOrtho(false, 320, 480);
 		// nextBounds = new Rectangle(320 - 64, 0, 64, 64);
 		touchPoint = new Vector3();
 
@@ -72,15 +72,14 @@ public class ScoreScreen extends ScreenAdapter {
 		guiCam.update();
 
 		game.batcher.setProjectionMatrix(guiCam.combined);
-		game.batcher.disableBlending();
+		// game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.scoresScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 10, 10, 32, 32);
 
-		//
-		// Assets.font.draw(game.batcher, scoreString, 10, 10);
-		font.drawMultiLine(game.batcher, scoreString, 140, 300);
+		Assets.font.setScale(0.6f, 0.6f);
+		Assets.font.drawMultiLine(game.batcher, scoreString, 140, 300);
 
 		game.batcher.end();
 
