@@ -60,15 +60,23 @@ public class WorldRenderer {
 	private void renderBall() {
 
 		Ball ball = world.ball;
-		batch.draw(Assets.redBall, ball.position.x - Ball.BALL_WIDTH / 2, ball.position.y - Ball.BALL_HEIGHT / 2,
-				Ball.BALL_WIDTH, Ball.BALL_HEIGHT);
+		batch.draw(Assets.redBall, 
+				ball.position.x - Ball.BALL_WIDTH / 2, 
+				ball.position.y - Ball.BALL_HEIGHT / 2,
+				Ball.BALL_WIDTH, 
+				Ball.BALL_HEIGHT
+				);		
 	}
 
 	private void renderPaddle() {
 
 		Paddle paddle = world.paddle;
-		batch.draw(Assets.paddle, paddle.position.x - Paddle.PADDLE_WIDTH / 2, paddle.position.y - Paddle.PADDLE_HEIGHT
-				/ 2, Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT);
+		batch.draw(Assets.paddle, 
+				paddle.position.x - Paddle.PADDLE_WIDTH / 2, 
+				paddle.position.y - Paddle.PADDLE_HEIGHT / 2, 
+				Paddle.PADDLE_WIDTH, 
+				Paddle.PADDLE_HEIGHT
+				);
 	}
 
 	private void renderBricks() {
@@ -77,8 +85,12 @@ public class WorldRenderer {
 		int len = bricks.size();
 
 		for (int i = 0; i < len; i++) {
-			batch.draw(Assets.brick1, bricks.get(i).position.x, bricks.get(i).position.y, Brick.BRICK_WIDTH,
-					Brick.BRICK_HEIGHT);
+			batch.draw(Assets.brick1, 
+					bricks.get(i).position.x - Brick.BRICK_WIDTH / 2, 
+					bricks.get(i).position.y - Brick.BRICK_HEIGHT / 2, 
+					Brick.BRICK_WIDTH,
+					Brick.BRICK_HEIGHT
+					);
 		}
 	}
 	
@@ -88,7 +100,9 @@ public class WorldRenderer {
 		batch.draw(Assets.pauseMenu,
 				pauseButton.position.x - Button.BUTTON_WIDTH / 2,
 				pauseButton.position.y - Button.BUTTON_HEIGHT / 2,
-				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+				Button.BUTTON_WIDTH, 
+				Button.BUTTON_HEIGHT
+				);
 
 	}
 	
@@ -98,7 +112,9 @@ public class WorldRenderer {
 		batch.draw(Assets.soundOn,
 				soundButton.position.x - Button.BUTTON_WIDTH / 2,
 				soundButton.position.y - Button.BUTTON_HEIGHT / 2,
-				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
+				Button.BUTTON_WIDTH, 
+				Button.BUTTON_HEIGHT
+				);
 
 	}
 	
@@ -115,7 +131,7 @@ public class WorldRenderer {
 	private void renderScore() {
 		Assets.font.setScale(0.6f, 0.6f);
 		// TODO: Review String object creation
-		Assets.font.draw(batch, "SCORE: " + world.score, 5, World.WORLD_HEIGHT-5);
+		Assets.font.draw(batch, "SCORE: " + world.score, 5, World.WORLD_HEIGHT - 5);
 	}
 
 }

@@ -8,10 +8,8 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2.RectangleSide;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
@@ -39,7 +37,7 @@ public class World {
 
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.1f);
+		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.1f);		
 		
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
@@ -63,14 +61,14 @@ public class World {
 
 	private void generateLevel() {
 
-		float x = 20;
+		float x = 36;
 		float y = 240;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
 				bricks.add(new Brick(x, y));
 				x += 35;
 			}
-			x = 20;
+			x = 36;
 			y += 24;
 		}
 

@@ -78,6 +78,8 @@ public class GameScreen extends ScreenAdapter {
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
 	
+		Gdx.app.log("state", String.valueOf(state));
+		
 		switch (state) {
 		case GAME_READY:
 			updateReady();
@@ -107,50 +109,43 @@ public class GameScreen extends ScreenAdapter {
 		
 		if (Gdx.input.justTouched()) {
 			
-			//Ensure we are working in the same world coordinate system:
-//			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
-  		    guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 			
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				return;
 			}
-			
+
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				Settings.soundEnabled = !Settings.soundEnabled;
 				if (Settings.soundEnabled)
 					Assets.music.play();
 				else
-					Assets.music.pause();
+					Assets.music.pause();				
+				return;
 			}
 		}
-		
-		//Update the World
+
 		float accel = 0;
-		
-		if (Settings.accelerometerEnabled){
+
+		if (Settings.accelerometerEnabled) {
 			world.update(deltaTime, Gdx.input.getAccelerometerX());
-		}else{
-			
-			
-			if (Gdx.input.isTouched()) {
-				
-				//Ensure we are working in the same world coordinate system:
-//				guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
-	  		    guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-	  		    
-	  		    if (touchPoint.x < world.paddle.position.x){ //is moving to the left
-	  		    	accel = World.WORLD_WIDTH * 2;
-	  		    }else if(touchPoint.x > world.paddle.position.x){ //is moving to the right
-	  		    	accel = World.WORLD_WIDTH * -2;
-	  		    }	  		    
-  		 
+		} else if (Gdx.input.isTouched()) {
+
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+			if (touchPoint.x < world.paddle.position.x) { // is moving to the
+															// left
+				accel = World.WORLD_WIDTH * 2;
+			} else if (touchPoint.x > world.paddle.position.x) { // is moving to
+																	// the right
+				accel = World.WORLD_WIDTH * -2;
 			}
 
 		}
-		
+
 		world.update(deltaTime, accel);
 		
 		
@@ -174,29 +169,22 @@ public class GameScreen extends ScreenAdapter {
 
 
 	private void updatePaused () {
+
 		if (Gdx.input.justTouched()) {
-			
-			//Ensure we are working in the same world coordinate system:
-//			guiCam.setToOrtho(false,World.WORLD_WIDTH,World.WORLD_HEIGHT);
+
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-		
+
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_RUNNING;
 				return;
 			}
-			
+
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_RUNNING;
 				return;
 			}
-
-//			if (world.settingsButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new SettingsMenuScreen(game));
-//				return;
-//			}
 
 		}
 	}
