@@ -1,12 +1,17 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 
+import android.R.color;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class Assets {
 
@@ -36,6 +41,7 @@ public class Assets {
 	public static TextureRegion redBall;
 	public static TextureRegion paddle;
 	public static TextureRegion brick1;
+	public static TextureRegion lives;
 
 	// public static TextureRegion blue_ball;
 	// public static TextureRegion grey_ball;
@@ -112,7 +118,9 @@ public class Assets {
 		items = loadTexture("textures/items.png");
 		redBall = new TextureRegion(items, 0, 0, 64, 64);
 		paddle = new TextureRegion(items, 96, 0, 128, 32);
+		lives = new TextureRegion(items, 224, 0, 64, 64);
 		brick1 = new TextureRegion(items, 64, 16, 32, 16);
+		
 
 		Texture pauseR = loadTexture("buttons/pause.png");
 		pauseMenu = new TextureRegion(pauseR, 0, 0, 128, 128);
@@ -141,14 +149,15 @@ public class Assets {
 
 		/* BitmapFont example */
 
-		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
+		//font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
 		
-//		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-//				Gdx.files.internal("fonts/arial.ttf"));
-//		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-//		parameter.size = 15;
-//		font = generator.generateFont(parameter); // font size 12 pixels
-//		generator.dispose();
+		 FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
+		 Gdx.files.internal("fonts/junegull.ttf"));
+		 FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		 parameter.size = 40;
+		 font = generator.generateFont(parameter); // font size 12 pixels
+		 font.setColor(new Color(Color.PURPLE));
+		 generator.dispose();
 
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
 		music.setLooping(true);

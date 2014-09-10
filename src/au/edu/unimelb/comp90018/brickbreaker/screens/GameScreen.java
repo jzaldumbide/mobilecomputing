@@ -138,10 +138,10 @@ public class GameScreen extends ScreenAdapter {
 
 			if (touchPoint.x < world.paddle.position.x) { // is moving to the
 															// left
-				accel = World.WORLD_WIDTH * 2;
+				accel = World.WORLD_WIDTH * 2f;
 			} else if (touchPoint.x > world.paddle.position.x) { // is moving to
 																	// the right
-				accel = World.WORLD_WIDTH * -2;
+				accel = World.WORLD_WIDTH * -2f;
 			}
 
 		}

@@ -8,7 +8,6 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -25,7 +24,6 @@ public class WorldRenderer {
 		this.world = world;
 		this.cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
-//		this.cam.zoom = 2f;
 		this.batch = batch;
 	}
 
@@ -53,7 +51,7 @@ public class WorldRenderer {
 		renderScore();
 		renderSoundButton();
 		renderPauseButton();
-//		renderSettingsButton();
+		renderLives();
 		batch.end();
 	}
 
@@ -118,20 +116,28 @@ public class WorldRenderer {
 
 	}
 	
-//	private void renderSettingsButton() {
-//
-//		Button settingsButton = world.settingsButton;
-//		batch.draw(Assets.settingsMenu,
-//				settingsButton.position.x - Button.BUTTON_WIDTH / 2,
-//				settingsButton.position.y - Button.BUTTON_HEIGHT / 2,
-//				Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT);
-//
-//	}
-	
 	private void renderScore() {
-		Assets.font.setScale(0.6f, 0.6f);
+		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
 		Assets.font.draw(batch, "SCORE: " + world.score, 5, World.WORLD_HEIGHT - 5);
+	}
+	
+	private void renderLives() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "LIVES: ", 5, World.WORLD_HEIGHT - 20);
+		
+		List<Button> lives = world.lives;
+		int len = lives.size();
+
+		for (int i = 0; i < len; i++) {
+			batch.draw(Assets.lives, 
+					lives.get(i).position.x - Button.BUTTON_WIDTH / 4, 
+					lives.get(i).position.y - Button.BUTTON_HEIGHT / 4, 
+					Button.BUTTON_WIDTH/2,
+					Button.BUTTON_HEIGHT/2
+					);
+		}
 	}
 
 }

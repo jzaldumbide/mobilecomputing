@@ -17,9 +17,6 @@ public class World {
 	public static final float WORLD_WIDTH = 320;
 	public static final float WORLD_HEIGHT = 480;
 
-	public static final float BUTTON_SPAN_X = 0.2f;
-	public static final float BUTTON_SPAN_Y = 0.1f;
-
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_NEXT_LEVEL = 1;
 	public static final int WORLD_STATE_GAME_OVER = 2;
@@ -27,6 +24,7 @@ public class World {
 	public Ball ball;
 	public Paddle paddle;
 	public List<Brick> bricks;
+	public List<Button> lives;
 	public Button pauseButton, soundButton;
 
 	public final WorldListener listener;
@@ -37,12 +35,13 @@ public class World {
 
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.1f);		
+		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);		
 		
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
 		
 		bricks = new ArrayList<Brick>();
+		lives = new ArrayList<Button>();
 		
 		soundButton = new Button(Button.BUTTON_WIDTH / 2, Button.BUTTON_HEIGHT / 2);
 		pauseButton = new Button(WORLD_WIDTH - 0.5f * Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT / 2);
@@ -61,8 +60,9 @@ public class World {
 
 	private void generateLevel() {
 
+		/*Set bricks*/
 		float x = 36;
-		float y = 240;
+		float y = 300;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
 				bricks.add(new Brick(x, y));
@@ -70,6 +70,14 @@ public class World {
 			}
 			x = 36;
 			y += 24;
+		}
+		
+		/*Set lives*/
+		x = 77;
+		y = 453;
+		for (int i = 1; i <= 3; i++) {
+				lives.add(new Button(x, y));
+				x += 19;
 		}
 
 		// this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 -
