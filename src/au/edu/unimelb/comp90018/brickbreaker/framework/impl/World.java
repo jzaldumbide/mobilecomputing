@@ -2,9 +2,12 @@ package au.edu.unimelb.comp90018.brickbreaker.framework.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
@@ -23,7 +26,7 @@ public class World {
 
 	public Ball ball;
 	public Paddle paddle;
-	public List<Brick> bricks;
+	public List<BrickAdapter> bricks;
 	public List<Button> lives;
 	public Button pauseButton, soundButton;
 
@@ -40,7 +43,7 @@ public class World {
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
 		
-		bricks = new ArrayList<Brick>();
+		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 		
 		soundButton = new Button(Button.BUTTON_WIDTH / 2, Button.BUTTON_HEIGHT / 2);
@@ -60,12 +63,19 @@ public class World {
 
 	private void generateLevel() {
 
+		Random rand = new Random();
+		
 		/*Set bricks*/
 		float x = 36;
 		float y = 300;
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 1; j <= 8; j++) {
-				bricks.add(new Brick(x, y));
+				if (rand.nextInt(2) == 1)
+					bricks.add(new BrickTypeI(x, y));
+				else
+					bricks.add(new BrickTypeII(x, y));
+//				bricks.add(new Brick(x, y));
+				
 				x += 35;
 			}
 			x = 36;
@@ -196,8 +206,15 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
+				
 				ball.hitBrick(bricks.get(i).bounds);
-				bricks.remove(i);
+				
+				// TODO: Don't know if this line needs to be included in ball.hitBrick
+				bricks.get(i).hitMe();
+				
+				if (bricks.get(i).isPulverised())
+					bricks.remove(i);
+				
 				score ++;
 				break;
 			}

@@ -1,0 +1,31 @@
+package au.edu.unimelb.comp90018.brickbreaker.actors;
+
+public class BrickTypeI extends BrickAdapter {
+
+	static float WIDTH = 32;
+	static float HEIGHT = 16;
+
+	int hitsLeftToPulverise;
+
+	public BrickTypeI(float x, float y) {
+		super(x, y, WIDTH, HEIGHT);
+		hitsLeftToPulverise = 1;
+	}
+
+	@Override
+	public void hitMe() {
+		hitsLeftToPulverise--;
+	}
+
+	@Override
+	public void update(float deltaTime) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isPulverised() {
+		return hitsLeftToPulverise == 0;
+	}
+
+}

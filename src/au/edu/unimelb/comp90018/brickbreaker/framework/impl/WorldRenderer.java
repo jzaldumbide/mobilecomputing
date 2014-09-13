@@ -3,7 +3,7 @@ package au.edu.unimelb.comp90018.brickbreaker.framework.impl;
 import java.util.List;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Brick;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
@@ -79,15 +79,15 @@ public class WorldRenderer {
 
 	private void renderBricks() {
 
-		List<Brick> bricks = world.bricks;
+		List<BrickAdapter> bricks = world.bricks;
 		int len = bricks.size();
 
 		for (int i = 0; i < len; i++) {
 			batch.draw(Assets.brick1, 
-					bricks.get(i).position.x - Brick.BRICK_WIDTH / 2, 
-					bricks.get(i).position.y - Brick.BRICK_HEIGHT / 2, 
-					Brick.BRICK_WIDTH,
-					Brick.BRICK_HEIGHT
+					bricks.get(i).position.x - bricks.get(i).width / 2, 
+					bricks.get(i).position.y - bricks.get(i).height / 2, 
+					bricks.get(i).width,
+					bricks.get(i).height
 					);
 		}
 	}
