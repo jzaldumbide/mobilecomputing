@@ -5,6 +5,9 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class Settings {
 
+	public static int TARGET_WIDTH = 320;
+	public static int TARGET_HEIGHT = 480;
+	
 	/* Set here default game properties */
 	public static boolean soundEnabled = true;
 	public static boolean accelerometerEnabled = false;

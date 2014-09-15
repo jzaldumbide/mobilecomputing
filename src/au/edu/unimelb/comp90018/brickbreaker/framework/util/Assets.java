@@ -1,7 +1,5 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 
-import android.R.color;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -42,6 +40,7 @@ public class Assets {
 	public static TextureRegion paddle;
 	public static TextureRegion brick1;
 	public static TextureRegion lives;
+	public static TextureRegion buttonMenu;
 
 	// public static TextureRegion blue_ball;
 	// public static TextureRegion grey_ball;
@@ -101,7 +100,7 @@ public class Assets {
 		levelScreen = new TextureRegion(backgroundLevels, 0, 0, 320, 480);
 
 		backgroundMenu = loadTexture("backgrounds/screens/screen_menu.png");
-		menuScreen = new TextureRegion(backgroundMenu, 0, 0, 320, 480);
+		menuScreen = new TextureRegion(backgroundMenu, 0, 0, 800, 1280);
 
 		backgroundOptions = loadTexture("backgrounds/screens/screen_options.png");
 		optionScreen = new TextureRegion(backgroundOptions, 0, 0, 320, 480);
@@ -110,7 +109,7 @@ public class Assets {
 		scoresScreen = new TextureRegion(backgroundScores, 0, 0, 320, 480);
 
 		backgroundSplash = loadTexture("backgrounds/screens/screen_splash.png");
-		splashScreen = new TextureRegion(backgroundSplash, 0, 0, 320, 480);
+		splashScreen = new TextureRegion(backgroundSplash, 0, 0, 800, 1280);
 
 		background = loadTexture("backgrounds/background.png");
 		backgroundRegion = new TextureRegion(background, 0, 0, 800, 1280);
@@ -140,6 +139,11 @@ public class Assets {
 		Texture gameOverR = loadTransparentTexture(320, 480,
 				"backgrounds/gameover.png");
 		gameOver = new TextureRegion(gameOverR, 0, 0, 320, 480);
+		
+		
+		//Buttons:
+		Texture buttonMenuR = loadTexture("buttons/menuButton.png");
+		buttonMenu = new TextureRegion(buttonMenuR, 0, 0, 256, 64);
 
 		// Animation example
 		// brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64,

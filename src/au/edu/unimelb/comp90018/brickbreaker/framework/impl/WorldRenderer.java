@@ -6,6 +6,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -93,25 +94,31 @@ public class WorldRenderer {
 	}
 	
 	private void renderPauseButton() {
+		
+		int buttonWidth = ButtonSize.MEDIUM_SQUARE.getButtonWidth();
+		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
 
 		Button pauseButton = world.pauseButton;
 		batch.draw(Assets.pauseMenu,
-				pauseButton.position.x - Button.BUTTON_WIDTH / 2,
-				pauseButton.position.y - Button.BUTTON_HEIGHT / 2,
-				Button.BUTTON_WIDTH, 
-				Button.BUTTON_HEIGHT
+				pauseButton.position.x - buttonWidth / 2,
+				pauseButton.position.y - buttonHeight / 2,
+				buttonWidth, 
+				buttonHeight
 				);
 
 	}
 	
 	private void renderSoundButton() {
+		
+		int buttonWidth = ButtonSize.MEDIUM_SQUARE.getButtonWidth();
+		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
 
 		Button soundButton = world.soundButton;
 		batch.draw(Assets.soundOn,
-				soundButton.position.x - Button.BUTTON_WIDTH / 2,
-				soundButton.position.y - Button.BUTTON_HEIGHT / 2,
-				Button.BUTTON_WIDTH, 
-				Button.BUTTON_HEIGHT
+				soundButton.position.x - buttonWidth / 2,
+				soundButton.position.y - buttonHeight / 2,
+				buttonWidth, 
+				buttonHeight
 				);
 
 	}
@@ -123,6 +130,10 @@ public class WorldRenderer {
 	}
 	
 	private void renderLives() {
+		
+		int buttonWidth = ButtonSize.SMALL_SQUARE.getButtonWidth();
+		int buttonHeight = ButtonSize.SMALL_SQUARE.getButtonHeight();
+		
 		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
 		Assets.font.draw(batch, "LIVES: ", 5, World.WORLD_HEIGHT - 20);
@@ -132,10 +143,10 @@ public class WorldRenderer {
 
 		for (int i = 0; i < len; i++) {
 			batch.draw(Assets.lives, 
-					lives.get(i).position.x - Button.BUTTON_WIDTH / 4, 
-					lives.get(i).position.y - Button.BUTTON_HEIGHT / 4, 
-					Button.BUTTON_WIDTH/2,
-					Button.BUTTON_HEIGHT/2
+					lives.get(i).position.x - buttonWidth / 2, 
+					lives.get(i).position.y - buttonHeight / 2, 
+					buttonWidth,
+					buttonHeight
 					);
 		}
 	}

@@ -9,6 +9,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
@@ -46,8 +47,8 @@ public class World {
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 		
-		soundButton = new Button(Button.BUTTON_WIDTH / 2, Button.BUTTON_HEIGHT / 2);
-		pauseButton = new Button(WORLD_WIDTH - 0.5f * Button.BUTTON_WIDTH, Button.BUTTON_HEIGHT / 2);
+		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,ButtonSize.MEDIUM_SQUARE);
+		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth(), ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,ButtonSize.MEDIUM_SQUARE);
 				
 		this.listener = listener;
 
@@ -86,7 +87,7 @@ public class World {
 		x = 77;
 		y = 453;
 		for (int i = 1; i <= 3; i++) {
-				lives.add(new Button(x, y));
+				lives.add(new Button(x, y,ButtonSize.SMALL_SQUARE));
 				x += 19;
 		}
 
