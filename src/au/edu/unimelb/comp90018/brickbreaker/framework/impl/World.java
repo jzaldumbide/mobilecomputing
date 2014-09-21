@@ -47,8 +47,8 @@ public class World {
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 		
-		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,ButtonSize.MEDIUM_SQUARE);
-		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth(), ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,ButtonSize.MEDIUM_SQUARE);
+		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2+5, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2+2,ButtonSize.MEDIUM_SQUARE);
+		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth()-5, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2+2,ButtonSize.MEDIUM_SQUARE);
 				
 		this.listener = listener;
 

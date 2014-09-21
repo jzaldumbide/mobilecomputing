@@ -38,7 +38,7 @@ public class WorldRenderer {
 	public void renderBackground() {
 		batch.disableBlending();
 		batch.begin();
-		batch.draw(Assets.backgroundRegion, cam.position.x - FRUSTUM_WIDTH / 2, cam.position.y - FRUSTUM_HEIGHT / 2,
+		batch.draw(Assets.gameBackground, cam.position.x - FRUSTUM_WIDTH / 2, cam.position.y - FRUSTUM_HEIGHT / 2,
 				FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		batch.end();
 	}
@@ -59,7 +59,7 @@ public class WorldRenderer {
 	private void renderBall() {
 
 		Ball ball = world.ball;
-		batch.draw(Assets.redBall, 
+		batch.draw(Assets.blueBall, 
 				ball.position.x - Ball.BALL_WIDTH / 2, 
 				ball.position.y - Ball.BALL_HEIGHT / 2,
 				Ball.BALL_WIDTH, 
@@ -84,7 +84,7 @@ public class WorldRenderer {
 		int len = bricks.size();
 
 		for (int i = 0; i < len; i++) {
-			batch.draw(Assets.brick1, 
+			batch.draw(Assets.smallOrangeBrick, 
 					bricks.get(i).position.x - bricks.get(i).width / 2, 
 					bricks.get(i).position.y - bricks.get(i).height / 2, 
 					bricks.get(i).width,
@@ -99,7 +99,7 @@ public class WorldRenderer {
 		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
 
 		Button pauseButton = world.pauseButton;
-		batch.draw(Assets.pauseMenu,
+		batch.draw(Assets.pause,
 				pauseButton.position.x - buttonWidth / 2,
 				pauseButton.position.y - buttonHeight / 2,
 				buttonWidth, 
