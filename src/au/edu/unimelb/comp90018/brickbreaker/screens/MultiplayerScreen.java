@@ -1,15 +1,28 @@
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.net.ServerSocket;
+import com.badlogic.gdx.net.ServerSocketHints;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 
 public class MultiplayerScreen extends ScreenAdapter {
 	BrickBreaker game;
@@ -22,6 +35,10 @@ public class MultiplayerScreen extends ScreenAdapter {
 	public static Texture btnserver, btnjoin, btnback;
 	public int screenWidth, screenHeight, btnsizeWidth, btnsizeHeight,
 			btnseparation;
+	String ipAddress = null;
+	String ipServer = "192.168.56.101";
+
+	BitmapFont font;
 
 	/* BUTTONS */
 
@@ -32,6 +49,17 @@ public class MultiplayerScreen extends ScreenAdapter {
 		btnsizeWidth = 300;
 		btnsizeHeight = 32;
 		btnseparation = 8;
+
+		font = new BitmapFont(Gdx.files.internal("fonts/test/Arial-12.fnt"),
+				Gdx.files.internal("fonts/test/fontgame.png"), false);
+
+		// network
+		// NetworkServer ns = new NetworkServer();
+		// Thread t = new Thread(ns);
+		// t.start();
+		startServerNetwork();
+		getmyipNetwork();
+		//
 
 		guiCam = new OrthographicCamera(screenWidth, screenHeight);
 		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
@@ -54,14 +82,16 @@ public class MultiplayerScreen extends ScreenAdapter {
 					0));
 
 			if (serverBounds.contains(touchPoint.x, touchPoint.y)) {
-				Gdx.app.log("starting server", "startin server");
+				Gdx.app.log("starting server", "starting server");
+
+				// Gdx.app.log("sever running?", "server running?");
 
 				return;
 			}
 
 			if (joinBounds.contains(touchPoint.x, touchPoint.y)) {
-				Gdx.app.log("joining", "joining");
-
+				// Gdx.app.log("joining", "joining");
+				sendMessage();
 				return;
 			}
 
@@ -81,7 +111,7 @@ public class MultiplayerScreen extends ScreenAdapter {
 		guiCam.update();
 		game.batcher.setProjectionMatrix(guiCam.combined);
 
-		game.batcher.disableBlending();
+		// game.batcher.disableBlending();
 		game.batcher.begin();
 		game.batcher.draw(Assets.menuScreen, 0, 0, 320, 480);
 		game.batcher.draw(btnserver, serverBounds.x, serverBounds.y,
@@ -91,11 +121,12 @@ public class MultiplayerScreen extends ScreenAdapter {
 
 		game.batcher.draw(btnback, backBounds.x, backBounds.y,
 				backBounds.width, backBounds.height);
+		Assets.font.drawMultiLine(game.batcher, ipAddress, 10, 200);
 		game.batcher.end();
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
-
+		// sendMessage();
 		game.batcher.end();
 	}
 
@@ -108,5 +139,110 @@ public class MultiplayerScreen extends ScreenAdapter {
 	@Override
 	public void pause() {
 		// Settings.save();
+	}
+
+	public String getmyipNetwork() {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					if (!inetAddress.isLoopbackAddress()) {
+						Gdx.app.log("ip: ", inetAddress.getHostAddress()
+								.toString());
+						ipAddress = inetAddress.getHostAddress().toString();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Gdx.app.log("Exception caught =", e.getMessage());
+		}
+		return ipAddress;
+
+	}
+
+	// The server network
+	public void startServerNetwork() {
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				ServerSocketHints serverSocketHint = new ServerSocketHints();
+				// 0 means no timeout. Probably not the greatest idea in
+				// production!
+				serverSocketHint.acceptTimeout = 0;
+
+				// Create the socket server using TCP protocol and listening on
+				// 9021
+				// Only one app can listen to a port at a time, keep in mind
+				// many ports are reserved
+				// especially in the lower numbers ( like 21, 80, etc )
+				ServerSocket serverSocket = Gdx.net.newServerSocket(
+						Protocol.TCP, 9021, serverSocketHint);
+
+				// Loop forever
+				while (true) {
+					// Create a socket
+					Socket socket = serverSocket.accept(null);
+
+					// Read data from the socket into a BufferedReader
+					BufferedReader buffer = new BufferedReader(
+							new InputStreamReader(socket.getInputStream()));
+
+					try {
+						// Read to the next newline (\n) and display that text
+						// on labelMessage
+						// labelMessage.setText(buffer.readLine());
+						Gdx.app.log("Recibido: ", buffer.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
+
+	// The client network
+	public void clientNetwork() {
+	}
+
+	public void sendMessage() {
+		// When the button is clicked, get the message text or create a default
+		// string value
+		String textToSend = new String();
+		String coords = new String();
+		coords = "x: " + Gdx.input.getX() + " " + "y: " + Gdx.input.getY();
+		textToSend = ipAddress + " dice hola y esta en " + coords + ("\n");
+
+		SocketHints socketHints = new SocketHints();
+		// Socket will time our in 4 seconds
+		socketHints.connectTimeout = 4000;
+		// create the socket and connect to the server entered in the text box (
+		// x.x.x.x format ) on port 9021
+		Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021,
+				socketHints);
+		try {
+			// write our entered message to the stream
+			socket.getOutputStream().write(textToSend.getBytes());
+			// Gdx.app.log(ipAddress + " dice: ", textToSend);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public String updatemessage() {
+		return "testing";
+	}
+
+	// The server Bluetooth
+	public void startServerBluetooth() {
+	}
+
+	// The client Bluetooth
+	public void startClientBluetooth() {
 	}
 }

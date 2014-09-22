@@ -59,6 +59,7 @@ public class ScoreScreen extends ScreenAdapter {
 
 				game.setScreen(new MenuScreen(game));
 				Gdx.app.log("", "click para regresar");
+
 				return;
 			}
 
