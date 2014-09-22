@@ -1,9 +1,9 @@
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
+import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.WorldRenderer;
+import au.edu.unimelb.comp90018.brickbreaker.framework.WorldRenderer;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 

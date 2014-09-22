@@ -1,7 +1,7 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.DynamicGameObject;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
+import au.edu.unimelb.comp90018.brickbreaker.framework.DynamicGameObject;
+import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 
 public class Paddle extends DynamicGameObject {
 

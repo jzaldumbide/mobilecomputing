@@ -13,43 +13,55 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 
 public class Assets {
 
-	/* Textures */
+	/* Textures - there must be less possible */
+	public static TextureRegion gameBackground;
+	public static Texture defaultBackground;
 	public static Texture background;
-	public static Texture items;
+	public static Texture items; //Main Texture with game sprites
+	public static Texture itemsButtons; //temporary Texture for buttons only
 	public static Texture backgroundHelp;// jp
-	public static Texture backgroundLevels;// jp
 	public static Texture backgroundMenu;// jp
 	public static Texture backgroundOptions;// jp
 	public static Texture backgroundScores;// jp
 	public static Texture backgroundSplash;// jp
 
-	/* Texture Regions */
-	public static TextureRegion backgroundRegion;
-	public static TextureRegion mainMenu;
-	public static TextureRegion pauseMenu;
-	public static TextureRegion settingsMenu;
-	public static TextureRegion quit;
+	/* Transparent Screens*/
+	public static TextureRegion defaultNotification;
 	public static TextureRegion ready;
 	public static TextureRegion gameOver;
-	public static TextureRegion highScoresRegion;
-	public static TextureRegion logo;
-	public static TextureRegion soundOn;
-	public static TextureRegion soundOff;
-	public static TextureRegion arrow;
+
+	/*Here declare game Textures*/
+	public static TextureRegion blueBall;
 	public static TextureRegion redBall;
 	public static TextureRegion paddle;
-	public static TextureRegion brick1;
+	public static TextureRegion smallGreenBrick;
+	public static TextureRegion mediumGreenBrick;
+	public static TextureRegion smallOrangeBrick;
+	public static TextureRegion mediumOrangeBrick;
+	public static TextureRegion smallBlueBrick;
+	public static TextureRegion mediumBlueBrick;
+	public static TextureRegion smallYellowBrick;
+	public static TextureRegion smallPurpleBrick;
 	public static TextureRegion lives;
 	public static TextureRegion buttonMenu;
+	
+	/*Here declare buttons*/
+	public static TextureRegion soundOn;
+	public static TextureRegion soundOff;
+	public static TextureRegion musicOn;
+	public static TextureRegion musicOff;
+	public static TextureRegion accelOn;
+	public static TextureRegion quit;
+	public static TextureRegion back;
+	public static TextureRegion pause;
+	public static TextureRegion settings;
+	public static TextureRegion help;
+	public static TextureRegion multiplayer;
+	public static TextureRegion connect;
 
-	// public static TextureRegion blue_ball;
-	// public static TextureRegion grey_ball;
-	// public static TextureRegion orange_ball;
-	// public static TextureRegion red_ball;
-	// public static TextureRegion yellow_ball;
-	/* texture regions for screens */
+	/*Here declare Screens*/
+	public static TextureRegion defaultScreen;
 	public static TextureRegion helpScreen;
-	public static TextureRegion levelScreen;
 	public static TextureRegion menuScreen;
 	public static TextureRegion optionScreen;
 	public static TextureRegion scoresScreen;
@@ -58,6 +70,10 @@ public class Assets {
 	/* Animations */
 	// public static Animation coinAnim; //example
 
+	/* TextureRegionSets -> Something similar to Animations */
+	public static TextureRegionSet brickTypeI;
+	public static TextureRegionSet brickTypeII;
+	
 	/* BitmapFonts */
 	public static BitmapFont font;
 	public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"�`'<>";
@@ -92,12 +108,13 @@ public class Assets {
 	}
 
 	public static void load() {
-		// background for screens
+		
+		/*Here declare screen backgrounds*/
+		defaultBackground = loadTexture("backgrounds/screens/default_background.png");
+		defaultScreen = new TextureRegion(defaultBackground, 0, 0, 800, 1280);
+		
 		backgroundHelp = loadTexture("backgrounds/screens/screen_help.png");
 		helpScreen = new TextureRegion(backgroundHelp, 0, 0, 320, 480);
-
-		backgroundLevels = loadTexture("backgrounds/screens/screen_levels.png");
-		levelScreen = new TextureRegion(backgroundLevels, 0, 0, 320, 480);
 
 		backgroundMenu = loadTexture("backgrounds/screens/screen_menu.png");
 		menuScreen = new TextureRegion(backgroundMenu, 0, 0, 800, 1280);
@@ -112,26 +129,49 @@ public class Assets {
 		splashScreen = new TextureRegion(backgroundSplash, 0, 0, 800, 1280);
 
 		background = loadTexture("backgrounds/background.png");
-		backgroundRegion = new TextureRegion(background, 0, 0, 800, 1280);
-		// background for screens end
+		gameBackground = new TextureRegion(background, 0, 0, 800, 1280);
+		
+		//Button template that goes behind text (used in menus):
+		Texture buttonMenuR = loadTexture("buttons/menuButton.png");
+		buttonMenu = new TextureRegion(buttonMenuR, 0, 0, 256, 64); //The button shown in the main menu
+			
+		/*Here you should put all textures that comes from items.png*/
 		items = loadTexture("textures/items.png");
-		redBall = new TextureRegion(items, 0, 0, 64, 64);
+		blueBall = new TextureRegion(items, 0, 0, 64, 64);
+		redBall = new TextureRegion(items, 0, 64, 64, 64);
 		paddle = new TextureRegion(items, 96, 0, 128, 32);
 		lives = new TextureRegion(items, 224, 0, 64, 64);
-		brick1 = new TextureRegion(items, 64, 16, 32, 16);
+		smallGreenBrick = new TextureRegion(items, 64, 0, 32, 16);
+		mediumGreenBrick = new TextureRegion(items, 80, 32, 32, 16);
+		smallOrangeBrick = new TextureRegion(items, 64, 16, 32, 16);
+		mediumOrangeBrick = new TextureRegion(items, 80, 48, 32, 16);
+		smallBlueBrick = new TextureRegion(items, 64, 32, 32, 16);
+		mediumBlueBrick  = new TextureRegion(items, 80, 64, 32, 16);
+		smallYellowBrick = new TextureRegion(items, 64, 48, 32, 16);
+		smallPurpleBrick = new TextureRegion(items, 64, 64, 32, 16);
 		
-
-		Texture pauseR = loadTexture("buttons/pause.png");
-		pauseMenu = new TextureRegion(pauseR, 0, 0, 128, 128);
-		Texture settingsR = loadTexture("buttons/settings.png");
-		settingsMenu = new TextureRegion(settingsR, 0, 0, 128, 128);
-		Texture quitR = loadTexture("buttons/quit.png");
-		quit = new TextureRegion(quitR, 0, 0, 128, 128);
-		Texture soundonR = loadTexture("buttons/soundOn.png");
-		soundOn = new TextureRegion(soundonR, 0, 0, 128, 128);
-		Texture soundoffR = loadTexture("buttons/soundOff.png");
-		soundOff = new TextureRegion(soundoffR, 0, 0, 128, 128);
-
+		
+		/*Here you should put all textures that comes from itemsButtons.png*/
+		itemsButtons = loadTexture("textures/itemsButtons.png");
+		musicOn = new TextureRegion(itemsButtons, 0, 0, 128, 128);
+		musicOff = new TextureRegion(itemsButtons, 128, 0, 128, 128);
+		accelOn = new TextureRegion(itemsButtons, 256, 0, 128, 128);
+		soundOn = new TextureRegion(itemsButtons, 384, 0, 128, 128);
+		soundOff = new TextureRegion(itemsButtons, 512, 0, 128, 128);
+		quit = new TextureRegion(itemsButtons, 640, 0, 128, 128);
+		settings = new TextureRegion(itemsButtons, 0, 128, 128, 128);
+		pause = new TextureRegion(itemsButtons, 128, 128, 128, 128);
+		back = new TextureRegion(itemsButtons, 256, 128, 128, 128);
+		help = new TextureRegion(itemsButtons, 384, 128, 128, 128);
+		multiplayer = new TextureRegion(itemsButtons, 512, 128, 128, 128);
+		connect = new TextureRegion(itemsButtons, 640, 128, 128, 128);
+		
+		
+		/*Here load Transparent Textures*/
+		Texture defaultNotificationR = loadTransparentTexture(320, 480,
+				"backgrounds/default_notification.png");
+		defaultNotification = new TextureRegion(defaultNotificationR, 0, 0, 320, 480);
+		
 		Texture readyR = loadTransparentTexture(320, 480,
 				"backgrounds/ready.png");
 		ready = new TextureRegion(readyR, 0, 0, 320, 480);
@@ -141,9 +181,9 @@ public class Assets {
 		gameOver = new TextureRegion(gameOverR, 0, 0, 320, 480);
 		
 		
-		//Buttons:
-		Texture buttonMenuR = loadTexture("buttons/menuButton.png");
-		buttonMenu = new TextureRegion(buttonMenuR, 0, 0, 256, 64);
+		/* TextureRegionSets */
+		brickTypeI = new TextureRegionSet(smallOrangeBrick);
+		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick);
 
 		// Animation example
 		// brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64,

@@ -40,7 +40,7 @@ public class LevelScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		backBounds = new Rectangle(10, 10, 32, 32);
-		btnback = new Texture("buttons/btn_back.png");
+		btnback = new Texture("buttons/back.png");
 		lvl1Bs = new Rectangle(32, 400, btnSize, btnSize);
 		lvl2Bs = new Rectangle(32 + (btnSeparation + btnSize), 400, btnSize,
 				btnSize);
@@ -160,7 +160,7 @@ public class LevelScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.levelScreen, 0, 0, 320, 480);
+		game.batcher.draw(Assets.defaultScreen, 0, 0, 320, 480);
 
 		game.batcher.draw(btnback, 10, 10, 32, 32);
 		// level buttons

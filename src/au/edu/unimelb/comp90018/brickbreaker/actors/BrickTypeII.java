@@ -5,11 +5,8 @@ public class BrickTypeII extends BrickAdapter implements Brick {
 	static float WIDTH = 32;
 	static float HEIGHT = 16;
 
-	int hitsLeftToPulverise;
-	
 	public BrickTypeII(float x, float y) {
-		super(x, y, WIDTH, HEIGHT);
-		hitsLeftToPulverise = 2;
+		super(x, y, WIDTH, HEIGHT, 2);		
 	}
 	
 	@Override

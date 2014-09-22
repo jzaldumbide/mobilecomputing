@@ -72,7 +72,7 @@ public class MultiplayerScreen extends ScreenAdapter {
 
 		btnserver = new Texture("buttons/btn_server.png");
 		btnjoin = new Texture("buttons/btn_join.png");
-		btnback = new Texture("buttons/btn_back.png");
+		btnback = new Texture("buttons/back.png");
 
 	}
 

@@ -18,7 +18,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import au.edu.unimelb.comp90018.brickbreaker.framework.model.GameLevel;
+import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

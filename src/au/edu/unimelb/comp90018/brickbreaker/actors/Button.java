@@ -1,6 +1,6 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.GameObject;
+import au.edu.unimelb.comp90018.brickbreaker.framework.GameObject;
 
 
 public class Button extends GameObject {

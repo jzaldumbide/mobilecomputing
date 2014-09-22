@@ -45,7 +45,7 @@ public class HelpScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		backBounds = new Rectangle(10, 10, 32, 32);
-		btnback = new Texture("buttons/btn_back.png");
+		btnback = new Texture("buttons/back.png");
 		// font.setScale(3, 3);
 
 	}

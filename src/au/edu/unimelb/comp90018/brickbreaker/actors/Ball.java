@@ -2,10 +2,10 @@ package au.edu.unimelb.comp90018.brickbreaker.actors;
 
 import java.util.List;
 
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.DynamicGameObject;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.Rectangle2.RectangleSide;
-import au.edu.unimelb.comp90018.brickbreaker.framework.impl.World;
+import au.edu.unimelb.comp90018.brickbreaker.framework.DynamicGameObject;
+import au.edu.unimelb.comp90018.brickbreaker.framework.Rectangle2;
+import au.edu.unimelb.comp90018.brickbreaker.framework.World;
+import au.edu.unimelb.comp90018.brickbreaker.framework.Rectangle2.RectangleSide;
 
 import com.badlogic.gdx.math.Vector2;
 
