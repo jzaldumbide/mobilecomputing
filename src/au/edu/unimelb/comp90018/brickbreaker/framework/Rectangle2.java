@@ -1,4 +1,4 @@
-package au.edu.unimelb.comp90018.brickbreaker.framework.impl;
+package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 import java.util.ArrayList;
 import java.util.List;
