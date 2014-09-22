@@ -4,13 +4,15 @@ import java.util.List;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class WorldRenderer {
 
@@ -81,10 +83,18 @@ public class WorldRenderer {
 	private void renderBricks() {
 
 		List<BrickAdapter> bricks = world.bricks;
+		
 		int len = bricks.size();
 
 		for (int i = 0; i < len; i++) {
-			batch.draw(Assets.smallOrangeBrick, 
+			TextureRegion brickTexture;
+			if (bricks.get(i) instanceof BrickTypeI){
+				brickTexture = Assets.brickTypeI.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
+			} else {
+				brickTexture = Assets.brickTypeII.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
+			}
+			
+			batch.draw(brickTexture, 
 					bricks.get(i).position.x - bricks.get(i).width / 2, 
 					bricks.get(i).position.y - bricks.get(i).height / 2, 
 					bricks.get(i).width,

@@ -43,7 +43,7 @@ public class Assets {
 	public static TextureRegion smallYellowBrick;
 	public static TextureRegion smallPurpleBrick;
 	public static TextureRegion lives;
-	public static TextureRegion buttonMenu;	
+	public static TextureRegion buttonMenu;
 	
 	/*Here declare buttons*/
 	public static TextureRegion soundOn;
@@ -70,6 +70,10 @@ public class Assets {
 	/* Animations */
 	// public static Animation coinAnim; //example
 
+	/* TextureRegionSets -> Something similar to Animations */
+	public static TextureRegionSet brickTypeI;
+	public static TextureRegionSet brickTypeII;
+	
 	/* BitmapFonts */
 	public static BitmapFont font;
 	public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"�`'<>";
@@ -177,7 +181,9 @@ public class Assets {
 		gameOver = new TextureRegion(gameOverR, 0, 0, 320, 480);
 		
 		
-		
+		/* TextureRegionSets */
+		brickTypeI = new TextureRegionSet(smallOrangeBrick);
+		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick);
 
 		// Animation example
 		// brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64,

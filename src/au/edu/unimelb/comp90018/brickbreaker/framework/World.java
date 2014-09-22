@@ -38,16 +38,19 @@ public class World {
 
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);		
-		
+		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);
+
 		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
-		
+
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
+
+		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2 + 5,
+				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
 		
-		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2+5, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2+2,ButtonSize.MEDIUM_SQUARE);
-		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth()-5, ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2+2,ButtonSize.MEDIUM_SQUARE);
+		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth() - 5,
+				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
 				
 		this.listener = listener;
 
