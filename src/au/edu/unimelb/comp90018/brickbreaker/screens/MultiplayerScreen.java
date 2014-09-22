@@ -211,8 +211,7 @@ public class MultiplayerScreen extends ScreenAdapter {
 	}
 
 	public void sendMessage() {
-		// When the button is clicked, get the message text or create a default
-		// string value
+
 		String textToSend = new String();
 		String coords = new String();
 		coords = "x: " + Gdx.input.getX() + " " + "y: " + Gdx.input.getY();
