@@ -88,6 +88,7 @@ public class WorldRenderer {
 
 		for (int i = 0; i < len; i++) {
 			TextureRegion brickTexture;
+			// TODO: review the index of these TextureRegionSets
 			if (bricks.get(i) instanceof BrickTypeI){
 				brickTexture = Assets.brickTypeI.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
 			} else {
