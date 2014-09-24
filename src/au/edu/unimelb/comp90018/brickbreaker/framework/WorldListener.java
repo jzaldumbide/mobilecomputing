@@ -12,8 +12,6 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 public interface WorldListener {
 	
-	public void hitWall ();
-
 	public void hitPaddle ();
 
 	public void hitBrick ();

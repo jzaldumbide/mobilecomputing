@@ -22,8 +22,7 @@
         <activity
             android:name=".AndroidLauncher"
             android:label="@string/title_activity_brick_breaker" 
-            android:screenOrientation="portrait"
-        	android:configChanges="keyboard|keyboardHidden|orientation">
+            android:configChanges="keyboard|keyboardHidden|orientation">
         	 <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
