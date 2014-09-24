@@ -173,7 +173,7 @@ public class World {
 
 	private void updatePaddle(float deltaTime, float accelX) {
 		// TODO: Review factor of normalisation of the acceleration
-		paddle.update(deltaTime, -accelX * 5);
+		paddle.update(deltaTime, -accelX);
 	}
 
 	private void checkGameOver() {

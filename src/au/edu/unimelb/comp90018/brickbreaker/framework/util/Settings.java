@@ -22,8 +22,10 @@ public class Settings {
 			String[] strings = filehandle.readString().split("\n");
 
 			soundEnabled = Boolean.parseBoolean(strings[0]);
+			accelerometerEnabled = Boolean.parseBoolean(strings[1]);
+			
 			for (int i = 0; i < 5; i++) {
-				highscores[i] = Integer.parseInt(strings[i + 1]);
+				highscores[i] = Integer.parseInt(strings[i + 2]);
 			}
 		} catch (Throwable e) { 
 			// :( It's ok we have defaults
@@ -36,6 +38,8 @@ public class Settings {
 			FileHandle filehandle = Gdx.files.external(file);
 
 			filehandle.writeString(Boolean.toString(soundEnabled) + "\n", false);
+			filehandle.writeString(Boolean.toString(accelerometerEnabled) + "\n", false);
+			
 			for (int i = 0; i < 5; i++) {
 				filehandle.writeString(Integer.toString(highscores[i]) + "\n", true);
 			}

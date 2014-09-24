@@ -105,49 +105,47 @@ public class GameScreen extends ScreenAdapter {
 		}
 	}
 
-	private void updateRunning (float deltaTime) {
-		
+	private void updateRunning(float deltaTime) {
+
 		if (Gdx.input.justTouched()) {
-			
+
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-			
+
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				return;
-			}
-
+			} 
+			
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				Settings.soundEnabled = !Settings.soundEnabled;
 				if (Settings.soundEnabled)
 					Assets.music.play();
 				else
-					Assets.music.pause();				
+					Assets.music.pause();
 				return;
 			}
 		}
 
 		float accel = 0;
 
-		if (Settings.accelerometerEnabled) {
-			world.update(deltaTime, Gdx.input.getAccelerometerX());
-		} else if (Gdx.input.isTouched()) {
+		if (Gdx.input.isTouched()) {
 
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-			if (touchPoint.x < world.paddle.position.x) { // is moving to the
-															// left
-				accel = World.WORLD_WIDTH * 2f;
-			} else if (touchPoint.x > world.paddle.position.x) { // is moving to
-																	// the right
-				accel = World.WORLD_WIDTH * -2f;
+			if (touchPoint.x < world.paddle.position.x) { // is moving to the left
+				accel = World.WORLD_WIDTH * 10f;
+			} else if (touchPoint.x > world.paddle.position.x) { // is moving to the right
+				accel = World.WORLD_WIDTH * -10f;
 			}
-
 		}
 
-		world.update(deltaTime, accel);
-		
+		if (Settings.accelerometerEnabled) {
+			world.update(deltaTime, Gdx.input.getAccelerometerX() * 200f);
+		} else {
+			world.update(deltaTime, accel);
+		}
 		
 //		if (world.score != lastScore) {
 //			lastScore = world.score;
@@ -182,7 +180,12 @@ public class GameScreen extends ScreenAdapter {
 
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				state = GAME_RUNNING;
+				Settings.soundEnabled = !Settings.soundEnabled;
+				if (Settings.soundEnabled)
+					Assets.music.play();
+				else
+					Assets.music.pause();
+//				state = GAME_RUNNING;
 				return;
 			}
 
