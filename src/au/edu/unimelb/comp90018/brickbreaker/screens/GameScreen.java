@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 
@@ -29,7 +30,9 @@ public class GameScreen extends ScreenAdapter {
 	Vector3 touchPoint;
 	World world;
 	WorldListener worldListener;
-	WorldRenderer renderer;	
+	WorldRenderer renderer;
+	Rectangle resumeBounds;
+	Rectangle quitBounds;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
@@ -69,6 +72,9 @@ public class GameScreen extends ScreenAdapter {
 		
 		world = new World(worldListener);
 		renderer = new WorldRenderer(game.batcher, world);
+		
+		resumeBounds = new Rectangle(85, 250, 150, 30);
+		quitBounds = new Rectangle(122, 200, 76, 38);
 		
 		toggleSound = true;
 		lastScore = 0;
@@ -166,29 +172,23 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 
-	private void updatePaused () {
+	private void updatePaused() {
 
 		if (Gdx.input.justTouched()) {
 
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
+			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				state = GAME_RUNNING;
 				return;
 			}
 
-			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
+			if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				Settings.soundEnabled = !Settings.soundEnabled;
-				if (Settings.soundEnabled)
-					Assets.music.play();
-				else
-					Assets.music.pause();
-//				state = GAME_RUNNING;
+				game.setScreen(new MenuScreen(game));
 				return;
 			}
-
 		}
 	}
 
@@ -252,9 +252,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void presentPaused () {
-		//game.batcher.draw(Assets.soundOn, World.WORLD_WIDTH-1, World.WORLD_HEIGHT-1, 2, 2);
-//		game.batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		//Assets.font.draw(game.batcher, scoreString, 1, 480 - 5);
+		game.batcher.draw(Assets.pauseMenu, 0, 0, 320, 480);		
 	}
 
 	private void presentLevelEnd () {

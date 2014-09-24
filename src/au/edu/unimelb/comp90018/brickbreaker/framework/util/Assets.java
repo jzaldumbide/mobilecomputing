@@ -29,7 +29,8 @@ public class Assets {
 	public static TextureRegion defaultNotification;
 	public static TextureRegion ready;
 	public static TextureRegion gameOver;
-
+	public static TextureRegion pauseMenu;
+	
 	/*Here declare game Textures*/
 	public static TextureRegion blueBall;
 	public static TextureRegion redBall;
@@ -168,17 +169,17 @@ public class Assets {
 		
 		
 		/*Here load Transparent Textures*/
-		Texture defaultNotificationR = loadTransparentTexture(320, 480,
-				"backgrounds/default_notification.png");
+		Texture defaultNotificationR = loadTransparentTexture(320, 480, "backgrounds/default_notification.png");
 		defaultNotification = new TextureRegion(defaultNotificationR, 0, 0, 320, 480);
-		
-		Texture readyR = loadTransparentTexture(320, 480,
-				"backgrounds/ready.png");
+
+		Texture readyR = loadTransparentTexture(320, 480, "backgrounds/ready.png");
 		ready = new TextureRegion(readyR, 0, 0, 320, 480);
 
-		Texture gameOverR = loadTransparentTexture(320, 480,
-				"backgrounds/gameover.png");
+		Texture gameOverR = loadTransparentTexture(320, 480, "backgrounds/gameover.png");
 		gameOver = new TextureRegion(gameOverR, 0, 0, 320, 480);
+
+		Texture pauseMenuR = loadTransparentTexture(320, 480, "backgrounds/pausemenu.png");
+		pauseMenu = new TextureRegion(pauseMenuR, 0, 0, 320, 480);		
 		
 		
 		/* TextureRegionSets */

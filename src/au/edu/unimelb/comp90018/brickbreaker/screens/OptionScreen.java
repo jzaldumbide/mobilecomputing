@@ -17,7 +17,7 @@ public class OptionScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
 
-	private Button soundButton, musicButton, gyroscopeButton, touchButton, btnBack;
+	private Button soundButton, musicButton, accelerometerButton, touchButton, btnBack;
 	Vector3 touchPoint;
 
 	public OptionScreen(BrickBreaker game) {
@@ -31,7 +31,7 @@ public class OptionScreen extends ScreenAdapter {
 		soundButton = new Button(Settings.TARGET_WIDTH / 2 - 50, Settings.TARGET_HEIGHT / 2, ButtonSize.XLARGE_SQUARE);
 		musicButton = new Button(Settings.TARGET_WIDTH / 2 + 50, Settings.TARGET_HEIGHT / 2 - 67,
 				ButtonSize.XLARGE_SQUARE);
-		gyroscopeButton = new Button(Settings.TARGET_WIDTH / 2 - 50, Settings.TARGET_HEIGHT / 2 - 135,
+		accelerometerButton = new Button(Settings.TARGET_WIDTH / 2 - 50, Settings.TARGET_HEIGHT / 2 - 135,
 				ButtonSize.XLARGE_SQUARE);
 	}
 
@@ -50,7 +50,7 @@ public class OptionScreen extends ScreenAdapter {
 
 				return;
 			}
-			if (gyroscopeButton.bounds.contains(touchPoint.x, touchPoint.y)) {
+			if (accelerometerButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				// Assets.playSound(Assets.clickSound);
 
 				Settings.accelerometerEnabled = !Settings.accelerometerEnabled;
@@ -90,8 +90,8 @@ public class OptionScreen extends ScreenAdapter {
 				ButtonSize.XLARGE_SQUARE.getButtonHeight());
 
 		game.batcher.draw(Assets.accelOn, 
-				gyroscopeButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
-				gyroscopeButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+				accelerometerButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+				accelerometerButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
 				ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
 				ButtonSize.XLARGE_SQUARE.getButtonHeight());
 
@@ -103,8 +103,8 @@ public class OptionScreen extends ScreenAdapter {
 
 		Assets.font.draw(game.batcher, 
 				Settings.accelerometerEnabled ? "ON" : "OFF", 
-				gyroscopeButton.position.x + ButtonSize.XLARGE_SQUARE.getButtonWidth() / 1.5f, 
-				gyroscopeButton.position.y + ButtonSize.XLARGE_SQUARE.getButtonHeight() / 6);
+				accelerometerButton.position.x + ButtonSize.XLARGE_SQUARE.getButtonWidth() / 1.5f, 
+				accelerometerButton.position.y + ButtonSize.XLARGE_SQUARE.getButtonHeight() / 6);
 		
 		game.batcher.end();
 
