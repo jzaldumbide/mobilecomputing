@@ -413,8 +413,9 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		if (myMode == GameMode.Server)
+		if (myMode == GameMode.Server) {
 			draw();
+		}
 	}
 
 	@Override
