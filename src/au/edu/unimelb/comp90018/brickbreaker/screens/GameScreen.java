@@ -141,6 +141,7 @@ public class GameScreen extends ScreenAdapter {
 						// on labelMessage
 						// labelMessage.setText(buffer.readLine());
 						Gdx.app.log("Recibido: ", buffer.readLine());
+						world.score = Integer.parseInt(buffer.readLine());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -197,9 +198,11 @@ public class GameScreen extends ScreenAdapter {
 
 						coords = "x: " + Gdx.input.getX() + " " + "y: "
 								+ Gdx.input.getY();
-						textToSend = ipAddress + " dice hola y esta en "
-								+ coords + ("\n");
-
+//						textToSend = ipAddress + " dice hola y esta en "
+//								+ coords + ("\n");
+						textToSend = String.valueOf(Gdx.input.getX());
+						
+						
 						// write our entered message to the stream
 						socket.getOutputStream().write(textToSend.getBytes());
 						Gdx.app.log(ipAddress + " dice: ", textToSend);
