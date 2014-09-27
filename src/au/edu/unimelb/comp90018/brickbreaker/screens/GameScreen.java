@@ -50,11 +50,13 @@ public class GameScreen extends ScreenAdapter {
 	int lastScore;
 	String scoreString;
 	String ipAddress = null;
-	String ipServer = "localhost";
+	String ipServer = "192.168.56.101";
 	
 	public enum GameMode {
 		Server, Client
 	}
+	
+	GameMode myMode;
 	
 	public GameScreen(BrickBreaker game, GameMode mode) {
 		
@@ -95,6 +97,8 @@ public class GameScreen extends ScreenAdapter {
 		toggleSound = true;
 		lastScore = 0;
 		scoreString = "SCORE: 0";
+	
+		myMode = mode;
 		
 		if (mode == GameMode.Server) {
 			startServerNetwork();
@@ -409,7 +413,8 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		draw();
+		if (myMode == GameMode.Server)
+			draw();
 	}
 
 	@Override
