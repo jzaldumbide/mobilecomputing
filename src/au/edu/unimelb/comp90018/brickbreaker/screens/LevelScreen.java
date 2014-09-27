@@ -47,24 +47,27 @@ public class LevelScreen extends ScreenAdapter {
 
 	public void update() {
 		if (Gdx.input.justTouched()) {
+			boolean levelButtonTouched = false;
+			int selectedLevel = 0;
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 
 			if (levelUnlockedButton_1.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
-				Gdx.app.log("level 1", "level 1");
-				game.setScreen(new GameScreen(game, GameMode.Server));
-				return;
+				selectedLevel = 1;
+				levelButtonTouched = true;
 			}
 			if (levelLockedButton_2.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
-				Gdx.app.log("level 2", "level 2");
-				game.setScreen(new GameScreen(game, GameMode.Client));
-				return;
+				selectedLevel = 2;
+				levelButtonTouched = true;
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				return;
+			}
+			if (levelButtonTouched){
+				Gdx.app.log("level "+selectedLevel, "level "+selectedLevel);
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+				return;				
 			}
 		}
 	}

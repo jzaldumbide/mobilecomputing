@@ -58,10 +58,9 @@ public class GameScreen extends ScreenAdapter {
 
 	GameMode myMode;
 
-	public GameScreen(BrickBreaker game, GameMode mode) {
+	public GameScreen(BrickBreaker game, GameMode mode, int level) {
 
-		this.game = game;
-
+		this.game = game;	
 		state = GAME_READY;
 
 		// We need to have a target resolution, e.g. 320 x 480
@@ -90,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
 			}
 		};
 
-		world = new World(worldListener);
+		world = new World(worldListener, level);
 		renderer = new WorldRenderer(game.batcher, world);
 
 		resumeBounds = new Rectangle(85, 250, 150, 30);
@@ -340,7 +339,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updateLevelEnd() {
 		if (Gdx.input.justTouched()) {
-			world = new World(worldListener);
+			world = new World(worldListener, 1); //Fix this
 			renderer = new WorldRenderer(game.batcher, world);
 			// world.score = lastScore;
 			state = GAME_READY;

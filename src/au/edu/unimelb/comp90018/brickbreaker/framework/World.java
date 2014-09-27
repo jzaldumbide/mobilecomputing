@@ -1,8 +1,11 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
@@ -10,9 +13,12 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
+import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
+import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class World {
@@ -31,27 +37,25 @@ public class World {
 	public Button pauseButton, soundButton;
 
 	public final WorldListener listener;
+	public int level;
 	public int score;
 	public int state;
 
-	public World(WorldListener listener) {
+	public World(WorldListener listener, int gameLevel) {
 
+		level = gameLevel;
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);
-
-		ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
-				new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
 
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 
 		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2 + 5,
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
-		
+
 		pauseButton = new Button(WORLD_WIDTH - 0.5f * ButtonSize.MEDIUM_SQUARE.getButtonWidth() - 5,
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
-				
+
 		this.listener = listener;
 
 		/*
@@ -59,105 +63,68 @@ public class World {
 		 * loader file
 		 */
 		generateLevel();
-		
-//		this.score = 0;
+
+		//		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
 	}
 
 	private void generateLevel() {
 
 		Random rand = new Random();
-		
-		/*Set bricks*/
-		float x = 36;
-		float y = 300;
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 8; j++) {
-				if (rand.nextInt(2) == 1)
-					bricks.add(new BrickTypeI(x, y));
-				else
-					bricks.add(new BrickTypeII(x, y));
-//				bricks.add(new Brick(x, y));
-				
-				x += 35;
-			}
-			x = 36;
-			y += 24;
-		}
-		
+		boolean error = false;
 		/*Set lives*/
-		x = 77;
-		y = 453;
+		float x = 77;
+		float y = 453;
 		for (int i = 1; i <= 3; i++) {
-				lives.add(new Button(x, y,ButtonSize.SMALL_SQUARE));
-				x += 19;
+			lives.add(new Button(x, y,ButtonSize.SMALL_SQUARE));
+			x += 19;
 		}
 
-		// this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 -
-		// Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,100);
-		// this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 -
-		// Assets.paddle.getRegionWidth()/2,40,600);
-		// //Generate example bricks
-		//
-		// for (int y = 0; y < 3; y++) {
-		// for (int x = 0; x < 8; x++) {
-		// Brick brick = new
-		// Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()),
-		// GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()));
-		// this.bricks.add(brick);
-		// }
-		// }
+		LevelDownloader ld = new LevelDownloader();
+		GameLevel gameLevel = null;
+		try {
+			gameLevel = ld.loadLevel("brickbreaker_level"+this.level+".xml", WORLD_WIDTH, WORLD_HEIGHT);
+			/*Here you should generate the game level using the configurations
+		 loaded from XMl file
+			 * note that all parameters from paddle example are constants, some of
+		 them could be part of the xml file.
+			 */
+			paddle = gameLevel.getPaddle();
+			ball = gameLevel.getBall();
+			Gdx.app.log("We will play with "+gameLevel.getBricks().size()+"Bricks", "We will play with "+gameLevel.getBricks().size()+"Bricks");
+			bricks = gameLevel.getBricks();
 
-		// LevelDownloader ld = new LevelDownloader();
-		// GameLevel gameLevel = null;
-		// try {
-		// gameLevel = ld.downloadGame("brickbreaker_level1.xml");
-		// /*Here you should generate the game level using the configurations
-		// loaded from XMl file
-		// * note that all parameters from paddle example are constants, some of
-		// them could be part of the xml file.
-		// */
-		// this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 -
-		// Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,gameLevel.getBall().getSpeed());
-		// this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 -
-		// Assets.paddle.getRegionWidth()/2,40,gameLevel.getPaddle().getSpeed());
-		//
-		// au.edu.unimelb.comp90018.brickbreaker.framework.model.Brick
-		// modelBricks[][] = gameLevel.getBricks();
-		//
-		// for ( int i = 0; i < modelBricks.length; i++ ){
-		// for ( int j = 0; j < modelBricks[i].length; j++ ){
-		// if (modelBricks[i][j]!=null){
-		// int x = modelBricks[i][j].getX();
-		// int y = modelBricks[i][j].getY();
-		// Brick brick = new
-		// Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()),
-		// GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()));
-		// this.bricks.add(brick);
-		// }
-		// }
-		// }
-		//
-		// } catch (IOException | XmlPullParserException | NullPointerException
-		// e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// this.ball = new Ball(Assets.red_ball,GAME_WIDTH/2 -
-		// Assets.red_ball.getRegionWidth()/2,40+Assets.paddle.getRegionHeight()-3,500);
-		// this.paddle = new Paddle(Assets.paddle,GAME_WIDTH/2 -
-		// Assets.paddle.getRegionWidth()/2,40,600);
-		// //Generate example bricks
-		//
-		// for (int y = 0; y < 3; y++) {
-		// for (int x = 0; x < 8; x++) {
-		// Brick brick = new
-		// Brick(Assets.brick,5*(x+1)+(x*Assets.brick.getRegionWidth()),
-		// GAME_HEIGHT - ((10*(y+1))+(y+1)*Assets.brick.getRegionHeight()));
-		// this.bricks.add(brick);
-		// }
-		// }
-		//
-		// }
+		} catch (IOException e) {
+			e.printStackTrace();
+			error = true;
+		} catch (XmlPullParserException ex){
+			ex.printStackTrace();
+			error = true;
+
+		}
+		if(error){
+			paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);
+
+			ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
+					new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
+
+			/*Set bricks*/
+			x = 36;
+			y = 300;
+			for (int i = 1; i <= 3; i++) {
+				for (int j = 1; j <= 8; j++) {
+					if (rand.nextInt(2) == 1)
+						bricks.add(new BrickTypeI(x, y));
+					else
+						bricks.add(new BrickTypeII(x, y));
+					//				bricks.add(new Brick(x, y));
+
+					x += 35;
+				}
+				x = 36;
+				y += 24;
+			}
+		}
 	}
 
 	public void update(float deltaTime, float accelX) {
@@ -191,9 +158,9 @@ public class World {
 
 		if (ball.velocity.y > 0)
 			return;
-		
+
 		if (ball.bounds.overlaps(paddle.bounds)) {			
-//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
+			//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
 			ball.hitPaddle(paddle.velocity.x);
 			Assets.playSound(Assets.clickSound);
 			// listener.jump();
@@ -209,16 +176,16 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-				
+
 				ball.hitBrick(bricks.get(i).bounds);
-				
+
 				// TODO: Don't know if this line needs to be included in ball.hitBrick
 				bricks.get(i).hitMe();
-				
+
 				if (bricks.get(i).isPulverised())
 					bricks.remove(i);
-				
-//				score ++;
+
+				//				score ++;
 				break;
 			}
 		}

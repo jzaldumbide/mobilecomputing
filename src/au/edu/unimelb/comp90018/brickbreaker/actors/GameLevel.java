@@ -3,6 +3,9 @@
  */
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author achaves
@@ -10,25 +13,20 @@ package au.edu.unimelb.comp90018.brickbreaker.actors;
  */
 public class GameLevel {
 
-	private Brick[][] bricks;
+	private List<BrickAdapter> bricks;
 	private Paddle paddle;
 	private Ball ball;
 	private int speed;
-	private static int ROWS = 15;
 	
 	public GameLevel(){
-		bricks = new Brick[ROWS][ROWS];
+		bricks = new ArrayList<BrickAdapter>();
 	}
 
-	public void addBrick(int row, int column, Brick brick){
-		bricks[row][column] = brick;
+	public void addBrick(BrickAdapter brick){
+		bricks.add(brick);
 	}
-	public Brick[][] getBricks() {
+	public List<BrickAdapter> getBricks() {
 		return bricks;
-	}
-
-	public void setBricks(Brick[][] bricks) {
-		this.bricks = bricks;
 	}
 
 	public Paddle getPaddle() {
@@ -54,28 +52,4 @@ public class GameLevel {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		GameLevel gl = (GameLevel)o;
-		
-		for (int i = 0; i < ROWS; i++){
-			for (int j = 0; j < ROWS; j++){				
-				if (gl.getBricks()[i][j]!=null && this.bricks[i][j]==null){
-					return false;
-				}
-				if (gl.getBricks()[i][j]==null && this.bricks[i][j]!=null){
-					return false;
-				}				
-				if (gl.getBricks()[i][j]!=null && this.bricks[i][j]!=null && !gl.getBricks()[i][j].equals(this.bricks[i][j]))
-					return false;
-			}
-		}
-		if (!gl.getBall().equals(this.ball))
-			return false;
-		if (!gl.getPaddle().equals(this.paddle))
-			return false;
-		return true;
-	}
-
 }
