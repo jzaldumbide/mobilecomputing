@@ -15,8 +15,8 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.Net.Protocol;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
@@ -51,27 +51,29 @@ public class GameScreen extends ScreenAdapter {
 	String scoreString;
 	String ipAddress = null;
 	String ipServer = "192.168.56.101";
-	
+
 	public enum GameMode {
 		Server, Client
 	}
-	
+
 	GameMode myMode;
-	
+
 	public GameScreen(BrickBreaker game, GameMode mode) {
-		
+
 		this.game = game;
 
 		state = GAME_READY;
 
 		// We need to have a target resolution, e.g. 320 x 480
-		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
-		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
-		
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
+				Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2,
+				Settings.TARGET_HEIGHT / 2, 0);
+
 		touchPoint = new Vector3();
 
 		worldListener = new WorldListener() {
-			
+
 			@Override
 			public void hitPaddle() {
 				Assets.playSound(Assets.correctSound);
@@ -97,9 +99,9 @@ public class GameScreen extends ScreenAdapter {
 		toggleSound = true;
 		lastScore = 0;
 		scoreString = "SCORE: 0";
-	
+
 		myMode = mode;
-		
+
 		if (mode == GameMode.Server) {
 			startServerNetwork();
 		} else if (mode == GameMode.Client) {
@@ -126,7 +128,7 @@ public class GameScreen extends ScreenAdapter {
 
 				ServerSocket serverSocket = Gdx.net.newServerSocket(
 						Protocol.TCP, 9021, serverSocketHint);
-
+				Gdx.app.log("Server status: ", "up");
 				// Loop forever
 				while (true) {
 					// Create a socket
@@ -140,11 +142,13 @@ public class GameScreen extends ScreenAdapter {
 						// Read to the next newline (\n) and display that text
 						// on labelMessage
 						// labelMessage.setText(buffer.readLine());
+						Gdx.app.log("Recibido: ", "???");
 						Gdx.app.log("Recibido: ", buffer.readLine());
-						synchronized (this) {
-							world.score = Integer.parseInt(buffer.readLine());
-						}
-						
+						Gdx.app.log("Recibido: ", "???????????????");
+						// synchronized (this) {
+						// world.score = Integer.parseInt(buffer.readLine());
+						// }
+
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -174,7 +178,7 @@ public class GameScreen extends ScreenAdapter {
 		return ipAddress;
 
 	}
-	
+
 	public void sendMessage() {
 
 		new Thread(new Runnable() {
@@ -186,7 +190,8 @@ public class GameScreen extends ScreenAdapter {
 				String coords = new String();
 				coords = "x: " + Gdx.input.getX() + " " + "y: "
 						+ Gdx.input.getY();
-				textToSend = ipAddress + " dice hola y esta en " + coords + ("\n");
+				textToSend = ipAddress + " dice hola y esta en " + coords
+						+ ("\n");
 
 				SocketHints socketHints = new SocketHints();
 				// Socket will time our in 4 seconds
@@ -194,18 +199,17 @@ public class GameScreen extends ScreenAdapter {
 				// create the socket and connect to the server entered in the
 				// text box (
 				// x.x.x.x format ) on port 9021
-				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer,
-						9021, socketHints);
+				Socket socket = Gdx.net.newClientSocket(Protocol.TCP,
+						"192.168.56.101", 9021, socketHints);
 				while (true) {
 					try {
 
 						coords = "x: " + Gdx.input.getX() + " " + "y: "
 								+ Gdx.input.getY();
-//						textToSend = ipAddress + " dice hola y esta en "
-//								+ coords + ("\n");
+						// textToSend = ipAddress + " dice hola y esta en "
+						// + coords + ("\n");
 						textToSend = String.valueOf(Gdx.input.getX());
-						
-						
+
 						// write our entered message to the stream
 						socket.getOutputStream().write(textToSend.getBytes());
 						Gdx.app.log(ipAddress + " dice: ", textToSend);
@@ -216,7 +220,7 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}).start();
 	}
-	
+
 	public void update(float deltaTime) {
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
@@ -249,9 +253,10 @@ public class GameScreen extends ScreenAdapter {
 	private void updateRunning(float deltaTime) {
 
 		if (Gdx.input.justTouched()) {
-			
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), viewport.x, viewport.y,
-					viewport.width, viewport.height);
+
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					viewport.x, viewport.y, viewport.width, viewport.height);
 
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -274,18 +279,21 @@ public class GameScreen extends ScreenAdapter {
 
 		if (Gdx.input.isTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), viewport.x, viewport.y,
-					viewport.width, viewport.height);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					viewport.x, viewport.y, viewport.width, viewport.height);
 
-			if (touchPoint.x < world.paddle.position.x) { // is moving to the left
+			if (touchPoint.x < world.paddle.position.x) { // is moving to the
+															// left
 				accel = World.WORLD_WIDTH * 10f;
-			} else if (touchPoint.x > world.paddle.position.x) { // is moving to the right
+			} else if (touchPoint.x > world.paddle.position.x) { // is moving to
+																	// the right
 				accel = World.WORLD_WIDTH * -10f;
 			}
 		}
 
 		if (Settings.accelerometerEnabled) {
-			world.update(deltaTime, Gdx.input.getAccelerometerX() * 200f);			
+			world.update(deltaTime, Gdx.input.getAccelerometerX() * 200f);
 		} else {
 			world.update(deltaTime, accel);
 		}
@@ -312,8 +320,9 @@ public class GameScreen extends ScreenAdapter {
 
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), viewport.x, viewport.y,
-					viewport.width, viewport.height);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					viewport.x, viewport.y, viewport.width, viewport.height);
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -333,7 +342,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			world = new World(worldListener);
 			renderer = new WorldRenderer(game.batcher, world);
-//			world.score = lastScore;
+			// world.score = lastScore;
 			state = GAME_READY;
 		}
 	}
@@ -347,10 +356,11 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	public void draw() {
-		
+
 		GL20 gl = Gdx.gl;
-		
-		gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+
+		gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width,
+				(int) viewport.height);
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -422,10 +432,11 @@ public class GameScreen extends ScreenAdapter {
 		if (myMode == GameMode.Server) {
 			draw();
 		} else if (myMode == GameMode.Client) {
-			
+
 			GL20 gl = Gdx.gl;
-			
-//			gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+
+			// gl.glViewport((int) viewport.x, (int) viewport.y, (int)
+			// viewport.width, (int) viewport.height);
 			gl.glClearColor(0, 0, 0, 1);
 			gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
