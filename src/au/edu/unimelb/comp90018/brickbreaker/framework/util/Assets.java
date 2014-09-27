@@ -19,6 +19,7 @@ public class Assets {
 	public static Texture background;
 	public static Texture items; //Main Texture with game sprites
 	public static Texture itemsButtons; //temporary Texture for buttons only
+	public static Texture itemsLevelsButtons; //temporary Texture for buttons only
 	public static Texture backgroundHelp;// jp
 	public static Texture backgroundMenu;// jp
 	public static Texture backgroundOptions;// jp
@@ -59,6 +60,19 @@ public class Assets {
 	public static TextureRegion help;
 	public static TextureRegion multiplayer;
 	public static TextureRegion connect;
+	
+	/*Here declare buttons for locked levels*/
+	public static TextureRegion levelLocked_1;
+	public static TextureRegion levelLocked_2;
+	public static TextureRegion levelLocked_3;
+	public static TextureRegion levelLocked_4;
+	public static TextureRegion levelLocked_5;
+	public static TextureRegion levelLocked_6;
+	public static TextureRegion levelLocked_7;
+	public static TextureRegion levelLocked_8;
+	public static TextureRegion levelLocked_9;
+	
+	public static TextureRegion levelUnlocked_1;
 
 	/*Here declare Screens*/
 	public static TextureRegion defaultScreen;
@@ -151,6 +165,19 @@ public class Assets {
 		smallYellowBrick = new TextureRegion(items, 64, 48, 32, 16);
 		smallPurpleBrick = new TextureRegion(items, 64, 64, 32, 16);
 		
+		/*Here you should load textures for locked levels*/
+		itemsLevelsButtons = loadTexture("textures/itemsLevelsButtons.png");
+		levelLocked_1 = new TextureRegion(itemsLevelsButtons, 0, 0, 128, 128);
+		levelLocked_2 = new TextureRegion(itemsLevelsButtons, 128, 0, 128, 128);
+		levelLocked_3 = new TextureRegion(itemsLevelsButtons, 256, 0, 128, 128);
+		levelLocked_4 = new TextureRegion(itemsLevelsButtons, 0, 128, 128, 128);
+		levelLocked_5 = new TextureRegion(itemsLevelsButtons, 128, 128, 128, 128);
+		levelLocked_6 = new TextureRegion(itemsLevelsButtons, 256, 128, 128, 128);
+		levelLocked_7 = new TextureRegion(itemsLevelsButtons, 0, 256, 128, 128);
+		levelLocked_8 = new TextureRegion(itemsLevelsButtons, 128, 256, 128, 128);
+		levelLocked_9 = new TextureRegion(itemsLevelsButtons, 256, 256, 128, 128);
+		
+		levelUnlocked_1 = new TextureRegion(itemsLevelsButtons, 0, 384, 128, 128);
 		
 		/*Here you should put all textures that comes from itemsButtons.png*/
 		itemsButtons = loadTexture("textures/itemsButtons.png");

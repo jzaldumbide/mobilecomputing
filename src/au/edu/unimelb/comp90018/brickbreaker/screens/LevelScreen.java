@@ -1,199 +1,117 @@
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 import au.edu.unimelb.comp90018.brickbreaker.screens.GameScreen.GameMode;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class LevelScreen extends ScreenAdapter {
 	BrickBreaker game;
-
 	OrthographicCamera guiCam;
-	Rectangle backBounds, lvl1Bs, lvl2Bs, lvl3Bs, lvl4Bs, lvl5Bs, lvl6Bs,
-			lvl7Bs, lvl8Bs, lvl9Bs;
+	
+	private Button levelLockedButton_1,levelLockedButton_2,levelLockedButton_3,levelLockedButton_4,levelLockedButton_5,levelLockedButton_6,levelLockedButton_7,levelLockedButton_8,levelLockedButton_9, btnBack;
+	private Button levelUnlockedButton_1;
 	Vector3 touchPoint;
-	Texture btnlvl1, btnlvl2, btnlvl3, btnlvl4, btnlvl5, btnlvl6, btnlvl7,
-			btnlvl8, btnlvl9;
-	TextureRegion helpRegion;
-	public static Texture btnback;
-	public int screenWidth, screenHeight, btnSize, btnSeparation;
 
 	public LevelScreen(BrickBreaker game) {
-		screenWidth = 320;
-		screenHeight = 480;
-		btnSize = 64;
-		btnSeparation = 32;
-
-		this.game = game;
-		guiCam = new OrthographicCamera(screenWidth, screenHeight);
-		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
-
-		// guiCam.setToOrtho(false, 320, 480);
-		// nextBounds = new Rectangle(320 - 64, 0, 64, 64);
+		
 		touchPoint = new Vector3();
+		this.game = game;
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
 
-		backBounds = new Rectangle(10, 10, 32, 32);
-		btnback = new Texture("buttons/back.png");
-		lvl1Bs = new Rectangle(32, 400, btnSize, btnSize);
-		lvl2Bs = new Rectangle(32 + (btnSeparation + btnSize), 400, btnSize,
-				btnSize);
-		lvl3Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize), 400,
-				btnSize, btnSize);
-		lvl4Bs = new Rectangle(32, 400 - (btnSeparation + btnSize), btnSize,
-				btnSize);
-		lvl5Bs = new Rectangle(32 + (btnSeparation + btnSize),
-				400 - (btnSeparation + btnSize), btnSize, btnSize);
-		lvl6Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize),
-				400 - (btnSeparation + btnSize), btnSize, btnSize);
-		lvl7Bs = new Rectangle(32, 400 - 2 * (btnSeparation + btnSize),
-				btnSize, btnSize);
-		lvl8Bs = new Rectangle(32 + (btnSeparation + btnSize),
-				400 - 2 * (btnSeparation + btnSize), btnSize, btnSize);
-		lvl9Bs = new Rectangle(32 + 2 * (btnSeparation + btnSize),
-				400 - 2 * (btnSeparation + btnSize), btnSize, btnSize);
+		//levelLockedButton_1 = new Button(Settings.TARGET_WIDTH/2 - 32 - 64,Settings.TARGET_HEIGHT/2 +32 + 64,ButtonSize.XLARGE_SQUARE);
+		levelUnlockedButton_1 = new Button(Settings.TARGET_WIDTH/2 - 32 - 64,Settings.TARGET_HEIGHT/2 + 32 + 64,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_2 = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2 + 32 + 64,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_3 = new Button(Settings.TARGET_WIDTH/2 + 32 + 64,Settings.TARGET_HEIGHT/2 + 32 + 64,ButtonSize.XLARGE_SQUARE);
+				
+		levelLockedButton_4 = new Button(Settings.TARGET_WIDTH/2 - 32 - 64,Settings.TARGET_HEIGHT/2,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_5 = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_6 = new Button(Settings.TARGET_WIDTH/2 + 32 + 64,Settings.TARGET_HEIGHT/2,ButtonSize.XLARGE_SQUARE);
+				
+		levelLockedButton_7 = new Button(Settings.TARGET_WIDTH/2 - 32 - 64,Settings.TARGET_HEIGHT/2 -32 - 64,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_8 = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2 - 32 - 64,ButtonSize.XLARGE_SQUARE);
+		levelLockedButton_9 = new Button(Settings.TARGET_WIDTH/2 + 32 + 64,Settings.TARGET_HEIGHT/2 - 32 - 64,ButtonSize.XLARGE_SQUARE);
 
-		btnlvl1 = new Texture("levelbtn/1.png");
-		btnlvl2 = new Texture("levelbtn/2.png");
-		btnlvl3 = new Texture("levelbtn/3.png");
-		btnlvl4 = new Texture("levelbtn/4.png");
-		btnlvl5 = new Texture("levelbtn/5.png");
-		btnlvl6 = new Texture("levelbtn/6.png");
-		btnlvl7 = new Texture("levelbtn/7.png");
-		btnlvl8 = new Texture("levelbtn/8.png");
-		btnlvl9 = new Texture("levelbtn/9.png");
-
+		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
 	}
 
 	public void update() {
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),
-					0));
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 
-			if (lvl1Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 1
-				// game.setScreen(new MenuScreen(game));
+			if (levelUnlockedButton_1.bounds.contains(touchPoint.x, touchPoint.y)) {
+				// Assets.playSound(Assets.clickSound);
 				Gdx.app.log("level 1", "level 1");
 				game.setScreen(new GameScreen(game, GameMode.Server));
 				return;
 			}
-			if (lvl2Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 2
-				// game.setScreen(new MenuScreen(game));
+			if (levelLockedButton_2.bounds.contains(touchPoint.x, touchPoint.y)) {
+				// Assets.playSound(Assets.clickSound);
 				Gdx.app.log("level 2", "level 2");
 				game.setScreen(new GameScreen(game, GameMode.Client));
 				return;
 			}
-			if (lvl3Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 3
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 3", "level 3");
+			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
+				// Assets.playSound(Assets.clickSound);
+				game.setScreen(new MenuScreen(game));
 				return;
 			}
-			if (lvl4Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 4
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 4", "level 4");
-				return;
-			}
-			if (lvl5Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 5
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 5", "level 5");
-				return;
-			}
-			if (lvl6Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 6
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 6", "level 6");
-				return;
-			}
-			if (lvl7Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 7
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 7", "level 7");
-				return;
-			}
-			if (lvl8Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 8
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 8", "level 8");
-				return;
-			}
-			if (lvl9Bs.contains(touchPoint.x, touchPoint.y)) {
-
-				// llamar al level 9
-				// game.setScreen(new MenuScreen(game));
-				Gdx.app.log("level 9", "level 9");
-				return;
-			}
-
-			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
-
-				game.setScreen(new SelectScreen(game));
-				Gdx.app.log("", "click para regresar");
-				return;
-			}
-
 		}
 	}
 
 	public void draw() {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		guiCam.update();
+		Assets.font.setScale(0.7f, 0.7f);
+		Assets.font.setColor(new Color(Color.WHITE));
+		
 
 		game.batcher.setProjectionMatrix(guiCam.combined);
-		game.batcher.disableBlending();
-		game.batcher.begin();
-		game.batcher.draw(Assets.defaultScreen, 0, 0, 320, 480);
-
-		game.batcher.draw(btnback, 10, 10, 32, 32);
-		// level buttons
-		game.batcher.draw(btnlvl1, lvl1Bs.x, lvl1Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl2, lvl2Bs.x, lvl2Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl3, lvl3Bs.x, lvl3Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl4, lvl4Bs.x, lvl4Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl5, lvl5Bs.x, lvl5Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl6, lvl6Bs.x, lvl6Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl7, lvl7Bs.x, lvl7Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl8, lvl8Bs.x, lvl8Bs.y, btnSize, btnSize);
-		game.batcher.draw(btnlvl9, lvl9Bs.x, lvl9Bs.y, btnSize, btnSize);
-
-		//
-		game.batcher.end();
-
 		game.batcher.enableBlending();
 		game.batcher.begin();
-		// game.batcher.draw(Assets., 320, 0, -64, 64);
+		game.batcher.draw(Assets.defaultBackground, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		//game.batcher.draw(Assets.levelLocked_1,levelLockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelUnlocked_1,levelUnlockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelUnlockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_2,levelLockedButton_2.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_2.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_3,levelLockedButton_3.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_3.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		
+		game.batcher.draw(Assets.levelLocked_4,levelLockedButton_4.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_4.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_5,levelLockedButton_5.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_5.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_6,levelLockedButton_6.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_6.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		
+		game.batcher.draw(Assets.levelLocked_7,levelLockedButton_7.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_7.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_8,levelLockedButton_8.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_8.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.levelLocked_9,levelLockedButton_9.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_9.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		
+		game.batcher.draw(Assets.back, 
+				btnBack.position.x - ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2,
+				btnBack.position.y - ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,
+				ButtonSize.MEDIUM_SQUARE.getButtonWidth(), 
+				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
+		
 		game.batcher.end();
+
 	}
 
 	@Override
 	public void render(float delta) {
-		draw();
 		update();
+		draw();
 	}
 
 	@Override
-	public void hide() {
-		// helpImage.dispose();
-		super.dispose();
+	public void pause() {
+		// Settings.save();
 	}
 }
