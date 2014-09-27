@@ -102,9 +102,9 @@ public class GameScreen extends ScreenAdapter {
 		myMode = mode;
 
 		if (mode == GameMode.Server) {
-			startServerNetwork();
+//			startServerNetwork();
 		} else if (mode == GameMode.Client) {
-			sendMessage();
+//			sendMessage();
 		}
 	}
 
