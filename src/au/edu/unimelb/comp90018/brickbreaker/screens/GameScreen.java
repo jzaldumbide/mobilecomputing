@@ -114,39 +114,37 @@ public class GameScreen extends ScreenAdapter {
 
 			@Override
 			public void run() {
+
 				ServerSocketHints serverSocketHint = new ServerSocketHints();
+
 				// 0 means no timeout. Probably not the greatest idea in
 				// production!
 				serverSocketHint.acceptTimeout = 0;
 
 				// Create the socket server using TCP protocol and listening on
-				// 9021
-				// Only one app can listen to a port at a time, keep in mind
-				// many ports are reserved
-				// especially in the lower numbers ( like 21, 80, etc )
+				// 9021. Only one app can listen to a port at a time, keep in
+				// mind many ports are reserved especially in the lower numbers
+				// ( like 21, 80, etc )
+				ServerSocket serverSocket = Gdx.net.newServerSocket(Protocol.TCP, 9021, serverSocketHint);
 
-				ServerSocket serverSocket = Gdx.net.newServerSocket(
-						Protocol.TCP, 9021, serverSocketHint);
-				Gdx.app.log("Server status: ", "up");
 				// Loop forever
 				while (true) {
+
 					// Create a socket
 					Socket socket = serverSocket.accept(null);
 
 					// Read data from the socket into a BufferedReader
-					BufferedReader buffer = new BufferedReader(
-							new InputStreamReader(socket.getInputStream()));
+					BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 					try {
-						// Read to the next newline (\n) and display that text
-						// on labelMessage
-						// labelMessage.setText(buffer.readLine());
-						Gdx.app.log("Recibido: ", "???");
-						Gdx.app.log("Recibido: ", buffer.readLine());
-						Gdx.app.log("Recibido: ", "???????????????");
-						// synchronized (this) {
-						// world.score = Integer.parseInt(buffer.readLine());
-						// }
+						while (true) {
+							// Read to the next newline (\n) and display
+							Gdx.app.log("Recibido: ", buffer.readLine());
+							// synchronized (this) {
+							// world.score =
+							// Integer.parseInt(buffer.readLine());
+							// }
+						}
 
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -158,15 +156,12 @@ public class GameScreen extends ScreenAdapter {
 
 	public String getmyipNetwork() {
 		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements();) {
+			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
 				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 					InetAddress inetAddress = enumIpAddr.nextElement();
 					if (!inetAddress.isLoopbackAddress()) {
-						Gdx.app.log("ip: ", inetAddress.getHostAddress()
-								.toString());
+						Gdx.app.log("ip: ", inetAddress.getHostAddress().toString());
 						ipAddress = inetAddress.getHostAddress().toString();
 					}
 				}
@@ -186,32 +181,25 @@ public class GameScreen extends ScreenAdapter {
 			public void run() {
 
 				String textToSend = new String();
-				String coords = new String();
-				coords = "x: " + Gdx.input.getX() + " " + "y: "
-						+ Gdx.input.getY();
-				textToSend = ipAddress + " dice hola y esta en " + coords
-						+ ("\n");
-
+				
 				SocketHints socketHints = new SocketHints();
+				
 				// Socket will time our in 4 seconds
 				socketHints.connectTimeout = 4000;
-				// create the socket and connect to the server entered in the
-				// text box (
-				// x.x.x.x format ) on port 9021
-				Socket socket = Gdx.net.newClientSocket(Protocol.TCP,
-						"192.168.56.101", 9021, socketHints);
+				
+				// Create the socket and connect to the server on port 9021
+				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021, socketHints);
+				
 				while (true) {
 					try {
 
-						coords = "x: " + Gdx.input.getX() + " " + "y: "
-								+ Gdx.input.getY();
-						// textToSend = ipAddress + " dice hola y esta en "
-						// + coords + ("\n");
 						textToSend = String.valueOf(Gdx.input.getX());
 
 						// write our entered message to the stream
 						socket.getOutputStream().write(textToSend.getBytes());
+						
 						Gdx.app.log(ipAddress + " dice: ", textToSend);
+						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
