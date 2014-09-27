@@ -1,8 +1,13 @@
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
+import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
@@ -33,7 +38,16 @@ public class ScoreScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
-		scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+		LevelDownloader ld = new LevelDownloader();
+		try {
+			scoreString = ld.loadHighScores();
+		} catch (XmlPullParserException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		} catch (IOException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		}		
 
 	}
 

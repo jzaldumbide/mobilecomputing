@@ -32,8 +32,8 @@ public class LevelDownloader {
 	/**
 	 * String with the URI prefix where the levels are allocated
 	 */
-	//private static String URIPREFIX = "http://192.168.1.1/";
-	private static String URIPREFIX = "http://anchavesb.netne.net/";
+	private static String URIPREFIX = "http://192.168.1.1/";
+	//private static String URIPREFIX = "http://anchavesb.netne.net/";
 	/**
 	 * Default class constructor
 	 */
@@ -74,7 +74,7 @@ public class LevelDownloader {
 	 * @throws IOException
 	 * @throws XmlPullParserException
 	 */
-	public GameLevel downloadGame(String levelName) throws ClientProtocolException, IOException, XmlPullParserException{
+	/*public GameLevel downloadGame(String levelName) throws ClientProtocolException, IOException, XmlPullParserException{
 		String response = makeHttpRequest(levelName);
 		GameLevel gameLevel = new GameLevel();
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -115,11 +115,65 @@ public class LevelDownloader {
         }
 
 		return gameLevel;
+	}*/
+	/**
+	 * Downloads the game and generate the proper model classes that represents the XML
+	 * @param levelName Name of the desired level
+	 * @return A model with all the parameters of the level
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws XmlPullParserException
+	 */
+	public String downloadGame(String levelName) throws ClientProtocolException, IOException, XmlPullParserException{
+		String response = makeHttpRequest(levelName);
+		return response;
 	}
-	private void persistGame (String levelName, String xml){
-		FileHandle filehandle = Gdx.files.external(levelName);
+	public String downloadHighScores() throws ClientProtocolException, IOException{
+		String response = makeHttpRequest("highScore.php");
+		return response;
+	}
+	private String loadFile (String fileName){
+		FileHandle filehandle = Gdx.files.external(fileName);
+		return filehandle.readString();
+	}
+	private void persistFile (String fileName, String value){
+		FileHandle filehandle = Gdx.files.external(fileName);
+		filehandle.writeString(value, false);		
+	}
+	public void persistGame (String levelName, String xml){
+		persistFile(levelName, xml);
+	}
 
-		filehandle.writeString(xml, false);
+	public void persistScores(String highScores) {
+		persistFile("highScores.xml", highScores);
+	}
 
+	public String loadHighScores() throws XmlPullParserException, IOException {
+		String highScores = loadFile("highScores.xml");
+		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        XmlPullParser xpp = factory.newPullParser();
+        xpp.setInput( new StringReader ( highScores ) );
+        StringBuffer sb = new StringBuffer();
+        int eventType = xpp.getEventType();
+        sb.append("Scores\n\n");
+        int position = 1;
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+        	if(eventType == XmlPullParser.START_TAG) {
+               String tagName = xpp.getName();
+               if (tagName.equals("highScore")){
+            	   String name = xpp.getAttributeValue("", "name");
+            	   int score = Integer.valueOf(xpp.getAttributeValue("", "score"));
+            	   sb.append(position);
+            	   sb.append(". ");
+            	   sb.append(name);
+            	   sb.append(": ");
+            	   sb.append(score);
+            	   sb.append("\n");
+               }
+            }
+         eventType = xpp.next();
+        }
+		return sb.toString();
 	}
 }
