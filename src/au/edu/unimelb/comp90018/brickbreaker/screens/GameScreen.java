@@ -415,6 +415,13 @@ public class GameScreen extends ScreenAdapter {
 		update(delta);
 		if (myMode == GameMode.Server) {
 			draw();
+		} else if (myMode == GameMode.Client) {
+			
+			GL20 gl = Gdx.gl;
+			
+//			gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+			gl.glClearColor(0, 0, 0, 1);
+			gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
 	}
 
