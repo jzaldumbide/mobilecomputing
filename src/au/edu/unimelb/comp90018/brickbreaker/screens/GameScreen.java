@@ -141,7 +141,10 @@ public class GameScreen extends ScreenAdapter {
 						// on labelMessage
 						// labelMessage.setText(buffer.readLine());
 						Gdx.app.log("Recibido: ", buffer.readLine());
-						world.score = Integer.parseInt(buffer.readLine());
+						synchronized (this) {
+							world.score = Integer.parseInt(buffer.readLine());
+						}
+						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -330,7 +333,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			world = new World(worldListener);
 			renderer = new WorldRenderer(game.batcher, world);
-			world.score = lastScore;
+//			world.score = lastScore;
 			state = GAME_READY;
 		}
 	}

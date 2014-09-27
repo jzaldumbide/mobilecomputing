@@ -60,7 +60,7 @@ public class World {
 		 */
 		generateLevel();
 		
-		this.score = 0;
+//		this.score = 0;
 		this.state = WORLD_STATE_RUNNING;
 	}
 
@@ -218,7 +218,7 @@ public class World {
 				if (bricks.get(i).isPulverised())
 					bricks.remove(i);
 				
-				score ++;
+//				score ++;
 				break;
 			}
 		}
