@@ -2,6 +2,7 @@ package au.edu.unimelb.comp90018.brickbreaker.screens;
 
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.screens.GameScreen.GameMode;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -81,7 +82,7 @@ public class LevelScreen extends ScreenAdapter {
 				// llamar al level 1
 				// game.setScreen(new MenuScreen(game));
 				Gdx.app.log("level 1", "level 1");
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new GameScreen(game, GameMode.Server));
 				return;
 			}
 			if (lvl2Bs.contains(touchPoint.x, touchPoint.y)) {
@@ -89,6 +90,7 @@ public class LevelScreen extends ScreenAdapter {
 				// llamar al level 2
 				// game.setScreen(new MenuScreen(game));
 				Gdx.app.log("level 2", "level 2");
+				game.setScreen(new GameScreen(game, GameMode.Client));
 				return;
 			}
 			if (lvl3Bs.contains(touchPoint.x, touchPoint.y)) {

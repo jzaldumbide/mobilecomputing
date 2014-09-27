@@ -1,5 +1,12 @@
 package au.edu.unimelb.comp90018.brickbreaker.screens;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
@@ -9,11 +16,16 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.net.ServerSocket;
+import com.badlogic.gdx.net.ServerSocketHints;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -37,8 +49,15 @@ public class GameScreen extends ScreenAdapter {
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
-
-	public GameScreen(BrickBreaker game) {
+	String ipAddress = null;
+	String ipServer = "localhost";
+	
+	public enum GameMode {
+		Server, Client
+	}
+	
+	public GameScreen(BrickBreaker game, GameMode mode) {
+		
 		this.game = game;
 
 		state = GAME_READY;
@@ -76,8 +95,118 @@ public class GameScreen extends ScreenAdapter {
 		toggleSound = true;
 		lastScore = 0;
 		scoreString = "SCORE: 0";
+		
+		if (mode == GameMode.Server) {
+			startServerNetwork();
+		} else if (mode == GameMode.Client) {
+			sendMessage();
+		}
 	}
 
+	public void startServerNetwork() {
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				ServerSocketHints serverSocketHint = new ServerSocketHints();
+				// 0 means no timeout. Probably not the greatest idea in
+				// production!
+				serverSocketHint.acceptTimeout = 0;
+
+				// Create the socket server using TCP protocol and listening on
+				// 9021
+				// Only one app can listen to a port at a time, keep in mind
+				// many ports are reserved
+				// especially in the lower numbers ( like 21, 80, etc )
+
+				ServerSocket serverSocket = Gdx.net.newServerSocket(
+						Protocol.TCP, 9021, serverSocketHint);
+
+				// Loop forever
+				while (true) {
+					// Create a socket
+					Socket socket = serverSocket.accept(null);
+
+					// Read data from the socket into a BufferedReader
+					BufferedReader buffer = new BufferedReader(
+							new InputStreamReader(socket.getInputStream()));
+
+					try {
+						// Read to the next newline (\n) and display that text
+						// on labelMessage
+						// labelMessage.setText(buffer.readLine());
+						Gdx.app.log("Recibido: ", buffer.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
+
+	public String getmyipNetwork() {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					if (!inetAddress.isLoopbackAddress()) {
+						Gdx.app.log("ip: ", inetAddress.getHostAddress()
+								.toString());
+						ipAddress = inetAddress.getHostAddress().toString();
+					}
+				}
+			}
+		} catch (Exception e) {
+			Gdx.app.log("Exception caught =", e.getMessage());
+		}
+		return ipAddress;
+
+	}
+	
+	public void sendMessage() {
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				String textToSend = new String();
+				String coords = new String();
+				coords = "x: " + Gdx.input.getX() + " " + "y: "
+						+ Gdx.input.getY();
+				textToSend = ipAddress + " dice hola y esta en " + coords + ("\n");
+
+				SocketHints socketHints = new SocketHints();
+				// Socket will time our in 4 seconds
+				socketHints.connectTimeout = 4000;
+				// create the socket and connect to the server entered in the
+				// text box (
+				// x.x.x.x format ) on port 9021
+				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer,
+						9021, socketHints);
+				while (true) {
+					try {
+
+						coords = "x: " + Gdx.input.getX() + " " + "y: "
+								+ Gdx.input.getY();
+						textToSend = ipAddress + " dice hola y esta en "
+								+ coords + ("\n");
+
+						// write our entered message to the stream
+						socket.getOutputStream().write(textToSend.getBytes());
+						Gdx.app.log(ipAddress + " dice: ", textToSend);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+	}
+	
 	public void update(float deltaTime) {
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
