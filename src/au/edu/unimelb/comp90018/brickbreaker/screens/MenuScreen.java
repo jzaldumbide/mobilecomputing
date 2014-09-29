@@ -18,7 +18,7 @@ public class MenuScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
 	
-	private Button playButton, scoresButton, optionsButton, helpButton, exitButton;
+	private Button playButton, scoresButton, optionsButton, helpButton, quitButton;
 	Vector3 touchPoint;
 
 	public MenuScreen(BrickBreaker game) {
@@ -31,8 +31,8 @@ public class MenuScreen extends ScreenAdapter {
 		playButton = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2,ButtonSize.XLARGE_RECTANGLE);
 		scoresButton = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2-45,ButtonSize.XLARGE_RECTANGLE);
 		optionsButton = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2-90,ButtonSize.XLARGE_RECTANGLE);
-		helpButton = new Button(0,0,ButtonSize.XLARGE_RECTANGLE);
-		exitButton = new Button(0,0,ButtonSize.XLARGE_RECTANGLE);
+		helpButton = new Button(50 + ButtonSize.MEDIUM_SQUARE.getButtonWidth(),50,ButtonSize.MEDIUM_SQUARE);
+		quitButton = new Button(Settings.TARGET_WIDTH - ButtonSize.MEDIUM_SQUARE.getButtonWidth() - 50,50,ButtonSize.MEDIUM_SQUARE);
 	}
 
 	public void update() {
@@ -40,29 +40,28 @@ public class MenuScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 
 			if (playButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
-				// game.setScreen(new GameScreen(game));
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new SelectScreen(game));
 				return;
 			}
 
 			if (scoresButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new ScoreScreen(game));
 				return;
 			}
 			if (optionsButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new OptionScreen(game));
 				return;
 			}
 			if (helpButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new HelpScreen(game));
 				return;
 			}
-			if (exitButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+			if (quitButton.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
 				Gdx.app.exit();
 				return;
 			}
@@ -84,6 +83,9 @@ public class MenuScreen extends ScreenAdapter {
 		game.batcher.draw(Assets.buttonMenu,playButton.position.x-ButtonSize.XLARGE_RECTANGLE.getButtonWidth()/2,playButton.position.y-ButtonSize.XLARGE_RECTANGLE.getButtonHeight()/2,ButtonSize.XLARGE_RECTANGLE.getButtonWidth(),ButtonSize.XLARGE_RECTANGLE.getButtonHeight());
 		game.batcher.draw(Assets.buttonMenu,scoresButton.position.x-ButtonSize.XLARGE_RECTANGLE.getButtonWidth()/2,scoresButton.position.y-ButtonSize.XLARGE_RECTANGLE.getButtonHeight()/2,ButtonSize.XLARGE_RECTANGLE.getButtonWidth(),ButtonSize.XLARGE_RECTANGLE.getButtonHeight());
 		game.batcher.draw(Assets.buttonMenu,optionsButton.position.x-ButtonSize.XLARGE_RECTANGLE.getButtonWidth()/2,optionsButton.position.y-ButtonSize.XLARGE_RECTANGLE.getButtonHeight()/2,ButtonSize.XLARGE_RECTANGLE.getButtonWidth(),ButtonSize.XLARGE_RECTANGLE.getButtonHeight());
+		
+		game.batcher.draw(Assets.help,helpButton.position.x-ButtonSize.MEDIUM_SQUARE.getButtonWidth()/2,helpButton.position.y-ButtonSize.MEDIUM_SQUARE.getButtonHeight()/2,ButtonSize.MEDIUM_SQUARE.getButtonWidth(),ButtonSize.MEDIUM_SQUARE.getButtonHeight());
+		game.batcher.draw(Assets.quit,quitButton.position.x-ButtonSize.MEDIUM_SQUARE.getButtonWidth()/2,quitButton.position.y-ButtonSize.MEDIUM_SQUARE.getButtonHeight()/2,ButtonSize.MEDIUM_SQUARE.getButtonWidth(),ButtonSize.MEDIUM_SQUARE.getButtonHeight());
 		
 		float posX = Settings.TARGET_WIDTH/2;
 		float posY = Settings.TARGET_HEIGHT/2;

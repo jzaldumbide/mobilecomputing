@@ -40,18 +40,18 @@ public class OptionScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 
 				return;
 			}
 
 			if (musicButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 
 				return;
 			}
 			if (accelerometerButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 
 				Settings.accelerometerEnabled = !Settings.accelerometerEnabled;
 				Settings.save();
@@ -59,7 +59,7 @@ public class OptionScreen extends ScreenAdapter {
 				return;
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				return;
 			}

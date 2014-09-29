@@ -37,18 +37,18 @@ public class SelectScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 
 			if (singlePlayerButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new LevelScreen(game));
 				return;
 			}
 
 			if (multiPlayerButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MultiplayerScreen(game));
 				return;
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				return;
 			}

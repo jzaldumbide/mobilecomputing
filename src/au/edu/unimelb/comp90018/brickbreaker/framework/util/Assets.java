@@ -16,15 +16,12 @@ public class Assets {
 	/* Textures - there must be less possible */
 	public static TextureRegion gameBackground;
 	public static Texture defaultBackground;
+	public static Texture splashBackground;
+	public static Texture menuBackground;
 	public static Texture background;
 	public static Texture items; //Main Texture with game sprites
 	public static Texture itemsButtons; //temporary Texture for buttons only
 	public static Texture itemsLevelsButtons; //temporary Texture for buttons only
-	public static Texture backgroundHelp;// jp
-	public static Texture backgroundMenu;// jp
-	public static Texture backgroundOptions;// jp
-	public static Texture backgroundScores;// jp
-	public static Texture backgroundSplash;// jp
 
 	/* Transparent Screens*/
 	public static TextureRegion defaultNotification;
@@ -35,7 +32,9 @@ public class Assets {
 	/*Here declare game Textures*/
 	public static TextureRegion blueBall;
 	public static TextureRegion redBall;
-	public static TextureRegion paddle;
+	public static TextureRegion paddleLarge;
+	public static TextureRegion paddleSmall;
+	//Variety of Bricks:
 	public static TextureRegion smallGreenBrick;
 	public static TextureRegion mediumGreenBrick;
 	public static TextureRegion smallOrangeBrick;
@@ -44,6 +43,8 @@ public class Assets {
 	public static TextureRegion mediumBlueBrick;
 	public static TextureRegion smallYellowBrick;
 	public static TextureRegion smallPurpleBrick;
+	public static TextureRegion smallPinkBrick;
+	public static TextureRegion smallBlackBrick;
 	public static TextureRegion lives;
 	public static TextureRegion buttonMenu;
 	
@@ -73,6 +74,8 @@ public class Assets {
 	public static TextureRegion levelLocked_9;
 	
 	public static TextureRegion levelUnlocked_1;
+	public static TextureRegion levelUnlocked_2;
+	public static TextureRegion levelUnlocked_3;
 
 	/*Here declare Screens*/
 	public static TextureRegion defaultScreen;
@@ -96,11 +99,14 @@ public class Assets {
 	/* Sounds & Music */
 	public static Music music;
 
-	public static Sound stepSound;
+	public static Sound touchWallSound;
+	public static Sound touchHardBrickSound;
+	public static Sound lifeLostSound;
+	public static Sound gameOverSound;
+	public static Sound winnerSound;
+	public static Sound getBonusSound;
 	public static Sound clickSound;
-	public static Sound correctSound;
-	public static Sound incorrectSound;
-	public static Sound shakeSound;
+	public static Sound toggleSound;
 
 	public static Texture loadTexture(String file) {
 		return new Texture(Gdx.files.internal(file));
@@ -128,21 +134,12 @@ public class Assets {
 		defaultBackground = loadTexture("backgrounds/screens/default_background.png");
 		defaultScreen = new TextureRegion(defaultBackground, 0, 0, 800, 1280);
 		
-		backgroundHelp = loadTexture("backgrounds/screens/screen_help.png");
-		helpScreen = new TextureRegion(backgroundHelp, 0, 0, 320, 480);
-
-		backgroundMenu = loadTexture("backgrounds/screens/screen_menu.png");
-		menuScreen = new TextureRegion(backgroundMenu, 0, 0, 800, 1280);
-
-		backgroundOptions = loadTexture("backgrounds/screens/screen_options.png");
-		optionScreen = new TextureRegion(backgroundOptions, 0, 0, 320, 480);
-
-		backgroundScores = loadTexture("backgrounds/screens/screen_scores.png");
-		scoresScreen = new TextureRegion(backgroundScores, 0, 0, 320, 480);
-
-		backgroundSplash = loadTexture("backgrounds/screens/screen_splash.png");
-		splashScreen = new TextureRegion(backgroundSplash, 0, 0, 800, 1280);
-
+		menuBackground = loadTexture("backgrounds/screens/screen_menu.png");
+		menuScreen = new TextureRegion(menuBackground, 0, 0, 800, 1280);
+		
+		splashBackground = loadTexture("backgrounds/screens/screen_splash.png");
+		splashScreen = new TextureRegion(splashBackground, 0, 0, 800, 1280);
+		
 		background = loadTexture("backgrounds/background.png");
 		gameBackground = new TextureRegion(background, 0, 0, 800, 1280);
 		
@@ -154,16 +151,19 @@ public class Assets {
 		items = loadTexture("textures/items.png");
 		blueBall = new TextureRegion(items, 0, 0, 64, 64);
 		redBall = new TextureRegion(items, 0, 64, 64, 64);
-		paddle = new TextureRegion(items, 96, 0, 128, 32);
+		paddleLarge = new TextureRegion(items, 96, 0, 128, 32);
+		paddleSmall = new TextureRegion(items, 96, 32, 96, 32);
 		lives = new TextureRegion(items, 224, 0, 64, 64);
 		smallGreenBrick = new TextureRegion(items, 64, 0, 32, 16);
-		mediumGreenBrick = new TextureRegion(items, 80, 32, 32, 16);
+		mediumGreenBrick = new TextureRegion(items, 80, 64, 32, 16);
 		smallOrangeBrick = new TextureRegion(items, 64, 16, 32, 16);
-		mediumOrangeBrick = new TextureRegion(items, 80, 48, 32, 16);
+		mediumOrangeBrick = new TextureRegion(items, 80, 80, 32, 16);
 		smallBlueBrick = new TextureRegion(items, 64, 32, 32, 16);
-		mediumBlueBrick  = new TextureRegion(items, 80, 64, 32, 16);
+		mediumBlueBrick  = new TextureRegion(items, 80, 96, 32, 16);
 		smallYellowBrick = new TextureRegion(items, 64, 48, 32, 16);
 		smallPurpleBrick = new TextureRegion(items, 64, 64, 32, 16);
+		smallPinkBrick = new TextureRegion(items, 64, 80, 32, 16);
+		smallBlackBrick = new TextureRegion(items, 64, 96, 32, 16);
 		
 		/*Here you should load textures for locked levels*/
 		itemsLevelsButtons = loadTexture("textures/itemsLevelsButtons.png");
@@ -178,6 +178,8 @@ public class Assets {
 		levelLocked_9 = new TextureRegion(itemsLevelsButtons, 256, 256, 128, 128);
 		
 		levelUnlocked_1 = new TextureRegion(itemsLevelsButtons, 0, 384, 128, 128);
+		levelUnlocked_2 = new TextureRegion(itemsLevelsButtons, 128, 384, 128, 128);
+		levelUnlocked_3 = new TextureRegion(itemsLevelsButtons, 256, 384, 128, 128);
 		
 		/*Here you should put all textures that comes from itemsButtons.png*/
 		itemsButtons = loadTexture("textures/itemsButtons.png");
@@ -227,7 +229,7 @@ public class Assets {
 		 Gdx.files.internal("fonts/junegull.ttf"));
 		 FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		 parameter.size = 40;
-		 font = generator.generateFont(parameter); // font size 12 pixels
+		 font = generator.generateFont(parameter); 
 		 font.setColor(new Color(Color.PURPLE));
 		 generator.dispose();
 
@@ -235,20 +237,23 @@ public class Assets {
 		music.setLooping(true);
 		music.setVolume(0.5f);
 
-		if (Settings.soundEnabled)
+		if (Settings.musicEnabled)
 			music.play();
 
-		stepSound = Gdx.audio.newSound(Gdx.files.internal("sound/step.ogg"));
-		clickSound = Gdx.audio.newSound(Gdx.files.internal("sound/click.ogg"));
-		correctSound = Gdx.audio.newSound(Gdx.files
-				.internal("sound/correct.ogg"));
-		incorrectSound = Gdx.audio.newSound(Gdx.files
-				.internal("sound/incorrect.ogg"));
-		shakeSound = Gdx.audio.newSound(Gdx.files.internal("sound/shake.ogg"));
+	
+		touchWallSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchWall.ogg"));
+		touchHardBrickSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchHardBrick.ogg"));
+		lifeLostSound = Gdx.audio.newSound(Gdx.files.internal("sound/lifeLost.ogg"));
+		gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sound/gameOver.ogg"));
+		winnerSound = Gdx.audio.newSound(Gdx.files.internal("sound/tada.wav"));
+		getBonusSound = Gdx.audio.newSound(Gdx.files.internal("sound/getBonus.ogg"));
+		clickSound = Gdx.audio.newSound(Gdx.files.internal("sound/click.wav"));
+		toggleSound = Gdx.audio.newSound(Gdx.files.internal("sound/toggle.ogg"));
 	}
 
 	public static void playSound(Sound sound) {
 		if (Settings.soundEnabled)
 			sound.play(1);
 	}
+	
 }

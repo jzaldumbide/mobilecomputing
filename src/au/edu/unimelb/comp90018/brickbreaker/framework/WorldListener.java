@@ -16,6 +16,8 @@ public interface WorldListener {
 
 	public void hitBrick ();
 	
-	public void loseLife();
+	public void lifeLost();
+	
+	public void gameOver();
 	
 }

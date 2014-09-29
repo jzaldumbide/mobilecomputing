@@ -57,7 +57,7 @@ public class ScoreScreen extends ScreenAdapter {
 					0));
 
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
-
+				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				Gdx.app.log("", "click para regresar");
 

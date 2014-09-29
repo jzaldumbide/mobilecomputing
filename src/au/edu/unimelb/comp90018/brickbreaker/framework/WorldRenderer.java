@@ -55,6 +55,7 @@ public class WorldRenderer {
 		renderSoundButton();
 		renderPauseButton();
 		renderLives();
+		renderLevelNumber();
 		batch.end();
 	}
 
@@ -72,7 +73,7 @@ public class WorldRenderer {
 	private void renderPaddle() {
 
 		Paddle paddle = world.paddle;
-		batch.draw(Assets.paddle, 
+		batch.draw(Assets.paddleSmall, 
 				paddle.position.x - Paddle.PADDLE_WIDTH / 2, 
 				paddle.position.y - Paddle.PADDLE_HEIGHT / 2, 
 				Paddle.PADDLE_WIDTH, 
@@ -138,6 +139,12 @@ public class WorldRenderer {
 		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
 		Assets.font.draw(batch, "SCORE: " + world.score, 5, World.WORLD_HEIGHT - 5);
+	}
+	
+	private void renderLevelNumber() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "LEVEL: " + world.level, World.WORLD_WIDTH-70, World.WORLD_HEIGHT - 5);
 	}
 	
 	private void renderLives() {

@@ -71,17 +71,22 @@ public class GameScreen extends ScreenAdapter {
 
 			@Override
 			public void hitPaddle() {
-				Assets.playSound(Assets.correctSound);
+				Assets.playSound(Assets.getBonusSound);
 			}
 
 			@Override
 			public void hitBrick() {
-				Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.touchHardBrickSound);
 			}
 
 			@Override
-			public void loseLife() {
-				Assets.playSound(Assets.incorrectSound);
+			public void lifeLost() {
+				Assets.playSound(Assets.lifeLostSound);
+			}
+			
+			@Override
+			public void gameOver() {
+				Assets.playSound(Assets.gameOverSound);
 			}
 		};
 
@@ -231,8 +236,8 @@ public class GameScreen extends ScreenAdapter {
 
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				Settings.soundEnabled = !Settings.soundEnabled;
-				if (Settings.soundEnabled)
+				Settings.musicEnabled = !Settings.musicEnabled;
+				if (Settings.musicEnabled)
 					Assets.music.play();
 				else
 					Assets.music.pause();

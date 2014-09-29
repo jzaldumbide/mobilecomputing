@@ -10,6 +10,7 @@ public class Settings {
 	public static final float ASPECT_RATIO = (float) TARGET_WIDTH / (float) TARGET_HEIGHT;
 	
 	/* Set here default game properties */
+	public static boolean musicEnabled = false;
 	public static boolean soundEnabled = true;
 	public static boolean accelerometerEnabled = false;
 	public final static int[] highscores = new int[] { 100, 80, 50, 30, 10 };
@@ -22,7 +23,7 @@ public class Settings {
 
 			String[] strings = filehandle.readString().split("\n");
 
-			soundEnabled = Boolean.parseBoolean(strings[0]);
+			musicEnabled = Boolean.parseBoolean(strings[0]);
 			accelerometerEnabled = Boolean.parseBoolean(strings[1]);
 			
 			for (int i = 0; i < 5; i++) {
@@ -38,7 +39,7 @@ public class Settings {
 		try {
 			FileHandle filehandle = Gdx.files.external(file);
 
-			filehandle.writeString(Boolean.toString(soundEnabled) + "\n", false);
+			filehandle.writeString(Boolean.toString(musicEnabled) + "\n", false);
 			filehandle.writeString(Boolean.toString(accelerometerEnabled) + "\n", false);
 			
 			for (int i = 0; i < 5; i++) {
