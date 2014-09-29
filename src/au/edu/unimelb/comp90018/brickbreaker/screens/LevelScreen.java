@@ -52,16 +52,19 @@ public class LevelScreen extends ScreenAdapter {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
 
 			if (levelUnlockedButton_1.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
 				selectedLevel = 1;
 //				levelButtonTouched = true;
 				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
 			}
 			if (levelLockedButton_2.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
 				selectedLevel = 2;
 //				levelButtonTouched = true;
 				game.setScreen(new GameScreen(game, GameMode.Client, selectedLevel));
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
 				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
 				return;
