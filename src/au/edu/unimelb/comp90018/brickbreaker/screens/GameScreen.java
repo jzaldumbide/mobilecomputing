@@ -3,9 +3,6 @@ package au.edu.unimelb.comp90018.brickbreaker.screens;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.World;
@@ -49,8 +46,7 @@ public class GameScreen extends ScreenAdapter {
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
-	String ipAddress = null;
-	String ipServer = "192.168.56.101";
+	String ipServer = "192.168.1.13";
 
 	public enum GameMode {
 		Server, Client
@@ -102,13 +98,13 @@ public class GameScreen extends ScreenAdapter {
 		myMode = mode;
 
 		if (mode == GameMode.Server) {
-//			startServerNetwork();
+			startServerThread();			
 		} else if (mode == GameMode.Client) {
-//			sendMessage();
+			startClientThread();
 		}
 	}
 
-	public void startServerNetwork() {
+	public void startServerThread() {
 
 		new Thread(new Runnable() {
 
@@ -133,55 +129,34 @@ public class GameScreen extends ScreenAdapter {
 					// Create a socket
 					Socket socket = serverSocket.accept(null);
 
-					// Read data from the socket into a BufferedReader
-					BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-					try {
-						while (true) {
-							// Read to the next newline (\n) and display
-							Gdx.app.log("Recibido: ", buffer.readLine());
-							// synchronized (this) {
-							// world.score =
-							// Integer.parseInt(buffer.readLine());
-							// }
+					while (true) {						
+						StringBuffer sb = new StringBuffer();						
+						try {
+							sb
+								.append(String.valueOf(state)).append(";")								
+								.append(String.valueOf(world.paddle.position.x)).append(";")
+								.append(String.valueOf(world.paddle.position.y)).append(";")
+								.append(String.valueOf(world.ball.position.x)).append(";")
+								.append(String.valueOf(world.ball.position.y)).append("\n");
+							
+							socket.getOutputStream().write(sb.toString().getBytes());							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					}					
 				}
 			}
 		}).start();
 	}
-
-	public String getmyipNetwork() {
-		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress()) {
-						Gdx.app.log("ip: ", inetAddress.getHostAddress().toString());
-						ipAddress = inetAddress.getHostAddress().toString();
-					}
-				}
-			}
-		} catch (Exception e) {
-			Gdx.app.log("Exception caught =", e.getMessage());
-		}
-		return ipAddress;
-
-	}
-
-	public void sendMessage() {
+	
+	public void startClientThread() {
 
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 
-				String textToSend = new String();
-				
 				SocketHints socketHints = new SocketHints();
 				
 				// Socket will time our in 4 seconds
@@ -190,18 +165,21 @@ public class GameScreen extends ScreenAdapter {
 				// Create the socket and connect to the server on port 9021
 				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021, socketHints);
 				
+				BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
+				String msg = null;
+				
 				while (true) {
 					try {
-
-						textToSend = String.valueOf(Gdx.input.getX());
-
-						// write our entered message to the stream
-						socket.getOutputStream().write(textToSend.getBytes());
+						msg = buffer.readLine();
+						String[] parts = msg.split(";");
 						
-						Gdx.app.log(ipAddress + " dice: ", textToSend);
-						
-					} catch (IOException e) {
-						e.printStackTrace();
+						state = Integer.parseInt(parts[0]);
+						world.paddle.position.set(Float.parseFloat(parts[1]), Float.parseFloat(parts[2]));
+						world.ball.position.set(Float.parseFloat(parts[3]), Float.parseFloat(parts[4]));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -329,14 +307,13 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			world = new World(worldListener, 1); //Fix this
 			renderer = new WorldRenderer(game.batcher, world);
-			// world.score = lastScore;
+			world.score = lastScore;
 			state = GAME_READY;
 		}
 	}
 
 	private void updateGameOver() {
 		if (Gdx.input.justTouched()) {
-			// TODO: this is just for testing
 			state = GAME_LEVEL_END;
 			// game.setScreen(new MainMenuScreen(game));
 		}
@@ -415,18 +392,10 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-		update(delta);
 		if (myMode == GameMode.Server) {
-			draw();
-		} else if (myMode == GameMode.Client) {
-
-			GL20 gl = Gdx.gl;
-
-			// gl.glViewport((int) viewport.x, (int) viewport.y, (int)
-			// viewport.width, (int) viewport.height);
-			gl.glClearColor(0, 0, 0, 1);
-			gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			update(delta);
 		}
+		draw();
 	}
 
 	@Override
