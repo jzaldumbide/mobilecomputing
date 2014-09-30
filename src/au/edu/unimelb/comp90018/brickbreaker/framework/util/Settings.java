@@ -10,7 +10,7 @@ public class Settings {
 	public static final float ASPECT_RATIO = (float) TARGET_WIDTH / (float) TARGET_HEIGHT;
 	
 	/* Set here default game properties */
-	public static boolean musicEnabled = false;
+	public static boolean musicEnabled = true;
 	public static boolean soundEnabled = true;
 	public static boolean accelerometerEnabled = false;
 	public final static int[] highscores = new int[] { 100, 80, 50, 30, 10 };

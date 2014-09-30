@@ -27,7 +27,7 @@ public class World {
 	public static final float WORLD_HEIGHT = 480;
 
 	public static final int WORLD_STATE_RUNNING = 0;
-	public static final int WORLD_STATE_NEXT_LEVEL = 1;
+	public static final int WORLD_STATE_LEVEL_END = 1;
 	public static final int WORLD_STATE_GAME_OVER = 2;
 	public static final int WORLD_STATE_GAME_LOST_LIFE = 3;
 
@@ -149,7 +149,7 @@ public class World {
 	
 	private void checkNextLevel(){
 		if (this.bricks.size()<1){
-			this.state = WORLD_STATE_NEXT_LEVEL;
+			this.state = WORLD_STATE_LEVEL_END;
 		}
 	}
 	

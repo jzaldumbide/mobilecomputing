@@ -292,7 +292,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 		else if(world.state == World.WORLD_STATE_GAME_LOST_LIFE){
 			state = GAME_READY;
-		}else if(world.state == World.WORLD_STATE_NEXT_LEVEL){
+		}else if(world.state == World.WORLD_STATE_LEVEL_END){
 			state = GAME_LEVEL_END;
 		}
 	}
@@ -363,12 +363,18 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	}
 
 	private void updateGameOver() {
+		
 		if (Gdx.input.justTouched()) {
 			
 			state = GAME_OVER;
 			
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					viewport.x, viewport.y, viewport.width, viewport.height);
+			
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
+				game.setScreen(new LevelScreen(game));
 				//TODO: We should restart World here something like this:
 				//world = new World(worldListener, 1); //Fix this
 				//renderer = new WorldRenderer(game.batcher, world);
@@ -377,7 +383,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			}
 			
 			if (submitScoreGameOver.contains(touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
+				Assets.playSound(Assets.toggleSound);
 				Gdx.input.getTextInput(this, "Enter Name", ""); 
 				return;
 			}
