@@ -6,6 +6,7 @@ package au.edu.unimelb.comp90018.brickbreaker.framework.network;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -180,5 +181,10 @@ public class LevelDownloader {
          eventType = xpp.next();
         }
 		return sb.toString();
+	}
+
+	public void submitHighScore(String name, int score) throws ClientProtocolException, IOException {
+		String url = "highScore.php?action=add&name="+URLEncoder.encode(name, "utf-8")+"&score="+score;
+		makeHttpRequest(url);		
 	}
 }

@@ -4,14 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.http.client.ClientProtocolException;
+
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldRenderer;
+import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,7 +28,7 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	static final int GAME_READY = 0;
 	static final int GAME_RUNNING = 1;
@@ -343,7 +347,8 @@ public class GameScreen extends ScreenAdapter {
 			
 			if (submitScoreWin.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				//TODO: Here you can submit the score... we need to find out how to handle input text 
+				//MyTextInputListener listener = new MyTextInputListener();
+				Gdx.input.getTextInput(this, "Enter Name", ""); 
 				return;
 			}
 			
@@ -373,7 +378,7 @@ public class GameScreen extends ScreenAdapter {
 			
 			if (submitScoreGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				//TODO: Here you can submit the score... we need to find out how to handle input text 
+				Gdx.input.getTextInput(this, "Enter Name", ""); 
 				return;
 			}
 		}
@@ -483,5 +488,27 @@ public class GameScreen extends ScreenAdapter {
 		float w = (float) Settings.TARGET_WIDTH * scale;
 		float h = (float) Settings.TARGET_HEIGHT * scale;
 		viewport = new Rectangle(crop.x, crop.y, w, h);
+	}
+
+	@Override
+	public void canceled() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void input(String name) {
+		if (name.length()>0){
+			LevelDownloader ld = new LevelDownloader();
+			try {
+				ld.submitHighScore(name,world.score);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
