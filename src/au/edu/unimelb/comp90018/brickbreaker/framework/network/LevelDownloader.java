@@ -176,6 +176,7 @@ public class LevelDownloader {
             	   sb.append(": ");
             	   sb.append(score);
             	   sb.append("\n");
+            	   position++;
                }
             }
          eventType = xpp.next();
