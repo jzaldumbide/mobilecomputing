@@ -31,6 +31,7 @@ public class GameScreen extends ScreenAdapter {
 	static final int GAME_PAUSED = 2;
 	static final int GAME_LEVEL_END = 3;
 	static final int GAME_OVER = 4;
+	static final int GAME_LIFE_LOST = 5;
 
 	BrickBreaker game;
 
@@ -41,8 +42,7 @@ public class GameScreen extends ScreenAdapter {
 	WorldListener worldListener;
 	WorldRenderer renderer;
 	Rectangle viewport;
-	Rectangle resumeBounds;
-	Rectangle quitBounds;
+	Rectangle resumeBounds,quitBounds, playAgainWin, submitScoreWin, nextLevelWin, playAgainGameOver, submitScoreGameOver;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
@@ -95,6 +95,12 @@ public class GameScreen extends ScreenAdapter {
 
 		resumeBounds = new Rectangle(85, 250, 150, 30);
 		quitBounds = new Rectangle(122, 200, 76, 38);
+		
+		playAgainWin = new Rectangle(50, 120, 60, 50);
+		submitScoreWin = new Rectangle(135, 120, 60, 50);
+		nextLevelWin = new Rectangle(220, 120, 60, 50);
+		playAgainGameOver = new Rectangle(90, 120, 60, 50);
+		submitScoreGameOver = new Rectangle(180, 120, 60, 50);
 
 		toggleSound = true;
 		lastScore = 0;
@@ -205,6 +211,9 @@ public class GameScreen extends ScreenAdapter {
 		case GAME_PAUSED:
 			updatePaused();
 			break;
+		case GAME_LIFE_LOST:
+			updateLifeLost();
+			break;
 		case GAME_LEVEL_END:
 			updateLevelEnd();
 			break;
@@ -268,13 +277,6 @@ public class GameScreen extends ScreenAdapter {
 			world.update(deltaTime, accel);
 		}
 
-		// if (world.score != lastScore) {
-		// lastScore = world.score;
-		// scoreString = "SCORE: " + lastScore;
-		// }
-		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
-		// //game.setScreen(new WinScreen(game));
-		// }
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
 			// if (lastScore >= Settings.highscores[4])
@@ -283,6 +285,11 @@ public class GameScreen extends ScreenAdapter {
 			// scoreString = "SCORE: " + lastScore;
 			// Settings.addScore(lastScore);
 			// Settings.save();
+		}
+		else if(world.state == World.WORLD_STATE_GAME_LOST_LIFE){
+			state = GAME_READY;
+		}else if(world.state == World.WORLD_STATE_NEXT_LEVEL){
+			state = GAME_LEVEL_END;
 		}
 	}
 
@@ -305,22 +312,70 @@ public class GameScreen extends ScreenAdapter {
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
+		
 		}
 	}
 
-	private void updateLevelEnd() {
+	private void updateLifeLost() {
 		if (Gdx.input.justTouched()) {
-			world = new World(worldListener, 1); //Fix this
-			renderer = new WorldRenderer(game.batcher, world);
-			world.score = lastScore;
-			state = GAME_READY;
+			state = GAME_LIFE_LOST;
+		}
+	}
+	
+	private void updateLevelEnd() {	
+
+		if (Gdx.input.justTouched()) {
+			
+			state = GAME_LEVEL_END;
+
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					viewport.x, viewport.y, viewport.width, viewport.height);
+
+			if (playAgainWin.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				//TODO: We should restart World here something like this:
+				//world = new World(worldListener, 1); //Fix this
+				//renderer = new WorldRenderer(game.batcher, world);
+				//world.score = lastScore;
+				return;
+			}
+			
+			if (submitScoreWin.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				//TODO: Here you can submit the score... we need to find out how to handle input text 
+				return;
+			}
+			
+			if (nextLevelWin.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				//TODO: Here you can set the next level or call the LevelScreen as well
+				game.setScreen(new LevelScreen(game));
+				return;
+			}
+			
 		}
 	}
 
 	private void updateGameOver() {
 		if (Gdx.input.justTouched()) {
-			state = GAME_LEVEL_END;
-			// game.setScreen(new MainMenuScreen(game));
+			
+			state = GAME_OVER;
+			
+			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				//TODO: We should restart World here something like this:
+				//world = new World(worldListener, 1); //Fix this
+				//renderer = new WorldRenderer(game.batcher, world);
+				//world.score = lastScore;
+				return;
+			}
+			
+			if (submitScoreGameOver.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				//TODO: Here you can submit the score... we need to find out how to handle input text 
+				return;
+			}
 		}
 	}
 
@@ -351,6 +406,9 @@ public class GameScreen extends ScreenAdapter {
 		case GAME_PAUSED:
 			presentPaused();
 			break;
+		case GAME_LIFE_LOST:
+			presentLostLife();
+			break;
 		case GAME_LEVEL_END:
 			presentLevelEnd();
 			break;
@@ -367,32 +425,27 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void presentRunning() {
-		// game.batcher.draw(Assets.soundOn, 320 - 64, 480 - 64, 64, 64);
-		// Assets.font.draw(game.batcher, scoreString, 1, 480 - 5);
+
 	}
 
 	private void presentPaused() {
 		game.batcher.draw(Assets.pauseMenu, 0, 0, 320, 480);
 	}
 
+	private void presentLostLife() {
+		game.batcher.draw(Assets.ready, 0, 0, 320, 480);
+	}
+	
 	private void presentLevelEnd() {
-		// String topText = "the princess is ...";
-		// String bottomText = "in another castle!";
-		// float topWidth = Assets.font.getBounds(topText).width;
-		// float bottomWidth = Assets.font.getBounds(bottomText).width;
-		// Assets.font.draw(game.batcher, topText, 160 - topWidth / 2, 480 -
-		// 40);
-		// Assets.font.draw(game.batcher, bottomText, 160 - bottomWidth / 2,
-		// 40);
+		game.batcher.draw(Assets.win, 0, 0, 320, 480);
+		Assets.font.setScale(0.5f, 0.5f);
+		Assets.font.draw(game.batcher, String.valueOf(world.score),175,211);
 	}
 
 	private void presentGameOver() {
 		game.batcher.draw(Assets.gameOver, 0, 0, 320, 480);
-		// game.batcher.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160,
-		// 96);
-		// float scoreWidth = Assets.font.getBounds(scoreString).width;
-		// Assets.font.draw(game.batcher, scoreString, 160 - scoreWidth / 2, 480
-		// - 20);
+		Assets.font.setScale(0.5f, 0.5f);
+		Assets.font.draw(game.batcher, String.valueOf(world.score),175,211);
 	}
 
 	@Override

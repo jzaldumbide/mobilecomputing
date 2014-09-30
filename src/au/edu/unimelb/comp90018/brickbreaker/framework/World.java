@@ -29,6 +29,7 @@ public class World {
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_NEXT_LEVEL = 1;
 	public static final int WORLD_STATE_GAME_OVER = 2;
+	public static final int WORLD_STATE_GAME_LOST_LIFE = 3;
 
 	public Ball ball;
 	public Paddle paddle;
@@ -131,7 +132,9 @@ public class World {
 		updateBall(deltaTime);
 		updatePaddle(deltaTime, accelX);
 		checkCollisions();
+		checkLostLife();
 		checkGameOver();
+		checkNextLevel();
 	}
 
 	private void updateBall(float deltaTime) {
@@ -143,8 +146,28 @@ public class World {
 		paddle.update(deltaTime, -accelX);
 	}
 
-	private void checkGameOver() {
+	
+	private void checkNextLevel(){
+		if (this.bricks.size()<1){
+			this.state = WORLD_STATE_NEXT_LEVEL;
+		}
+	}
+	
+	private void checkLostLife() {
 		if (ball.position.y <= 0){
+			int len = lives.size() - 1;
+			if (len != -1){
+				lives.remove(len);
+				this.state = WORLD_STATE_GAME_LOST_LIFE;
+			}else{
+				this.state = WORLD_STATE_GAME_OVER;
+			}
+			
+		}
+	}
+	
+	private void checkGameOver() {
+		if (this.lives.size()<1){
 			this.state = WORLD_STATE_GAME_OVER;
 		}
 	}
