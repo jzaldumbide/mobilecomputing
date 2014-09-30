@@ -61,7 +61,13 @@ public class LevelScreen extends ScreenAdapter {
 				Assets.playSound(Assets.clickSound);
 				selectedLevel = 2;
 //				levelButtonTouched = true;
-				game.setScreen(new GameScreen(game, GameMode.Client, selectedLevel));
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelLockedButton_3.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 3;
+//				levelButtonTouched = true;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);

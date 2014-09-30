@@ -124,11 +124,11 @@ public class LevelDownloader {
             	   
             	   if (type.equals("typeI")){
             		  //Gdx.app.log("Adding Brick Type I", "Adding Brick Type I");
-            	      gameLevel.addBrick(new BrickTypeI(36+(x*32), 300+(y*16)));
+            	      gameLevel.addBrick(new BrickTypeI(x, y));
             	   }
             	   else{
             		   //Gdx.app.log("Adding Brick Type II", "Adding Brick Type I");
-            		   gameLevel.addBrick(new BrickTypeII(36+(x*32), 300+(y*16)));
+            		   gameLevel.addBrick(new BrickTypeII(x , y));
             	   }
                }
                else{

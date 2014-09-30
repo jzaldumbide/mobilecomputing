@@ -34,7 +34,7 @@ public class BrickBreaker extends Game {
 		Assets.load();
 
 		/*Download all the levels and the highscores*/
-		int maxLevels = 2;
+		int maxLevels = 3;
 		LevelDownloader ld = new LevelDownloader();
 		try {
 			for (int level = 1; level  <= maxLevels; level++){
