@@ -41,6 +41,7 @@ public class World {
 	public int level;
 	public int score;
 	public int state;
+	public int rank;
 
 	public World(WorldListener listener, int gameLevel) {
 
@@ -66,6 +67,7 @@ public class World {
 		generateLevel();
 
 		this.score = 0;
+		this.rank = 0;
 		this.state = WORLD_STATE_RUNNING;
 	}
 
@@ -157,7 +159,8 @@ public class World {
 		if (ball.position.y <= 0){
 			int len = lives.size() - 1;
 			if (len != -1){
-				lives.remove(len);
+				lives.remove(len); //life lost
+				score --; //reduce 1 point in score
 				this.state = WORLD_STATE_GAME_LOST_LIFE;
 			}else{
 				this.state = WORLD_STATE_GAME_OVER;

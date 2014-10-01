@@ -90,7 +90,7 @@ public class ScoreScreen extends ScreenAdapter {
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
 
 		Assets.font.setScale(0.6f, 0.6f);
-		Assets.font.drawMultiLine(game.batcher, scoreString, 115, 350);
+		Assets.font.drawMultiLine(game.batcher, scoreString, 100, 400);
 
 		game.batcher.end();
 	}

@@ -3,7 +3,6 @@ package au.edu.unimelb.comp90018.brickbreaker.screens;
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
-import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
@@ -17,7 +16,7 @@ public class OptionScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
 
-	private Button soundButton, musicButton, accelerometerButton, touchButton, btnBack;
+	private Button soundButton, musicButton, accelerometerButton, btnBack;
 	Vector3 touchPoint;
 
 	public OptionScreen(BrickBreaker game) {
@@ -28,11 +27,10 @@ public class OptionScreen extends ScreenAdapter {
 		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
-		soundButton = new Button(Settings.TARGET_WIDTH / 2 - 50, Settings.TARGET_HEIGHT / 2, ButtonSize.XLARGE_SQUARE);
-		musicButton = new Button(Settings.TARGET_WIDTH / 2 + 50, Settings.TARGET_HEIGHT / 2 - 67,
-				ButtonSize.XLARGE_SQUARE);
-		accelerometerButton = new Button(Settings.TARGET_WIDTH / 2 - 50, Settings.TARGET_HEIGHT / 2 - 135,
-				ButtonSize.XLARGE_SQUARE);
+		
+		soundButton = new Button(Settings.TARGET_WIDTH / 2 - 80, Settings.TARGET_HEIGHT / 2 - 15, ButtonSize.XLARGE_SQUARE);
+		musicButton = new Button(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2 - 15,ButtonSize.XLARGE_SQUARE);
+		accelerometerButton = new Button(Settings.TARGET_WIDTH / 2 + 80, Settings.TARGET_HEIGHT / 2 - 15,ButtonSize.XLARGE_SQUARE);
 	}
 
 	public void update() {
@@ -41,21 +39,24 @@ public class OptionScreen extends ScreenAdapter {
 
 			if (soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-
+				Settings.soundEnabled = !Settings.soundEnabled;
 				return;
 			}
 
 			if (musicButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-
+				Settings.musicEnabled = !Settings.musicEnabled;
+				
+				if (Settings.musicEnabled)
+					Assets.music.play();
+				else
+					Assets.music.pause();
+				
 				return;
 			}
 			if (accelerometerButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-
 				Settings.accelerometerEnabled = !Settings.accelerometerEnabled;
-				Settings.save();
-				
 				return;
 			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
@@ -77,23 +78,52 @@ public class OptionScreen extends ScreenAdapter {
 
 		game.batcher.draw(Assets.menuScreen, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 
-		game.batcher.draw(Assets.soundOn, 
-				soundButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
-				soundButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
-				ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
-				ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		
+		if (Settings.soundEnabled){
+		
+			game.batcher.draw(Assets.soundOn, 
+					soundButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					soundButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}else{
+			game.batcher.draw(Assets.soundOff, 
+					soundButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					soundButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}
 
-		game.batcher.draw(Assets.musicOn, 
-				musicButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
-				musicButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
-				ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
-				ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		if (Settings.musicEnabled){
+		
+			game.batcher.draw(Assets.musicOn, 
+					musicButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					musicButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}else{
+			game.batcher.draw(Assets.musicOff, 
+					musicButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					musicButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}
 
-		game.batcher.draw(Assets.accelOn, 
-				accelerometerButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
-				accelerometerButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
-				ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
-				ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		
+		if (Settings.accelerometerEnabled){
+			
+			game.batcher.draw(Assets.accelOn, 
+					accelerometerButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					accelerometerButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}else{
+			game.batcher.draw(Assets.touchOn, 
+					accelerometerButton.position.x - ButtonSize.XLARGE_SQUARE.getButtonWidth() / 2,
+					accelerometerButton.position.y - ButtonSize.XLARGE_SQUARE.getButtonHeight() / 2,
+					ButtonSize.XLARGE_SQUARE.getButtonWidth(), 
+					ButtonSize.XLARGE_SQUARE.getButtonHeight());
+		}
 
 		game.batcher.draw(Assets.back, 
 				btnBack.position.x - ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2,
@@ -101,11 +131,6 @@ public class OptionScreen extends ScreenAdapter {
 				ButtonSize.MEDIUM_SQUARE.getButtonWidth(), 
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
 
-		Assets.font.draw(game.batcher, 
-				Settings.accelerometerEnabled ? "ON" : "OFF", 
-				accelerometerButton.position.x + ButtonSize.XLARGE_SQUARE.getButtonWidth() / 1.5f, 
-				accelerometerButton.position.y + ButtonSize.XLARGE_SQUARE.getButtonHeight() / 6);
-		
 		game.batcher.end();
 
 	}

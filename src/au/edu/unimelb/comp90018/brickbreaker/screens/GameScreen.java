@@ -46,11 +46,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	WorldListener worldListener;
 	WorldRenderer renderer;
 	Rectangle viewport;
-	Rectangle resumeBounds,quitBounds, playAgainWin, submitScoreWin, nextLevelWin, playAgainGameOver, submitScoreGameOver;
+	Rectangle resumeBounds,quitBounds, continueWin, playAgainGameOver, quitGameOver;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
-	String ipServer = "192.168.1.13";
+	//String ipServer = "192.168.1.13";
+	String ipServer = "10.9.163.225";
 
 	public enum GameMode {
 		Server, Client
@@ -97,14 +98,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		world = new World(worldListener, level);
 		renderer = new WorldRenderer(game.batcher, world);
 
-		resumeBounds = new Rectangle(85, 250, 150, 30);
-		quitBounds = new Rectangle(122, 200, 76, 38);
+		resumeBounds = new Rectangle(90, 120, 60, 50);
+		quitBounds = new Rectangle(180, 120, 60, 50);
 		
-		playAgainWin = new Rectangle(50, 120, 60, 50);
-		submitScoreWin = new Rectangle(135, 120, 60, 50);
-		nextLevelWin = new Rectangle(220, 120, 60, 50);
+		continueWin = new Rectangle(200, 120, 80, 50);
 		playAgainGameOver = new Rectangle(90, 120, 60, 50);
-		submitScoreGameOver = new Rectangle(180, 120, 60, 50);
+		quitGameOver = new Rectangle(180, 120, 60, 50);
 
 		toggleSound = true;
 		lastScore = 0;
@@ -249,11 +248,13 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				Settings.musicEnabled = !Settings.musicEnabled;
+				
 				if (Settings.musicEnabled)
 					Assets.music.play();
 				else
 					Assets.music.pause();
+				Settings.musicEnabled = !Settings.musicEnabled;
+				Settings.soundEnabled = !Settings.soundEnabled;
 				return;
 			}
 		}
@@ -316,7 +317,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
-		
+	
 		}
 	}
 
@@ -336,25 +337,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
 					viewport.x, viewport.y, viewport.width, viewport.height);
 
-			if (playAgainWin.contains(touchPoint.x, touchPoint.y)) {
+			if (continueWin.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				//TODO: We should restart World here something like this:
-				//world = new World(worldListener, 1); //Fix this
-				//renderer = new WorldRenderer(game.batcher, world);
-				//world.score = lastScore;
-				return;
-			}
-			
-			if (submitScoreWin.contains(touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
-				//MyTextInputListener listener = new MyTextInputListener();
-				Gdx.input.getTextInput(this, "Enter Name", ""); 
-				return;
-			}
-			
-			if (nextLevelWin.contains(touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
-				//TODO: Here you can set the next level or call the LevelScreen as well
 				game.setScreen(new LevelScreen(game));
 				return;
 			}
@@ -374,17 +358,19 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				game.setScreen(new LevelScreen(game));
 				//TODO: We should restart World here something like this:
-				//world = new World(worldListener, 1); //Fix this
-				//renderer = new WorldRenderer(game.batcher, world);
-				//world.score = lastScore;
+				world = new World(worldListener, 1); 
+				renderer = new WorldRenderer(game.batcher, world);
+				world.score = 0;
+				state = GAME_RUNNING;
 				return;
 			}
 			
-			if (submitScoreGameOver.contains(touchPoint.x, touchPoint.y)) {
+			if (quitGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.toggleSound);
-				Gdx.input.getTextInput(this, "Enter Name", ""); 
+				//TODO: We should restart World here
+				//Gdx.input.getTextInput(this, "Enter Name", ""); 
+				game.setScreen(new MenuScreen(game));
 				return;
 			}
 		}

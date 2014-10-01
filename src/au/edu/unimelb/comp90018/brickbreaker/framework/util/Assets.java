@@ -62,6 +62,10 @@ public class Assets {
 	public static TextureRegion help;
 	public static TextureRegion multiplayer;
 	public static TextureRegion connect;
+	public static TextureRegion touchOn;
+	public static TextureRegion soundGameOn;
+	public static TextureRegion soundGameOff;
+	public static TextureRegion pauseGame;
 	
 	/*Here declare buttons for locked levels*/
 	public static TextureRegion levelLocked_1;
@@ -196,7 +200,10 @@ public class Assets {
 		help = new TextureRegion(itemsButtons, 384, 128, 128, 128);
 		multiplayer = new TextureRegion(itemsButtons, 512, 128, 128, 128);
 		connect = new TextureRegion(itemsButtons, 640, 128, 128, 128);
-		
+		touchOn = new TextureRegion(itemsButtons, 0, 256, 128, 128);
+		soundGameOn = new TextureRegion(itemsButtons, 128, 256, 128, 128);
+		soundGameOff = new TextureRegion(itemsButtons, 256, 256, 128, 128);
+		pauseGame = new TextureRegion(itemsButtons, 384, 256, 128, 128);
 		
 		/*Here load Transparent Textures*/
 		Texture defaultNotificationR = loadTransparentTexture(320, 480, "backgrounds/default_notification.png");
@@ -211,8 +218,8 @@ public class Assets {
 		Texture gameOverR = loadTransparentTexture(800, 1280, "backgrounds/gameover.png");
 		gameOver = new TextureRegion(gameOverR, 0, 0, 800, 1280);
 
-		Texture pauseMenuR = loadTransparentTexture(320, 480, "backgrounds/pausemenu.png");
-		pauseMenu = new TextureRegion(pauseMenuR, 0, 0, 320, 480);		
+		Texture pauseMenuR = loadTransparentTexture(800, 1280, "backgrounds/pausemenu.png");
+		pauseMenu = new TextureRegion(pauseMenuR, 0, 0, 800, 1280);		
 		
 		
 		/* TextureRegionSets */
@@ -241,8 +248,11 @@ public class Assets {
 		music.setLooping(true);
 		music.setVolume(0.5f);
 
-		if (Settings.musicEnabled)
+		if (Settings.musicEnabled){
 			music.play();
+		}else{
+			music.pause();
+		}
 
 	
 		touchWallSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchWall.ogg"));

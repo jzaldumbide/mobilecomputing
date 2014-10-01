@@ -9,6 +9,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -62,6 +63,7 @@ public class WorldRenderer {
 		renderPauseButton();
 		renderLives();
 		renderLevelNumber();
+		renderRank();
 		batch.end();
 	}
 
@@ -117,7 +119,7 @@ public class WorldRenderer {
 		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
 
 		Button pauseButton = world.pauseButton;
-		batch.draw(Assets.pause,
+		batch.draw(Assets.pauseGame,
 				pauseButton.position.x - buttonWidth / 2,
 				pauseButton.position.y - buttonHeight / 2,
 				buttonWidth, 
@@ -130,15 +132,23 @@ public class WorldRenderer {
 		
 		int buttonWidth = ButtonSize.MEDIUM_SQUARE.getButtonWidth();
 		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
+		Button musicButton = world.soundButton;
 
-		Button soundButton = world.soundButton;
-		batch.draw(Assets.soundOn,
-				soundButton.position.x - buttonWidth / 2,
-				soundButton.position.y - buttonHeight / 2,
+		if (Settings.musicEnabled){
+			batch.draw(Assets.soundGameOn,
+				musicButton.position.x - buttonWidth / 2,
+				musicButton.position.y - buttonHeight / 2,
 				buttonWidth, 
 				buttonHeight
 				);
-
+		}else{
+			batch.draw(Assets.soundGameOff,
+					musicButton.position.x - buttonWidth / 2,
+					musicButton.position.y - buttonHeight / 2,
+					buttonWidth, 
+					buttonHeight
+					);
+		}
 	}
 	
 	private void renderScore() {
@@ -150,7 +160,13 @@ public class WorldRenderer {
 	private void renderLevelNumber() {
 		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
-		Assets.font.draw(batch, "LEVEL: " + world.level, World.WORLD_WIDTH-70, World.WORLD_HEIGHT - 5);
+		Assets.font.draw(batch, "LEVEL: " + world.level, World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 5);
+	}
+	
+	private void renderRank() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "RANK: " + world.rank, World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 20);
 	}
 	
 	private void renderLives() {

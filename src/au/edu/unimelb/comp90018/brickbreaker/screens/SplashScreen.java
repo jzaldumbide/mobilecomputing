@@ -7,11 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class SplashScreen extends ScreenAdapter {
 	BrickBreaker game;
-	private long startTime;
 
 	OrthographicCamera guiCam;
 
@@ -20,8 +18,6 @@ public class SplashScreen extends ScreenAdapter {
 		this.game = game;
 		guiCam = new OrthographicCamera(900, 1024);
 		guiCam.position.set(900 / 2, 1024 / 2, 0);
-
-		startTime = TimeUtils.millis();
 	}
 
 	public void update() {
@@ -36,10 +32,8 @@ public class SplashScreen extends ScreenAdapter {
 		game.batcher.disableBlending();
 		game.batcher.begin();
 		game.batcher.draw(Assets.splashScreen, 0, 0, 900, 1024);
-		game.batcher.end();
+		game.batcher.end();		
 
-		if (TimeUtils.millis() > (startTime + 3000))
-			game.setScreen(new MenuScreen(game));
 	}
 
 	@Override
@@ -52,4 +46,5 @@ public class SplashScreen extends ScreenAdapter {
 	public void hide() {
 		super.dispose();
 	}
+
 }

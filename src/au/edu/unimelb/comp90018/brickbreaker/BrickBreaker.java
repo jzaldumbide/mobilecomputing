@@ -5,9 +5,11 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
+import android.os.AsyncTask;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
+import au.edu.unimelb.comp90018.brickbreaker.screens.MenuScreen;
 import au.edu.unimelb.comp90018.brickbreaker.screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
@@ -33,35 +35,8 @@ public class BrickBreaker extends Game {
 		Settings.load();
 		Assets.load();
 
-		/*Download all the levels and the highscores*/
-		int maxLevels = 3;
-		LevelDownloader ld = new LevelDownloader();
-		try {
-			for (int level = 1; level  <= maxLevels; level++){
-				String gameLevel;
-				gameLevel = ld.downloadGame("brickbreaker_level"+level+".xml");
-				ld.persistGame("brickbreaker_level"+level+".xml", gameLevel);
-			}
-			String highScores = ld.downloadHighScores();
-			ld.persistScores(highScores);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
-
-		/*
-		 * This is the call to the main screen. here you should call the
-		 * MainMenuScreen and call GameScreen from there
-		 */
-		// setScreen(new MenuScreen(this));
-		setScreen(new SplashScreen(this));// in order to call first to the
-		// splash screen
+		//Initialize a LoadViewTask object and call the execute() method  
+        new LoadViewTask().execute();       
 	}
 
 	@Override
@@ -73,5 +48,88 @@ public class BrickBreaker extends Game {
 	// public void dispose() {
 	// batcher.dispose();
 	// }
+	
+	//To use the AsyncTask, it must be subclassed  
+    private class LoadViewTask extends AsyncTask<Void, Integer, Void>  
+    {  
+        //Before running code in separate thread  
+        @Override  
+        protected void onPreExecute()  
+        {  
+        	setScreen(new SplashScreen(BrickBreaker.this));
+        }  
+  
+        //The code to be executed in a background thread.  
+        @Override  
+        protected Void doInBackground(Void... params)  
+        {  
+            /* This is just a code that delays the thread execution 4 times, 
+             * during 850 milliseconds and updates the current progress. This 
+             * is where the code that is going to be executed on a background 
+             * thread must be placed. 
+             */  
+            try  
+            {  
+                //Get the current thread's token  
+                synchronized (this)  
+                {  
+                        //Wait 850 milliseconds  
+                        this.wait(100);  
+                        //Increment the counter  
+                        //This value is going to be passed to the onProgressUpdate() method.  
+                        downloadLevels();
+                       // publishProgress(counter*25);  
+                }  
+            }  
+            catch (InterruptedException e)  
+            {  
+                e.printStackTrace();  
+            }  
+            return null;  
+        }  
+  
+        //Update the progress  
+        @Override  
+        protected void onProgressUpdate(Integer... values)  
+        {  
+            //set the current progress of the progress dialog  
+            //progressDialog.setProgress(values[0]);  
+        }  
+  
+        //after executing the code in the thread  
+        @Override  
+        protected void onPostExecute(Void result)  
+        {  
+            //initialize the View  
+        	setScreen(new MenuScreen(BrickBreaker.this));
+            //setContentView(R.layout.main);  
+        }  
+        
+        private void downloadLevels(){
+    		
+    		/*Download all the levels and the highscores*/
+    		int maxLevels = 3;
+    		LevelDownloader ld = new LevelDownloader();
+    		try {
+    			for (int level = 1; level  <= maxLevels; level++){
+    				String gameLevel;
+    				gameLevel = ld.downloadGame("brickbreaker_level"+level+".xml");
+    				ld.persistGame("brickbreaker_level"+level+".xml", gameLevel);
+    			}
+    			String highScores = ld.downloadHighScores();
+    			ld.persistScores(highScores);
+    		} catch (ClientProtocolException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (XmlPullParserException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}			
+    		
+    	}
+    }
 
 }
