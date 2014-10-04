@@ -24,8 +24,19 @@ public class SplashScreen extends ScreenAdapter {
 	}
 
 	public void draw() {
+		
 		GL20 gl = Gdx.gl;
+		
+		gl.glViewport(
+				(int) game.viewport.x, 
+				(int) game.viewport.y, 
+				(int) game.viewport.width,
+				(int) game.viewport.height
+				);
+		
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		guiCam.update();
 
 		game.batcher.setProjectionMatrix(guiCam.combined);

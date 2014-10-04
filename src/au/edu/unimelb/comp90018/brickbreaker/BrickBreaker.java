@@ -14,6 +14,8 @@ import au.edu.unimelb.comp90018.brickbreaker.screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * BrickBreakerGame class that extends Game, which implements
@@ -26,7 +28,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class BrickBreaker extends Game {
 
 	public SpriteBatch batcher;
-
+	public Rectangle viewport;
+	
 	@Override
 	public void create() {
 
@@ -44,11 +47,37 @@ public class BrickBreaker extends Game {
 		super.render();
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		
+//		// TODO Auto-generated method stub
+//		super.resize(width, height);
+//		
+		// calculate new viewport
+		float aspectRatio = (float) width / (float) height;
+		float scale = 1f;
+		Vector2 crop = new Vector2(0f, 0f);
+
+		if (aspectRatio > Settings.ASPECT_RATIO) {
+			scale = (float) height / (float) Settings.TARGET_HEIGHT;
+			crop.x = (width - Settings.TARGET_WIDTH * scale) / 2f;
+		} else if (aspectRatio < Settings.ASPECT_RATIO) {
+			scale = (float) width / (float) Settings.TARGET_WIDTH;
+			crop.y = (height - Settings.TARGET_HEIGHT * scale) / 2f;
+		} else {
+			scale = (float) width / (float) Settings.TARGET_WIDTH;
+		}
+
+		float w = (float) Settings.TARGET_WIDTH * scale;
+		float h = (float) Settings.TARGET_HEIGHT * scale;
+		viewport = new Rectangle(crop.x, crop.y, w, h);
+	}
+	
 	// @Override
 	// public void dispose() {
 	// batcher.dispose();
 	// }
-	
+
 	//To use the AsyncTask, it must be subclassed  
     private class LoadViewTask extends AsyncTask<Void, Integer, Void>  
     {  

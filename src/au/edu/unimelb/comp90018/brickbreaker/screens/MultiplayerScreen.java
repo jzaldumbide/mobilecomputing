@@ -64,7 +64,9 @@ public class MultiplayerScreen extends ScreenAdapter {
 	private final static int REQUEST_ENABLE_BT = 1;
 
 	public MultiplayerScreen(BrickBreaker game) {
+		
 		this.game = game;
+		
 		screenWidth = 320;
 		screenHeight = 480;
 		btnsizeWidth = 300;
@@ -98,9 +100,16 @@ public class MultiplayerScreen extends ScreenAdapter {
 	}
 
 	public void update() {
+	
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),
-					0));
+			
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (serverBounds.contains(touchPoint.x, touchPoint.y)) {
 				Gdx.app.log("starting server", "starting server");
@@ -126,10 +135,21 @@ public class MultiplayerScreen extends ScreenAdapter {
 	}
 
 	public void draw() {
-		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 0, 0, 1);
+		
+GL20 gl = Gdx.gl;
+		
+		gl.glViewport(
+				(int) game.viewport.x, 
+				(int) game.viewport.y, 
+				(int) game.viewport.width,
+				(int) game.viewport.height
+				);
+		
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		guiCam.update();
+		
 		game.batcher.setProjectionMatrix(guiCam.combined);
 
 		// game.batcher.disableBlending();

@@ -22,9 +22,11 @@ public class MenuScreen extends ScreenAdapter {
 	Vector3 touchPoint;
 
 	public MenuScreen(BrickBreaker game) {
+				
+		this.game = game;
 		
 		touchPoint = new Vector3();
-		this.game = game;
+		
 		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
 
@@ -37,8 +39,15 @@ public class MenuScreen extends ScreenAdapter {
 
 	public void update() {
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(),0));
-
+			
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
+			
 			if (playButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new SelectScreen(game));
@@ -69,9 +78,21 @@ public class MenuScreen extends ScreenAdapter {
 	}
 
 	public void draw() {
+		
 		GL20 gl = Gdx.gl;
+		
+		gl.glViewport(
+				(int) game.viewport.x, 
+				(int) game.viewport.y, 
+				(int) game.viewport.width,
+				(int) game.viewport.height
+				);
+		
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		guiCam.update();
+		
 		Assets.font.setScale(0.7f, 0.7f);
 		Assets.font.setColor(new Color(Color.WHITE));
 		

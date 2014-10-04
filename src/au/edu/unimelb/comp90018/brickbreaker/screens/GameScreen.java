@@ -21,7 +21,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
@@ -45,12 +44,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	World world;
 	WorldListener worldListener;
 	WorldRenderer renderer;
-	Rectangle viewport;
-	Rectangle resumeBounds,quitBounds, continueWin, playAgainGameOver, quitGameOver;
+	// Rectangle viewport;
+	Rectangle resumeBounds, quitBounds, continueWin, playAgainGameOver, quitGameOver;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
-	//String ipServer = "192.168.1.13";
+	// String ipServer = "192.168.1.13";
 	String ipServer = "10.9.163.225";
 
 	public enum GameMode {
@@ -61,14 +60,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	public GameScreen(BrickBreaker game, GameMode mode, int level) {
 
-		this.game = game;	
+		this.game = game;
 		state = GAME_READY;
 
-		// We need to have a target resolution, e.g. 320 x 480
-		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
-				Settings.TARGET_HEIGHT);
-		guiCam.position.set(Settings.TARGET_WIDTH / 2,
-				Settings.TARGET_HEIGHT / 2, 0);
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
 
 		touchPoint = new Vector3();
 
@@ -88,7 +84,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			public void lifeLost() {
 				Assets.playSound(Assets.lifeLostSound);
 			}
-			
+
 			@Override
 			public void gameOver() {
 				Assets.playSound(Assets.gameOverSound);
@@ -100,22 +96,22 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		resumeBounds = new Rectangle(90, 120, 60, 50);
 		quitBounds = new Rectangle(180, 120, 60, 50);
-		
+
 		continueWin = new Rectangle(200, 120, 80, 50);
 		playAgainGameOver = new Rectangle(90, 120, 60, 50);
 		quitGameOver = new Rectangle(180, 120, 60, 50);
 
 		toggleSound = true;
 		lastScore = 0;
-		scoreString = "SCORE: 0";
-
-		myMode = mode;
+		scoreString = "SCORE: 0";		
 
 		if (mode == GameMode.Server) {
-			startServerThread();			
+			startServerThread();
 		} else if (mode == GameMode.Client) {
 			startClientThread();
 		}
+		
+		myMode = mode;
 	}
 
 	public void startServerThread() {
@@ -143,27 +139,26 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					// Create a socket
 					Socket socket = serverSocket.accept(null);
 
-					while (true) {						
-						StringBuffer sb = new StringBuffer();						
+					while (true) {
+						StringBuffer sb = new StringBuffer();
 						try {
-							sb
-								.append(String.valueOf(state)).append(";")								
-								.append(String.valueOf(world.paddle.position.x)).append(";")
-								.append(String.valueOf(world.paddle.position.y)).append(";")
-								.append(String.valueOf(world.ball.position.x)).append(";")
-								.append(String.valueOf(world.ball.position.y)).append("\n");
-							
-							socket.getOutputStream().write(sb.toString().getBytes());							
+							sb.append(String.valueOf(state)).append(";")
+									.append(String.valueOf(world.paddle.position.x)).append(";")
+									.append(String.valueOf(world.paddle.position.y)).append(";")
+									.append(String.valueOf(world.ball.position.x)).append(";")
+									.append(String.valueOf(world.ball.position.y)).append("\n");
+
+							socket.getOutputStream().write(sb.toString().getBytes());
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}					
+					}
 				}
 			}
 		}).start();
 	}
-	
+
 	public void startClientThread() {
 
 		new Thread(new Runnable() {
@@ -172,22 +167,22 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			public void run() {
 
 				SocketHints socketHints = new SocketHints();
-				
+
 				// Socket will time our in 4 seconds
 				socketHints.connectTimeout = 4000;
-				
+
 				// Create the socket and connect to the server on port 9021
 				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021, socketHints);
-				
+
 				BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				
+
 				String msg = null;
-				
+
 				while (true) {
 					try {
 						msg = buffer.readLine();
 						String[] parts = msg.split(";");
-						
+
 						state = Integer.parseInt(parts[0]);
 						world.paddle.position.set(Float.parseFloat(parts[1]), Float.parseFloat(parts[2]));
 						world.ball.position.set(Float.parseFloat(parts[3]), Float.parseFloat(parts[4]));
@@ -201,6 +196,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	}
 
 	public void update(float deltaTime) {
+		
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
 
@@ -237,8 +233,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		if (Gdx.input.justTouched()) {
 
 			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					viewport.x, viewport.y, viewport.width, viewport.height);
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -247,14 +247,17 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			}
 
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				Assets.playSound(Assets.clickSound);
 				
+				Assets.playSound(Assets.clickSound);
+
 				if (Settings.musicEnabled)
 					Assets.music.play();
 				else
 					Assets.music.pause();
+				
 				Settings.musicEnabled = !Settings.musicEnabled;
 				Settings.soundEnabled = !Settings.soundEnabled;
+				
 				return;
 			}
 		}
@@ -263,9 +266,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.isTouched()) {
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					viewport.x, viewport.y, viewport.width, viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (touchPoint.x < world.paddle.position.x) { // is moving to the
 															// left
@@ -290,10 +296,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			// scoreString = "SCORE: " + lastScore;
 			// Settings.addScore(lastScore);
 			// Settings.save();
-		}
-		else if(world.state == World.WORLD_STATE_GAME_LOST_LIFE){
+		} else if (world.state == World.WORLD_STATE_GAME_LOST_LIFE) {
 			state = GAME_READY;
-		}else if(world.state == World.WORLD_STATE_LEVEL_END){
+		} else if (world.state == World.WORLD_STATE_LEVEL_END) {
 			state = GAME_LEVEL_END;
 		}
 	}
@@ -302,9 +307,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					viewport.x, viewport.y, viewport.width, viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -317,7 +325,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
-	
+
 		}
 	}
 
@@ -326,50 +334,56 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			state = GAME_LIFE_LOST;
 		}
 	}
-	
-	private void updateLevelEnd() {	
+
+	private void updateLevelEnd() {
 
 		if (Gdx.input.justTouched()) {
-			
+
 			state = GAME_LEVEL_END;
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					viewport.x, viewport.y, viewport.width, viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (continueWin.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new LevelScreen(game));
 				return;
 			}
-			
+
 		}
 	}
 
 	private void updateGameOver() {
-		
+
 		if (Gdx.input.justTouched()) {
-			
+
 			state = GAME_OVER;
-			
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					viewport.x, viewport.y, viewport.width, viewport.height);
-			
+
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
+
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
-				//TODO: We should restart World here something like this:
-				world = new World(worldListener, 1); 
+				// TODO: We should restart World here something like this:
+				world = new World(worldListener, 1);
 				renderer = new WorldRenderer(game.batcher, world);
 				world.score = 0;
 				state = GAME_RUNNING;
 				return;
 			}
-			
+
 			if (quitGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.toggleSound);
-				//TODO: We should restart World here
-				//Gdx.input.getTextInput(this, "Enter Name", ""); 
+				// TODO: We should restart World here
+				// Gdx.input.getTextInput(this, "Enter Name", "");
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
@@ -380,8 +394,13 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		GL20 gl = Gdx.gl;
 
-		gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width,
-				(int) viewport.height);
+		gl.glViewport(
+				(int) game.viewport.x, 
+				(int) game.viewport.y, 
+				(int) game.viewport.width,
+				(int) game.viewport.height
+				);
+		
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -432,17 +451,17 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	private void presentLostLife() {
 		game.batcher.draw(Assets.ready, 0, 0, 320, 480);
 	}
-	
+
 	private void presentLevelEnd() {
 		game.batcher.draw(Assets.win, 0, 0, 320, 480);
 		Assets.font.setScale(0.5f, 0.5f);
-		Assets.font.draw(game.batcher, String.valueOf(world.score),175,211);
+		Assets.font.draw(game.batcher, String.valueOf(world.score), 175, 211);
 	}
 
 	private void presentGameOver() {
 		game.batcher.draw(Assets.gameOver, 0, 0, 320, 480);
 		Assets.font.setScale(0.5f, 0.5f);
-		Assets.font.draw(game.batcher, String.valueOf(world.score),175,211);
+		Assets.font.draw(game.batcher, String.valueOf(world.score), 175, 211);
 	}
 
 	@Override
@@ -460,40 +479,16 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-
-		// calculate new viewport
-		float aspectRatio = (float) width / (float) height;
-		float scale = 1f;
-		Vector2 crop = new Vector2(0f, 0f);
-
-		if (aspectRatio > Settings.ASPECT_RATIO) {
-			scale = (float) height / (float) Settings.TARGET_HEIGHT;
-			crop.x = (width - Settings.TARGET_WIDTH * scale) / 2f;
-		} else if (aspectRatio < Settings.ASPECT_RATIO) {
-			scale = (float) width / (float) Settings.TARGET_WIDTH;
-			crop.y = (height - Settings.TARGET_HEIGHT * scale) / 2f;
-		} else {
-			scale = (float) width / (float) Settings.TARGET_WIDTH;
-		}
-
-		float w = (float) Settings.TARGET_WIDTH * scale;
-		float h = (float) Settings.TARGET_HEIGHT * scale;
-		viewport = new Rectangle(crop.x, crop.y, w, h);
-	}
-
-	@Override
 	public void canceled() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void input(String name) {
-		if (name.length()>0){
+		if (name.length() > 0) {
 			LevelDownloader ld = new LevelDownloader();
 			try {
-				ld.submitHighScore(name,world.score);
+				ld.submitHighScore(name, world.score);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
