@@ -22,17 +22,22 @@ public class Ball extends DynamicGameObject {
 	public void update(float deltaTime) {
 
 		position.add(velocity.x * deltaTime, velocity.y * deltaTime);
-
-		bounds.x = position.x - bounds.width / 2;
-		bounds.y = position.y - bounds.height / 2;
-
+		
 		if (position.x < BALL_WIDTH / 2 || position.x > (World.WORLD_WIDTH - BALL_WIDTH / 2)) {
+			if (position.x < BALL_WIDTH / 2)
+				position.x = BALL_WIDTH / 2;
+			if (position.x > (World.WORLD_WIDTH - BALL_WIDTH / 2))
+				position.x = World.WORLD_WIDTH - BALL_WIDTH / 2;
 			velocity.x *= -1;
 		}
 
 		if (position.y > (World.WORLD_HEIGHT - BALL_HEIGHT / 2)) {
+			position.y = World.WORLD_HEIGHT - BALL_HEIGHT / 2;
 			velocity.y *= -1;
 		}
+		
+		bounds.x = position.x - bounds.width / 2;
+		bounds.y = position.y - bounds.height / 2;
 	}
 
 	public void hitPaddle(float paddleVelX) {
