@@ -104,12 +104,16 @@ public class Assets {
 	/* Sounds & Music */
 	public static Music music;
 
+	public static Sound touchPaddleSound;
 	public static Sound touchWallSound;
+	public static Sound touchBrickSound;
 	public static Sound touchHardBrickSound;
 	public static Sound lifeLostSound;
 	public static Sound gameOverSound;
 	public static Sound winnerSound;
-	public static Sound getBonusSound;
+	public static Sound lifeBonusSound;
+	public static Sound coinBonusSound;
+	public static Sound badBonusSound;
 	public static Sound clickSound;
 	public static Sound toggleSound;
 
@@ -254,13 +258,17 @@ public class Assets {
 			music.pause();
 		}
 
-	
+		
+		touchPaddleSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchPaddle.wav"));
 		touchWallSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchWall.ogg"));
-		touchHardBrickSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchHardBrick.ogg"));
+		touchBrickSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchBrick.ogg"));
+		touchHardBrickSound = Gdx.audio.newSound(Gdx.files.internal("sound/touchHardBrick.wav"));
 		lifeLostSound = Gdx.audio.newSound(Gdx.files.internal("sound/lifeLost.ogg"));
-		gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sound/gameOver.ogg"));
-		winnerSound = Gdx.audio.newSound(Gdx.files.internal("sound/tada.wav"));
-		getBonusSound = Gdx.audio.newSound(Gdx.files.internal("sound/getBonus.ogg"));
+		gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sound/gameOverSound.ogg"));
+		winnerSound = Gdx.audio.newSound(Gdx.files.internal("sound/winnerSound.wav"));
+		lifeBonusSound = Gdx.audio.newSound(Gdx.files.internal("sound/getLifeBonus.ogg"));
+		coinBonusSound = Gdx.audio.newSound(Gdx.files.internal("sound/coin.wav"));
+		//badBonusSound = Gdx.audio.newSound(Gdx.files.internal("sound/coin.wav"));
 		clickSound = Gdx.audio.newSound(Gdx.files.internal("sound/click.wav"));
 		toggleSound = Gdx.audio.newSound(Gdx.files.internal("sound/toggle.ogg"));
 	}

@@ -16,7 +16,6 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
-import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -151,12 +150,14 @@ public class World {
 	
 	private void checkNextLevel(){
 		if (this.bricks.size()<1){
+			listener.gameWin();//play sound
 			this.state = WORLD_STATE_LEVEL_END;
 		}
 	}
 	
 	private void checkLostLife() {
 		if (ball.position.y <= 0){
+			listener.lifeLost();//play sound
 			int len = lives.size() - 1;
 			if (len != -1){
 				lives.remove(len); //life lost
@@ -171,15 +172,25 @@ public class World {
 	
 	private void checkGameOver() {
 		if (this.lives.size()<1){
+			listener.gameOver();//play sound
+			
 			this.state = WORLD_STATE_GAME_OVER;
 		}
 	}
 
 	private void checkCollisions() {
+		checkWallCollision();
 		checkPaddleCollision();
 		checkBrickCollision();
 	}
 
+	private void checkWallCollision() {
+		if(ball.position.x < ball.bounds.getWidth()/2 || ball.position.x > WORLD_WIDTH - ball.bounds.getWidth()/2 || ball.position.y > WORLD_HEIGHT - ball.bounds.getHeight()/2){
+			listener.hitWall();//play sound
+		}
+	}
+
+	
 	private void checkPaddleCollision() {
 
 		if (ball.velocity.y > 0)
@@ -188,7 +199,7 @@ public class World {
 		if (ball.bounds.overlaps(paddle.bounds)) {			
 			//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
 			ball.hitPaddle(paddle.velocity.x);
-			Assets.playSound(Assets.clickSound);
+			listener.hitPaddle();//play sound
 			// listener.jump();
 			// if (rand.nextFloat() > 0.5f) {
 			// platform.pulverize();
@@ -202,7 +213,7 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-
+				listener.hitBrick();//play sound
 				ball.hitBrick(bricks.get(i).bounds);
 
 				// TODO: Don't know if this line needs to be included in ball.hitBrick

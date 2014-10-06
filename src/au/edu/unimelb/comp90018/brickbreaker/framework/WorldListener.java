@@ -12,6 +12,18 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 public interface WorldListener {
 	
+	public void getBonusLife();
+	
+	public void getBonusCoins();
+	
+	public void getBonusBad();
+	
+	public void hitHardBrick();
+	
+	public void gameWin();
+	
+	public void hitWall();
+	
 	public void hitPaddle ();
 
 	public void hitBrick ();

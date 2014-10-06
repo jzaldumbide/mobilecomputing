@@ -71,13 +71,38 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		worldListener = new WorldListener() {
 
 			@Override
+			public void getBonusLife() {
+				Assets.playSound(Assets.lifeBonusSound);
+			}
+			
+			@Override
+			public void getBonusCoins() {
+				Assets.playSound(Assets.coinBonusSound);
+			}
+			
+			@Override
+			public void getBonusBad() {
+				//Assets.playSound(Assets.badBonusSound);
+			}
+			
+			@Override
 			public void hitPaddle() {
-				Assets.playSound(Assets.getBonusSound);
+				Assets.playSound(Assets.touchPaddleSound);
 			}
 
 			@Override
-			public void hitBrick() {
+			public void hitHardBrick() {
 				Assets.playSound(Assets.touchHardBrickSound);
+			}
+			
+			@Override
+			public void hitWall() {
+				Assets.playSound(Assets.touchWallSound);
+			}
+			
+			@Override
+			public void hitBrick() {
+				Assets.playSound(Assets.touchBrickSound);
 			}
 
 			@Override
@@ -88,6 +113,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			@Override
 			public void gameOver() {
 				Assets.playSound(Assets.gameOverSound);
+			}
+			
+			@Override
+			public void gameWin() {
+				Assets.playSound(Assets.winnerSound);
 			}
 		};
 
