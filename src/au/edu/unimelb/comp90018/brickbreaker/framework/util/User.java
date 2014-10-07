@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class User {
 
-	public final static String file = "brickbreaker.data";
+	public final static String file = Settings.playerDataFile;
 
 	public String username;
 
@@ -16,21 +16,13 @@ public class User {
 			if (!filehandle.exists()) {
 				filehandle.writeString(username + "\n", true);
 				// levels
-				filehandle.writeString(Integer.toString(1) + "\n", true);// only
-																			// the
-																			// first
-																			// level
-																			// unlocked
+				filehandle.writeString(Integer.toString(1) + "\n", true);
 				for (int i = 0; i < 8; i++) {
-					filehandle.writeString(Integer.toString(0) + "\n", true);// all
-																				// levels
-																				// locked
+					filehandle.writeString(Integer.toString(0) + "\n", true);
 				}
 				// scores
 				for (int i = 0; i < 9; i++) {
-					filehandle.writeString(Integer.toString(0) + "\n", true);// all
-																				// scores
-																				// 0
+					filehandle.writeString(Integer.toString(0) + "\n", true);
 				}
 				Gdx.app.log("file created: ", file);
 			}
@@ -39,30 +31,46 @@ public class User {
 
 	}
 
-	public static void updatescore(int level, int score) {
+	/**
+	 * Update level score
+	 * 
+	 * @param level
+	 * @param score
+	 */
+	public static void updateScore(int level, int score) {
 		try {
 			FileHandle filehandle = Gdx.files.external(file);
 			String[] strings = filehandle.readString().split("\n");
 			strings[level + 9] = Integer.toString(score);
 
-			save(strings);
+			savePlayerDataInfo(strings);
 		} catch (Throwable e) {
 		}
 
 	}
 
-	public static void unlocklevels(int level) {
+	/**
+	 * Unlock some Level
+	 * 
+	 * @param level
+	 */
+	public static void unlockLevel(int level) {
 		try {
 			FileHandle filehandle = Gdx.files.external(file);
 			String[] strings = filehandle.readString().split("\n");
 			strings[level] = Integer.toString(1);
 
-			save(strings);
+			savePlayerDataInfo(strings);
 		} catch (Throwable e) {
 		}
 	}
 
-	public static void save(String[] strings) {
+	/**
+	 * Save player info
+	 * 
+	 * @param strings
+	 */
+	public static void savePlayerDataInfo(String[] strings) {
 		try {
 			FileHandle filehandle = Gdx.files.external(file);
 			filehandle.writeString("", false);
@@ -76,36 +84,58 @@ public class User {
 
 	}
 
-	public static void getlevelscore(int level) {
+	/**
+	 * Return player score
+	 * 
+	 * @param level
+	 */
+	public static int getLevelScore(int level) {
 		int score = 0;
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
 		score = Integer.parseInt(strings[level + 9]);
 		Gdx.app.log("Level score: ", Integer.toString(score));
-		// return score;
+		return score;
 	}
 
-	public static void getlevelunlocked(int level) {
+	/**
+	 * Return level state
+	 * 
+	 * @param level
+	 * @return true or false
+	 */
+	public static boolean isLevelUnlocked(int level) {
 		int levelunlocked = 0;
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
 		levelunlocked = Integer.parseInt(strings[level]);
 		Gdx.app.log("Unlocked level: ", Integer.toString(levelunlocked));
 
-		// return levelunlocked;
+		if (levelunlocked == 0)
+			return true;
+
+		return false;
 	}
 
-	public static void user() {
+	/**
+	 * Return player Name
+	 * 
+	 * @return playerName
+	 */
+	public static String getPlayerName() {
 
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
-		String user = strings[0];
-		Gdx.app.log("Unlocked level: ", user);
+		String playerName = strings[0];
+		Gdx.app.log("Unlocked level: ", playerName);
 
-		// return user;
+		return playerName;
 	}
 
-	public static void gettotalscore() {
+	/**
+	 * Get total score
+	 */
+	public static int getTotalScore() {
 		int totalscore = 0;
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
@@ -115,6 +145,6 @@ public class User {
 
 		}
 		Gdx.app.log("totalscore: ", Integer.toString(totalscore));
-		// return totalscore;
+		return totalscore;
 	}
 }

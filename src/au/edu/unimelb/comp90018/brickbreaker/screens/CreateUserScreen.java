@@ -51,28 +51,28 @@ public class CreateUserScreen extends ScreenAdapter {
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));//ok
-				User.unlocklevels(1);
+				User.unlockLevel(1);
 				// User.unlocklevels(3);
-				User.unlocklevels(4);
-				User.unlocklevels(5);
-				User.unlocklevels(6);
+				User.unlockLevel(4);
+				User.unlockLevel(5);
+				User.unlockLevel(6);
 				// User.unlocklevels(7);
-				User.unlocklevels(8);
-				User.unlocklevels(9);
-				User.updatescore(1, 100);
-				User.updatescore(2, 200);
-				User.updatescore(3, 300);
+				User.unlockLevel(8);
+				User.unlockLevel(9);
+				User.updateScore(1, 100);
+				User.updateScore(2, 200);
+				User.updateScore(3, 300);
 
-				User.updatescore(4, 400);
-				User.updatescore(5, 500);
-				User.updatescore(6, 600);
+				User.updateScore(4, 400);
+				User.updateScore(5, 500);
+				User.updateScore(6, 600);
 				// User.updatescore(7, 700);
-				User.updatescore(8, 800);
-				User.updatescore(9, 900);
+				User.updateScore(8, 800);
+				User.updateScore(9, 900);
 
-				User.getlevelscore(8);
-				User.gettotalscore();
-				User.getlevelunlocked(3);
+				User.getLevelScore(8);
+				User.getTotalScore();
+				User.isLevelUnlocked(3);
 
 				return;
 			}

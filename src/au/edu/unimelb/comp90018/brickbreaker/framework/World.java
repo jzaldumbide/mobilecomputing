@@ -16,6 +16,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.User;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -152,6 +153,9 @@ public class World {
 		if (this.bricks.size()<1){
 			listener.gameWin();//play sound
 			this.state = WORLD_STATE_LEVEL_END;
+			level++;
+			User.unlockLevel(level);
+			User.updateScore(level, score);
 		}
 	}
 	
@@ -173,7 +177,6 @@ public class World {
 	private void checkGameOver() {
 		if (this.lives.size()<1){
 			listener.gameOver();//play sound
-			
 			this.state = WORLD_STATE_GAME_OVER;
 		}
 	}
