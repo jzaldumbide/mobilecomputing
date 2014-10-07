@@ -51,8 +51,8 @@ public class CreateUserScreen extends ScreenAdapter {
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));//ok
-				User.unlocklevels(2);
-				User.unlocklevels(3);
+				User.unlocklevels(1);
+				// User.unlocklevels(3);
 				User.unlocklevels(4);
 				User.unlocklevels(5);
 				User.unlocklevels(6);

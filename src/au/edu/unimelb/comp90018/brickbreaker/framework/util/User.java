@@ -95,6 +95,16 @@ public class User {
 		// return levelunlocked;
 	}
 
+	public static void user() {
+
+		FileHandle filehandle = Gdx.files.external(file);
+		String[] strings = filehandle.readString().split("\n");
+		String user = strings[0];
+		Gdx.app.log("Unlocked level: ", user);
+
+		// return user;
+	}
+
 	public static void gettotalscore() {
 		int totalscore = 0;
 		FileHandle filehandle = Gdx.files.external(file);
@@ -105,6 +115,6 @@ public class User {
 
 		}
 		Gdx.app.log("totalscore: ", Integer.toString(totalscore));
-		// return 0;
+		// return totalscore;
 	}
 }
