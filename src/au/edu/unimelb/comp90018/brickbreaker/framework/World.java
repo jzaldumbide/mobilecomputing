@@ -45,6 +45,7 @@ public class World {
 	public int state;
 	public int rank;
 	public int nextScore;
+	public int totalScore;
 	public List<Integer> rankings; //List with top 10 rankings to beat
 	Player player; //Object to handle total score
 
@@ -90,20 +91,26 @@ public class World {
 		}		
 
 		//Test whats the current rank of the user based on the general score
-		int currentScore = player.getTotalScore();
+		this.totalScore = player.getTotalScore();
+		updateRanking(this.totalScore);
+
+		this.score = 0;
+		this.state = WORLD_STATE_RUNNING;
+	}
+
+	/**
+	 * 
+	 */
+	private void updateRanking(int totalScore) {
 		this.rank = 1;
 		
-		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); i.next()){
+		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); ){
 			int score = i.next();
-			if ( score>currentScore ){
+			if ( score>totalScore ){
 				this.rank++;
 				this.nextScore = score;
 			}
 		}
-
-		this.score = 0;
-		this.rank = 0;
-		this.state = WORLD_STATE_RUNNING;
 	}
 
 	private void generateLevel() {
@@ -251,15 +258,18 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
+				score ++;
 				listener.hitBrick();//play sound
 				ball.hitBrick(bricks.get(i).bounds);
 
 				// TODO: Don't know if this line needs to be included in ball.hitBrick
 				bricks.get(i).hitMe();
-
-				if (bricks.get(i).isPulverised())
+				updateRanking(this.totalScore+score);
+				
+				if (bricks.get(i).isPulverised()){
 					bricks.remove(i);
-					score ++;
+				}
+					
 				break;
 			}
 		}

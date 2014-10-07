@@ -64,6 +64,8 @@ public class WorldRenderer {
 		renderLives();
 		renderLevelNumber();
 		renderRank();
+		renderTotalScore();
+		renderNextScore();
 		batch.end();
 	}
 
@@ -166,9 +168,21 @@ public class WorldRenderer {
 	private void renderRank() {
 		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
-		Assets.font.draw(batch, "RANK: " + world.rank, World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 20);
+		Assets.font.draw(batch, "RANK: " + (world.rank>10?"-":world.rank), World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 20);
 	}
-	
+
+	private void renderTotalScore() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "TOTAL: " + world.totalScore, World.WORLD_WIDTH-180, World.WORLD_HEIGHT - 5);
+	}
+
+	private void renderNextScore() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "NEXT: " + world.nextScore, World.WORLD_WIDTH-180, World.WORLD_HEIGHT - 20);
+	}
+
 	private void renderLives() {
 		
 		int buttonWidth = ButtonSize.SMALL_SQUARE.getButtonWidth();
