@@ -45,7 +45,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	WorldListener worldListener;
 	WorldRenderer renderer;
 	// Rectangle viewport;
-	Rectangle resumeBounds, quitBounds, continueWin, playAgainGameOver, quitGameOver;
+	Rectangle resumeBounds, quitBounds, continueWin, playAgainGameOver,
+			quitGameOver;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
@@ -63,8 +64,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		this.game = game;
 		state = GAME_READY;
 
-		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
-		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
+				Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2,
+				Settings.TARGET_HEIGHT / 2, 0);
 
 		touchPoint = new Vector3();
 
@@ -74,17 +77,17 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			public void getBonusLife() {
 				Assets.playSound(Assets.lifeBonusSound);
 			}
-			
+
 			@Override
 			public void getBonusCoins() {
 				Assets.playSound(Assets.coinBonusSound);
 			}
-			
+
 			@Override
 			public void getBonusBad() {
-				//Assets.playSound(Assets.badBonusSound);
+				// Assets.playSound(Assets.badBonusSound);
 			}
-			
+
 			@Override
 			public void hitPaddle() {
 				Assets.playSound(Assets.touchPaddleSound);
@@ -94,12 +97,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			public void hitHardBrick() {
 				Assets.playSound(Assets.touchHardBrickSound);
 			}
-			
+
 			@Override
 			public void hitWall() {
 				Assets.playSound(Assets.touchWallSound);
 			}
-			
+
 			@Override
 			public void hitBrick() {
 				Assets.playSound(Assets.touchBrickSound);
@@ -114,7 +117,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			public void gameOver() {
 				Assets.playSound(Assets.gameOverSound);
 			}
-			
+
 			@Override
 			public void gameWin() {
 				Assets.playSound(Assets.winnerSound);
@@ -133,14 +136,14 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		toggleSound = true;
 		lastScore = 0;
-		scoreString = "SCORE: 0";		
+		scoreString = "SCORE: 0";
 
-		if (mode == GameMode.Server) {
-			startServerThread();
-		} else if (mode == GameMode.Client) {
-			startClientThread();
-		}
-		
+		// if (mode == GameMode.Server) {
+		// startServerThread();
+		// } else if (mode == GameMode.Client) {
+		// startClientThread();
+		// }
+
 		myMode = mode;
 	}
 
@@ -161,7 +164,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				// 9021. Only one app can listen to a port at a time, keep in
 				// mind many ports are reserved especially in the lower numbers
 				// ( like 21, 80, etc )
-				ServerSocket serverSocket = Gdx.net.newServerSocket(Protocol.TCP, 9021, serverSocketHint);
+				ServerSocket serverSocket = Gdx.net.newServerSocket(
+						Protocol.TCP, 9021, serverSocketHint);
 
 				// Loop forever
 				while (true) {
@@ -172,13 +176,23 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					while (true) {
 						StringBuffer sb = new StringBuffer();
 						try {
-							sb.append(String.valueOf(state)).append(";")
-									.append(String.valueOf(world.paddle.position.x)).append(";")
-									.append(String.valueOf(world.paddle.position.y)).append(";")
-									.append(String.valueOf(world.ball.position.x)).append(";")
-									.append(String.valueOf(world.ball.position.y)).append("\n");
+							sb.append(String.valueOf(state))
+									.append(";")
+									.append(String
+											.valueOf(world.paddle.position.x))
+									.append(";")
+									.append(String
+											.valueOf(world.paddle.position.y))
+									.append(";")
+									.append(String
+											.valueOf(world.ball.position.x))
+									.append(";")
+									.append(String
+											.valueOf(world.ball.position.y))
+									.append("\n");
 
-							socket.getOutputStream().write(sb.toString().getBytes());
+							socket.getOutputStream().write(
+									sb.toString().getBytes());
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -202,9 +216,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				socketHints.connectTimeout = 4000;
 
 				// Create the socket and connect to the server on port 9021
-				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021, socketHints);
+				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer,
+						9021, socketHints);
 
-				BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				BufferedReader buffer = new BufferedReader(
+						new InputStreamReader(socket.getInputStream()));
 
 				String msg = null;
 
@@ -214,8 +230,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 						String[] parts = msg.split(";");
 
 						state = Integer.parseInt(parts[0]);
-						world.paddle.position.set(Float.parseFloat(parts[1]), Float.parseFloat(parts[2]));
-						world.ball.position.set(Float.parseFloat(parts[3]), Float.parseFloat(parts[4]));
+						world.paddle.position.set(Float.parseFloat(parts[1]),
+								Float.parseFloat(parts[2]));
+						world.ball.position.set(Float.parseFloat(parts[3]),
+								Float.parseFloat(parts[4]));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -226,7 +244,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	}
 
 	public void update(float deltaTime) {
-		
+
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
 
@@ -263,12 +281,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		if (Gdx.input.justTouched()) {
 
 			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					game.viewport.x, game.viewport.y, game.viewport.width,
+					game.viewport.height);
 
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -277,17 +292,17 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			}
 
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
-				
+
 				Assets.playSound(Assets.clickSound);
 
 				if (Settings.musicEnabled)
 					Assets.music.play();
 				else
 					Assets.music.pause();
-				
+
 				Settings.musicEnabled = !Settings.musicEnabled;
 				Settings.soundEnabled = !Settings.soundEnabled;
-				
+
 				return;
 			}
 		}
@@ -296,12 +311,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.isTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					game.viewport.x, game.viewport.y, game.viewport.width,
+					game.viewport.height);
 
 			if (touchPoint.x < world.paddle.position.x) { // is moving to the
 															// left
@@ -337,12 +350,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					game.viewport.x, game.viewport.y, game.viewport.width,
+					game.viewport.height);
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -371,12 +382,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			state = GAME_LEVEL_END;
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					game.viewport.x, game.viewport.y, game.viewport.width,
+					game.viewport.height);
 
 			if (continueWin.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -393,12 +402,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			state = GAME_OVER;
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(
+					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
+					game.viewport.x, game.viewport.y, game.viewport.width,
+					game.viewport.height);
 
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -424,13 +431,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		GL20 gl = Gdx.gl;
 
-		gl.glViewport(
-				(int) game.viewport.x, 
-				(int) game.viewport.y, 
-				(int) game.viewport.width,
-				(int) game.viewport.height
-				);
-		
+		gl.glViewport((int) game.viewport.x, (int) game.viewport.y,
+				(int) game.viewport.width, (int) game.viewport.height);
+
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
