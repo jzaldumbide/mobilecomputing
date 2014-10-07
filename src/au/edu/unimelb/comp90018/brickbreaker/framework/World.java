@@ -2,9 +2,11 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
@@ -42,7 +44,11 @@ public class World {
 	public int score;
 	public int state;
 	public int rank;
+	public int nextScore;
+	public List<Integer> rankings; //List with top 10 rankings to beat
+	Player player; //Object to handle total score
 
+	
 	public World(WorldListener listener, int gameLevel) {
 
 		level = gameLevel;
@@ -65,6 +71,35 @@ public class World {
 		 * loader file
 		 */
 		generateLevel();
+		//Download and persist high scores
+		LevelDownloader ld = new LevelDownloader();
+		String highScores;
+		try {
+			highScores = ld.downloadHighScores();
+			ld.persistScores(highScores);
+			this.rankings = ld.loadHighScoresAsList();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+
+		//Test whats the current rank of the user based on the general score
+		int currentScore = player.getTotalScore();
+		this.rank = 1;
+		
+		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); i.next()){
+			int score = i.next();
+			if ( score>currentScore ){
+				this.rank++;
+				this.nextScore = score;
+			}
+		}
 
 		this.score = 0;
 		this.rank = 0;
