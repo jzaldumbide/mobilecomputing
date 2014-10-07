@@ -105,7 +105,7 @@ public class User {
 		// return user;
 	}
 
-	public static void gettotalscore() {
+	public static int gettotalscore() {
 		int totalscore = 0;
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
@@ -115,6 +115,6 @@ public class User {
 
 		}
 		Gdx.app.log("totalscore: ", Integer.toString(totalscore));
-		// return totalscore;
+		return totalscore;
 	}
 }

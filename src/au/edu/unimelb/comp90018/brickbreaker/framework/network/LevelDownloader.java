@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -182,6 +184,28 @@ public class LevelDownloader {
          eventType = xpp.next();
         }
 		return sb.toString();
+	}
+	public List<Integer> loadHighScoresAsList() throws XmlPullParserException, IOException {
+		String highScores = loadFile("highScores.xml");
+		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+        factory.setNamespaceAware(true);
+        XmlPullParser xpp = factory.newPullParser();
+        xpp.setInput( new StringReader ( highScores ) );
+        List<Integer> scores = new ArrayList<Integer>();
+        int eventType = xpp.getEventType();
+        int position = 1;
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+        	if(eventType == XmlPullParser.START_TAG) {
+               String tagName = xpp.getName();
+               if (tagName.equals("highScore")){
+            	   String name = xpp.getAttributeValue("", "name");
+            	   int score = Integer.valueOf(xpp.getAttributeValue("", "score"));
+            	   scores.add(score);
+               }
+            }
+         eventType = xpp.next();
+        }
+		return scores;
 	}
 
 	public void submitHighScore(String name, int score) throws ClientProtocolException, IOException {
