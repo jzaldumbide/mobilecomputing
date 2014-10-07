@@ -15,6 +15,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
@@ -37,7 +38,11 @@ public class World {
 	public Paddle paddle;
 	public List<BrickAdapter> bricks;
 	public List<Button> lives;
+	public Coin coin;
 	public Button pauseButton, soundButton;
+	public float timeCounter;
+	public int coinShowTime;
+	public boolean showCoin;
 
 	public final WorldListener listener;
 	public int level;
@@ -45,18 +50,24 @@ public class World {
 	public int state;
 	public int rank;
 	public int nextScore;
+	public int totalScore;
 	public List<Integer> rankings; //List with top 10 rankings to beat
 	Player player; //Object to handle total score
 
 	
 	public World(WorldListener listener, int gameLevel) {
 
+		timeCounter = 0;
+		coinShowTime = 15; //first coin will appear after 15sec
 		level = gameLevel;
+		showCoin=false;
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
 
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
+
+		coin = new Coin(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,10));
 
 		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2 + 5,
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
@@ -90,20 +101,26 @@ public class World {
 		}		
 
 		//Test whats the current rank of the user based on the general score
-		int currentScore = player.getTotalScore();
+		this.totalScore = player.getTotalScore();
+		updateRanking(this.totalScore);
+
+		this.score = 0;
+		this.state = WORLD_STATE_RUNNING;
+	}
+
+	/**
+	 * 
+	 */
+	private void updateRanking(int totalScore) {
 		this.rank = 1;
 		
-		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); i.next()){
+		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); ){
 			int score = i.next();
-			if ( score>currentScore ){
+			if ( score>totalScore ){
 				this.rank++;
 				this.nextScore = score;
 			}
 		}
-
-		this.score = 0;
-		this.rank = 0;
-		this.state = WORLD_STATE_RUNNING;
 	}
 
 	private void generateLevel() {
@@ -166,12 +183,22 @@ public class World {
 	}
 
 	public void update(float deltaTime, float accelX) {
+				
 		updateBall(deltaTime);
 		updatePaddle(deltaTime, accelX);
+		
+		if (showCoin){ //start coin animation
+			updateCoin(deltaTime);
+		}
+		
 		checkCollisions();
 		checkLostLife();
 		checkGameOver();
 		checkNextLevel();
+	}
+	
+	private void updateCoin(float deltaTime){
+		coin.update(deltaTime);
 	}
 
 	private void updateBall(float deltaTime) {
@@ -219,6 +246,7 @@ public class World {
 	private void checkCollisions() {
 		checkWallCollision();
 		checkPaddleCollision();
+		checkCoinCollision();
 		checkBrickCollision();
 	}
 
@@ -227,7 +255,6 @@ public class World {
 			listener.hitWall();//play sound
 		}
 	}
-
 	
 	private void checkPaddleCollision() {
 
@@ -238,11 +265,16 @@ public class World {
 			//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
 			ball.hitPaddle(paddle.velocity.x);
 			listener.hitPaddle();//play sound
-			// listener.jump();
-			// if (rand.nextFloat() > 0.5f) {
-			// platform.pulverize();
-			// }
+		}
 
+	}
+	
+	private void checkCoinCollision(){
+		
+		if (coin.bounds.overlaps(paddle.bounds)){
+			coin.pulverize();
+			score++;
+			listener.getBonusCoins();//play sound
 		}
 	}
 
@@ -251,15 +283,18 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
+				score ++;
 				listener.hitBrick();//play sound
 				ball.hitBrick(bricks.get(i).bounds);
 
 				// TODO: Don't know if this line needs to be included in ball.hitBrick
 				bricks.get(i).hitMe();
-
-				if (bricks.get(i).isPulverised())
+				updateRanking(this.totalScore+score);
+				
+				if (bricks.get(i).isPulverised()){
 					bricks.remove(i);
-					score ++;
+				}
+					
 				break;
 			}
 		}

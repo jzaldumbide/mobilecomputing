@@ -1,12 +1,15 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 import java.util.List;
+import java.util.Random;
 
+import android.os.CountDownTimer;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
@@ -23,9 +26,11 @@ public class WorldRenderer {
 	OrthographicCamera cam;
 	SpriteBatch batch;
 	String scoreLabel;
+	int randomTime;
 
 	public WorldRenderer(SpriteBatch batch, World world) {
 		this.world = world;
+		this.randomTime = (int)world.timeCounter;
 		this.cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
 		this.cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
 		this.batch = batch;
@@ -58,15 +63,31 @@ public class WorldRenderer {
 		
 		renderBall();
 		renderPaddle();
+		renderBonuses();
 		renderScore();
 		renderSoundButton();
 		renderPauseButton();
 		renderLives();
 		renderLevelNumber();
 		renderRank();
+		renderTotalScore();
+		renderNextScore();
 		batch.end();
 	}
 
+	private void renderBonuses(){
+		
+		if (world.showCoin){
+		
+		Coin coin = world.coin;
+		batch.draw(Assets.coin, coin.position.x - Coin.COIN_WIDTH / 2,
+				coin.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
+				Coin.COIN_HEIGHT);
+		
+		}
+	
+	}
+	
 	private void renderBall() {
 
 		Ball ball = world.ball;
@@ -166,9 +187,21 @@ public class WorldRenderer {
 	private void renderRank() {
 		Assets.font.setScale(0.5f, 0.5f);
 		// TODO: Review String object creation
-		Assets.font.draw(batch, "RANK: " + world.rank, World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 20);
+		Assets.font.draw(batch, "RANK: " + (world.rank>10?"-":world.rank), World.WORLD_WIDTH-80, World.WORLD_HEIGHT - 20);
 	}
-	
+
+	private void renderTotalScore() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "TOTAL: " + world.totalScore, World.WORLD_WIDTH-180, World.WORLD_HEIGHT - 5);
+	}
+
+	private void renderNextScore() {
+		Assets.font.setScale(0.5f, 0.5f);
+		// TODO: Review String object creation
+		Assets.font.draw(batch, "NEXT: " + world.nextScore, World.WORLD_WIDTH-180, World.WORLD_HEIGHT - 20);
+	}
+
 	private void renderLives() {
 		
 		int buttonWidth = ButtonSize.SMALL_SQUARE.getButtonWidth();
