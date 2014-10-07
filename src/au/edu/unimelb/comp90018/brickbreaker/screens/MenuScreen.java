@@ -5,7 +5,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
-import au.edu.unimelb.comp90018.brickbreaker.framework.util.User;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
@@ -57,7 +57,7 @@ public class MenuScreen extends ScreenAdapter {
 					@Override
 					public void input(String text) {
 						String cname = text;
-						User.create(cname);// archivo creado
+						Player.create(cname);// archivo creado
 					}
 
 					@Override

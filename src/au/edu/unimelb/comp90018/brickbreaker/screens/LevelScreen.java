@@ -5,6 +5,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 import au.edu.unimelb.comp90018.brickbreaker.screens.GameScreen.GameMode;
 
 import com.badlogic.gdx.Gdx;
@@ -121,21 +122,20 @@ public class LevelScreen extends ScreenAdapter {
 		game.batcher.begin();
 		game.batcher.draw(Assets.defaultBackground, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 		
-		boolean level1_locked = false;
-		
-		if (level1_locked){
+	
+		if (Player.isLevelUnlocked(1)){
 			game.batcher.draw(Assets.levelLocked_1,levelLockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}else{
 			game.batcher.draw(Assets.levelUnlocked_1,levelUnlockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelUnlockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}
 		
-		if (level1_locked){
+		if (Player.isLevelUnlocked(2)){
 			game.batcher.draw(Assets.levelLocked_2,levelLockedButton_2.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_2.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}else{
 			game.batcher.draw(Assets.levelUnlocked_2,levelUnlockedButton_2.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelUnlockedButton_2.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}
 		
-		if (level1_locked){
+		if (Player.isLevelUnlocked(3)){
 			game.batcher.draw(Assets.levelLocked_3,levelLockedButton_3.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_3.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}else{
 			game.batcher.draw(Assets.levelUnlocked_3,levelUnlockedButton_3.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelUnlockedButton_3.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());

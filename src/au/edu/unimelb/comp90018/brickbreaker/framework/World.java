@@ -2,11 +2,9 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
@@ -18,7 +16,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
-import au.edu.unimelb.comp90018.brickbreaker.framework.util.User;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -44,17 +42,13 @@ public class World {
 	public int score;
 	public int state;
 	public int rank;
-	public int nextScore;
-	public List<Integer> rankings; //List with top 10 rankings to beat
-	User user; //Object to handle total score
 
 	public World(WorldListener listener, int gameLevel) {
 
 		level = gameLevel;
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-		user = new User();
-		rankings = new ArrayList<Integer>(10);
+
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 
@@ -72,37 +66,8 @@ public class World {
 		 */
 		generateLevel();
 
-		//Download and persist high scores
-		LevelDownloader ld = new LevelDownloader();
-		String highScores;
-		try {
-			highScores = ld.downloadHighScores();
-			ld.persistScores(highScores);
-			this.rankings = ld.loadHighScoresAsList();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-
-		//Test whats the current rank of the user based on the general score
-		int currentScore = user.gettotalscore();
-		this.rank = 1;
-		
-		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); i.next()){
-			int score = i.next();
-			if ( score>currentScore ){
-				this.rank++;
-				this.nextScore = score;
-			}
-		}
-		
 		this.score = 0;
+		this.rank = 0;
 		this.state = WORLD_STATE_RUNNING;
 	}
 
@@ -188,6 +153,9 @@ public class World {
 		if (this.bricks.size()<1){
 			listener.gameWin();//play sound
 			this.state = WORLD_STATE_LEVEL_END;
+			level++;
+			Player.unlockLevel(level);
+			Player.updateScore(level, score);
 		}
 	}
 	
@@ -209,7 +177,6 @@ public class World {
 	private void checkGameOver() {
 		if (this.lives.size()<1){
 			listener.gameOver();//play sound
-			
 			this.state = WORLD_STATE_GAME_OVER;
 		}
 	}
@@ -249,19 +216,15 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-				score ++;
 				listener.hitBrick();//play sound
 				ball.hitBrick(bricks.get(i).bounds);
 
 				// TODO: Don't know if this line needs to be included in ball.hitBrick
 				bricks.get(i).hitMe();
 
-				//Check ranking
-				
-				
-				if (bricks.get(i).isPulverised()){
-					bricks.remove(i);		
-				}
+				if (bricks.get(i).isPulverised())
+					bricks.remove(i);
+					score ++;
 				break;
 			}
 		}

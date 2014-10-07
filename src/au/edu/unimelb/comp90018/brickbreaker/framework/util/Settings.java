@@ -15,6 +15,7 @@ public class Settings {
 	public static boolean accelerometerEnabled = false;
 	public final static int[] highscores = new int[] { 100, 80, 50, 30, 10 };
 	public final static String file = ".brickbreaker";
+	public static String playerDataFile = "brickbreaker.data";
 
 	public static void load() {
 
