@@ -5,7 +5,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
-import au.edu.unimelb.comp90018.brickbreaker.framework.util.User;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
@@ -24,7 +24,7 @@ public class CreateUserScreen extends ScreenAdapter {
 	String textString;
 	String username = null;
 	private Button btnBack, btnnewPlayer;
-	User user;
+	Player user;
 
 	public CreateUserScreen(BrickBreaker game) {
 
@@ -51,28 +51,28 @@ public class CreateUserScreen extends ScreenAdapter {
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));//ok
-				User.unlockLevel(1);
+				Player.unlockLevel(1);
 				// User.unlocklevels(3);
-				User.unlockLevel(4);
-				User.unlockLevel(5);
-				User.unlockLevel(6);
+				Player.unlockLevel(4);
+				Player.unlockLevel(5);
+				Player.unlockLevel(6);
 				// User.unlocklevels(7);
-				User.unlockLevel(8);
-				User.unlockLevel(9);
-				User.updateScore(1, 100);
-				User.updateScore(2, 200);
-				User.updateScore(3, 300);
+				Player.unlockLevel(8);
+				Player.unlockLevel(9);
+				Player.updateScore(1, 100);
+				Player.updateScore(2, 200);
+				Player.updateScore(3, 300);
 
-				User.updateScore(4, 400);
-				User.updateScore(5, 500);
-				User.updateScore(6, 600);
+				Player.updateScore(4, 400);
+				Player.updateScore(5, 500);
+				Player.updateScore(6, 600);
 				// User.updatescore(7, 700);
-				User.updateScore(8, 800);
-				User.updateScore(9, 900);
+				Player.updateScore(8, 800);
+				Player.updateScore(9, 900);
 
-				User.getLevelScore(8);
-				User.getTotalScore();
-				User.isLevelUnlocked(3);
+				Player.getLevelScore(8);
+				Player.getTotalScore();
+				Player.isLevelUnlocked(3);
 
 				return;
 			}
@@ -142,7 +142,7 @@ public class CreateUserScreen extends ScreenAdapter {
 			@Override
 			public void input(String text) {
 				String cname = text;
-				User.create(cname);// archivo creado
+				Player.create(cname);// archivo creado
 			}
 
 			@Override

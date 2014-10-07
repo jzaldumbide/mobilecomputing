@@ -3,7 +3,7 @@ package au.edu.unimelb.comp90018.brickbreaker.framework.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public class User {
+public class Player {
 
 	public final static String file = Settings.playerDataFile;
 
