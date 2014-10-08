@@ -1,9 +1,7 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework;
 
 import java.util.List;
-import java.util.Random;
 
-import android.os.CountDownTimer;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
@@ -155,20 +153,21 @@ public class WorldRenderer {
 		int buttonHeight = ButtonSize.MEDIUM_SQUARE.getButtonHeight();
 		Button musicButton = world.soundButton;
 
-		if (Settings.musicEnabled){
-			batch.draw(Assets.soundGameOn,
-				musicButton.position.x - buttonWidth / 2,
-				musicButton.position.y - buttonHeight / 2,
-				buttonWidth, 
-				buttonHeight
-				);
-		}else{
+		if (!Settings.musicEnabled){
+
 			batch.draw(Assets.soundGameOff,
 					musicButton.position.x - buttonWidth / 2,
 					musicButton.position.y - buttonHeight / 2,
 					buttonWidth, 
 					buttonHeight
 					);
+		}else{
+				batch.draw(Assets.soundGameOn,
+						musicButton.position.x - buttonWidth / 2,
+						musicButton.position.y - buttonHeight / 2,
+						buttonWidth, 
+						buttonHeight
+						);
 		}
 	}
 	

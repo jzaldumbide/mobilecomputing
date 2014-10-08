@@ -219,8 +219,8 @@ public class Assets {
 		multiplayer = new TextureRegion(itemsButtons, 512, 128, 128, 128);
 		connect = new TextureRegion(itemsButtons, 640, 128, 128, 128);
 		touchOn = new TextureRegion(itemsButtons, 0, 256, 128, 128);
-		soundGameOn = new TextureRegion(itemsButtons, 128, 256, 128, 128);
-		soundGameOff = new TextureRegion(itemsButtons, 256, 256, 128, 128);
+		soundGameOff = new TextureRegion(itemsButtons, 128, 256, 128, 128);
+		soundGameOn = new TextureRegion(itemsButtons, 256, 256, 128, 128);
 		pauseGame = new TextureRegion(itemsButtons, 384, 256, 128, 128);
 		
 		/*Here load Transparent Textures*/

@@ -13,6 +13,7 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.WorldListener;
 import au.edu.unimelb.comp90018.brickbreaker.framework.WorldRenderer;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.Gdx;
@@ -64,7 +65,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		this.game = game;
 		state = GAME_READY;
-
+		
 		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
 				Settings.TARGET_HEIGHT);
 		guiCam.position.set(Settings.TARGET_WIDTH / 2,
@@ -298,6 +299,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	private void updateRunning(float deltaTime) {
 
+	
 		if (Gdx.input.justTouched()) {
 
 			guiCam.unproject(
@@ -314,14 +316,13 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 
 				Assets.playSound(Assets.clickSound);
+				
+				Settings.musicEnabled = !Settings.musicEnabled;
 
 				if (Settings.musicEnabled)
 					Assets.music.play();
 				else
 					Assets.music.pause();
-
-				Settings.musicEnabled = !Settings.musicEnabled;
-				Settings.soundEnabled = !Settings.soundEnabled;
 
 				return;
 			}
@@ -363,6 +364,16 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			state = GAME_READY;
 		} else if (world.state == World.WORLD_STATE_LEVEL_END) {
 			state = GAME_LEVEL_END;
+			
+			world.level++;
+			
+			if (world.lives.size() == 3){ //if player has 3 lifes you get 3 bonus points!!
+				world.score += 3;
+			}
+			
+			Player.unlockLevel(world.level);
+			Player.updateScore(world.level, world.score);
+			
 		}
 	}
 
@@ -520,9 +531,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	@Override
 	public void render(float delta) {
 		
-		if (myMode == GameMode.Server) {
+		//if (myMode == GameMode.Server) {
 			update(delta);
-		}
+		//}
 		draw();
 	}
 

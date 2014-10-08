@@ -63,7 +63,7 @@ public class World {
 		showCoin=false;
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
-
+	
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 
@@ -215,9 +215,6 @@ public class World {
 		if (this.bricks.size()<1){
 			listener.gameWin();//play sound
 			this.state = WORLD_STATE_LEVEL_END;
-			level++;
-			Player.unlockLevel(level);
-			Player.updateScore(level, score);
 		}
 	}
 	
@@ -251,7 +248,7 @@ public class World {
 	}
 
 	private void checkWallCollision() {
-		if(ball.position.x < ball.bounds.getWidth()/2 || ball.position.x > WORLD_WIDTH - ball.bounds.getWidth()/2 || ball.position.y > WORLD_HEIGHT - ball.bounds.getHeight()/2){
+		if(ball.position.x - Ball.BALL_WIDTH/2 <= 0 || ball.position.x + Ball.BALL_WIDTH/2 >= WORLD_WIDTH || ball.position.y + Ball.BALL_HEIGHT/2 >= WORLD_HEIGHT){
 			listener.hitWall();//play sound
 		}
 	}
