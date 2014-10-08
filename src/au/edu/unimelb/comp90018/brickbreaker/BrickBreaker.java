@@ -29,6 +29,7 @@ public class BrickBreaker extends Game {
 
 	public SpriteBatch batcher;
 	public Rectangle viewport;
+	public int orientation;
 
 	@Override
 	public void create() {
@@ -49,10 +50,7 @@ public class BrickBreaker extends Game {
 	@Override
 	public void resize(int width, int height) {
 
-		// // TODO Auto-generated method stub
-		// super.resize(width, height);
-		//
-		// calculate new viewport
+		// Calculate new viewport when the orientation is changed
 		float aspectRatio = (float) width / (float) height;
 		float scale = 1f;
 		Vector2 crop = new Vector2(0f, 0f);
@@ -69,7 +67,13 @@ public class BrickBreaker extends Game {
 
 		float w = (float) Settings.TARGET_WIDTH * scale;
 		float h = (float) Settings.TARGET_HEIGHT * scale;
+		
 		viewport = new Rectangle(crop.x, crop.y, w, h);
+		
+		if (height > width)
+			orientation = 0;
+		else
+			orientation = 1;
 	}
 
 	// @Override

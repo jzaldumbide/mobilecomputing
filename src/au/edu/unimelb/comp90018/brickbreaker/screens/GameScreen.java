@@ -46,9 +46,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	World world;
 	WorldListener worldListener;
 	WorldRenderer renderer;
-	// Rectangle viewport;
-	Rectangle resumeBounds, quitBounds, continueWin, playAgainGameOver,
-			quitGameOver;
+	Rectangle resumeBounds, quitBounds, continueWin, playAgainGameOver, quitGameOver;
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
@@ -66,11 +64,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		this.ld = new LevelDownloader();
 		this.game = game;
 		state = GAME_READY;
-		
-		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
-				Settings.TARGET_HEIGHT);
-		guiCam.position.set(Settings.TARGET_WIDTH / 2,
-				Settings.TARGET_HEIGHT / 2, 0);
+
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2, Settings.TARGET_HEIGHT / 2, 0);
 
 		touchPoint = new Vector3();
 
@@ -167,8 +163,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				// 9021. Only one app can listen to a port at a time, keep in
 				// mind many ports are reserved especially in the lower numbers
 				// ( like 21, 80, etc )
-				ServerSocket serverSocket = Gdx.net.newServerSocket(
-						Protocol.TCP, 9021, serverSocketHint);
+				ServerSocket serverSocket = Gdx.net.newServerSocket(Protocol.TCP, 9021, serverSocketHint);
 
 				// Loop forever
 				while (true) {
@@ -179,23 +174,13 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					while (true) {
 						StringBuffer sb = new StringBuffer();
 						try {
-							sb.append(String.valueOf(state))
-									.append(";")
-									.append(String
-											.valueOf(world.paddle.position.x))
-									.append(";")
-									.append(String
-											.valueOf(world.paddle.position.y))
-									.append(";")
-									.append(String
-											.valueOf(world.ball.position.x))
-									.append(";")
-									.append(String
-											.valueOf(world.ball.position.y))
-									.append("\n");
+							sb.append(String.valueOf(state)).append(";")
+									.append(String.valueOf(world.paddle.position.x)).append(";")
+									.append(String.valueOf(world.paddle.position.y)).append(";")
+									.append(String.valueOf(world.ball.position.x)).append(";")
+									.append(String.valueOf(world.ball.position.y)).append("\n");
 
-							socket.getOutputStream().write(
-									sb.toString().getBytes());
+							socket.getOutputStream().write(sb.toString().getBytes());
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -219,11 +204,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				socketHints.connectTimeout = 4000;
 
 				// Create the socket and connect to the server on port 9021
-				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer,
-						9021, socketHints);
+				Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ipServer, 9021, socketHints);
 
-				BufferedReader buffer = new BufferedReader(
-						new InputStreamReader(socket.getInputStream()));
+				BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 				String msg = null;
 
@@ -233,10 +216,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 						String[] parts = msg.split(";");
 
 						state = Integer.parseInt(parts[0]);
-						world.paddle.position.set(Float.parseFloat(parts[1]),
-								Float.parseFloat(parts[2]));
-						world.ball.position.set(Float.parseFloat(parts[3]),
-								Float.parseFloat(parts[4]));
+						world.paddle.position.set(Float.parseFloat(parts[1]), Float.parseFloat(parts[2]));
+						world.ball.position.set(Float.parseFloat(parts[3]), Float.parseFloat(parts[4]));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -250,7 +231,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
-		
+
 		switch (state) {
 		case GAME_READY:
 			updateReady();
@@ -259,11 +240,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			world.timeCounter += deltaTime;
 
 			updateRunning(deltaTime);
-			
+
 			createRandomCoin();
 			createRandomVirus();
 			createRandomExtraLife();
-			
+
 			break;
 		case GAME_PAUSED:
 			updatePaused();
@@ -288,13 +269,14 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	private void updateRunning(float deltaTime) {
 
-	
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					game.viewport.x, game.viewport.y, game.viewport.width,
-					game.viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -305,7 +287,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			if (world.soundButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 
 				Assets.playSound(Assets.clickSound);
-				
+
 				Settings.musicEnabled = !Settings.musicEnabled;
 
 				if (Settings.musicEnabled)
@@ -321,31 +303,38 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.isTouched()) {
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					game.viewport.x, game.viewport.y, game.viewport.width,
-					game.viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
+					game.viewport.x, 
+					game.viewport.y,
+					game.viewport.width, 
+					game.viewport.height
+					);
 
-			if (touchPoint.x < world.paddle.position.x) { // is moving to the
-															// left
+			// It is moving to the left
+			if (touchPoint.x < world.paddle.position.x) { 
 				accel = World.WORLD_WIDTH * 10f;
-			} else if (touchPoint.x > world.paddle.position.x) { // is moving to
-																	// the right
+			} 
+			// It is moving to the right
+			else if (touchPoint.x > world.paddle.position.x) { 
 				accel = World.WORLD_WIDTH * -10f;
 			}
 		}
 
 		if (Settings.accelerometerEnabled) {
-			world.update(deltaTime, Gdx.input.getAccelerometerX() * 200f);
-		} else {
-			world.update(deltaTime, accel);
+			if (game.orientation == 0)
+				accel = Gdx.input.getAccelerometerX() * 200f;
+			else if (game.orientation == 1)
+				accel = Gdx.input.getAccelerometerY() * -200f;
 		}
+
+		world.update(deltaTime, accel);
+		
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
 
-			//Automatically send results if score is higher than the 10th
-			if (Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
+			// Automatically send results if score is higher than the 10th
+			if (Player.getTotalScore() > world.rankings.get(world.rankings.size() - 1))
 				uploadScore();
 
 			// if (lastScore >= Settings.highscores[4])
@@ -358,17 +347,16 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			state = GAME_READY;
 		} else if (world.state == World.WORLD_STATE_LEVEL_END) {
 			state = GAME_LEVEL_END;
-			
+
 			world.level++;
-			
+
 			Player.unlockLevel(world.level);
 			Player.updateScore(world.level, world.score);
-			
-			//Automatically send results if score is higher than the 10th
-			if (world.rankings.size()>0 && Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
+
+			// Automatically send results if score is higher than the 10th
+			if (world.rankings.size() > 0 && Player.getTotalScore() > world.rankings.get(world.rankings.size() - 1))
 				uploadScore();
-			
-			
+
 		}
 	}
 
@@ -381,17 +369,15 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 	}
 
 	private void updatePaused() {
 
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					game.viewport.x, game.viewport.y, game.viewport.width,
-					game.viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), game.viewport.x, game.viewport.y,
+					game.viewport.width, game.viewport.height);
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -420,10 +406,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			state = GAME_LEVEL_END;
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					game.viewport.x, game.viewport.y, game.viewport.width,
-					game.viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), game.viewport.x, game.viewport.y,
+					game.viewport.width, game.viewport.height);
 
 			if (continueWin.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -440,10 +424,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			state = GAME_OVER;
 
-			guiCam.unproject(
-					touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0),
-					game.viewport.x, game.viewport.y, game.viewport.width,
-					game.viewport.height);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), game.viewport.x, game.viewport.y,
+					game.viewport.width, game.viewport.height);
 
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -469,8 +451,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		GL20 gl = Gdx.gl;
 
-		gl.glViewport((int) game.viewport.x, (int) game.viewport.y,
-				(int) game.viewport.width, (int) game.viewport.height);
+		gl.glViewport((int) game.viewport.x, (int) game.viewport.y, (int) game.viewport.width,
+				(int) game.viewport.height);
 
 		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -537,10 +519,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	@Override
 	public void render(float delta) {
-		
-		//if (myMode == GameMode.Server) {
-			update(delta);
-		//}
+
+		// if (myMode == GameMode.Server) {
+		update(delta);
+		// }
 		draw();
 	}
 
@@ -570,83 +552,96 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			}
 		}
 	}
-	
-	public void createRandomCoin(){
-		if (world.timeCounter > world.coinShowTime){
+
+	public void createRandomCoin() {
+		if (world.timeCounter > world.coinShowTime) {
 			world.showCoin = true;
-		}else{
-			world.showCoin =false;
+		} else {
+			world.showCoin = false;
 		}
-		
-		if (world.coin.position.y < 0 || world.coin.position.y == -10000){
-			world.coinShowTime = (int)world.timeCounter+randInt(10,20); //show coin every 10-20 seconds
-							
-			world.coin.position.x = World.WORLD_WIDTH/2 + randInt(-80,80);
-			world.coin.position.y = World.WORLD_HEIGHT/2;
+
+		if (world.coin.position.y < 0 || world.coin.position.y == -10000) {
+			world.coinShowTime = (int) world.timeCounter + randInt(10, 20); // show
+																			// coin
+																			// every
+																			// 10-20
+																			// seconds
+
+			world.coin.position.x = World.WORLD_WIDTH / 2 + randInt(-80, 80);
+			world.coin.position.y = World.WORLD_HEIGHT / 2;
 			world.coin.bounds.x = world.coin.position.x;
 			world.coin.bounds.y = world.coin.position.y;
-			
+
 		}
 	}
-	
-	public void createRandomVirus(){
-		if (world.timeCounter > world.virusShowTime){
+
+	public void createRandomVirus() {
+		if (world.timeCounter > world.virusShowTime) {
 			world.showVirus = true;
-		}else{
-			world.showVirus =false;
+		} else {
+			world.showVirus = false;
 		}
-		
-		if (world.virus.position.y < 0 || world.virus.position.y == -10000){
-			world.virusShowTime = (int)world.timeCounter+randInt(10,30); //show virus every 10-30 seconds
-							
-			world.virus.position.x = World.WORLD_WIDTH/2 + randInt(-100,100);
-			world.virus.position.y = World.WORLD_HEIGHT/2;
+
+		if (world.virus.position.y < 0 || world.virus.position.y == -10000) {
+			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show
+																				// virus
+																				// every
+																				// 10-30
+																				// seconds
+
+			world.virus.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
+			world.virus.position.y = World.WORLD_HEIGHT / 2;
 			world.virus.bounds.x = world.virus.position.x;
 			world.virus.bounds.y = world.virus.position.y;
-			
+
 		}
 	}
-	
-	public void createRandomExtraLife(){
-		if (world.timeCounter > world.extraLifeShowTime){
+
+	public void createRandomExtraLife() {
+		if (world.timeCounter > world.extraLifeShowTime) {
 			world.showExtraLife = true;
-		}else{
-			world.showExtraLife =false;
+		} else {
+			world.showExtraLife = false;
 		}
-		
-		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000){
-			world.extraLifeShowTime = (int)world.timeCounter+randInt(10,40); //show extra life every 50-60 seconds
-							
-			world.extraLife.position.x = World.WORLD_WIDTH/2 + randInt(-100,100);
-			world.extraLife.position.y = World.WORLD_HEIGHT/2;
+
+		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000) {
+			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show
+																					// extra
+																					// life
+																					// every
+																					// 50-60
+																					// seconds
+
+			world.extraLife.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
+			world.extraLife.position.y = World.WORLD_HEIGHT / 2;
 			world.extraLife.bounds.x = world.extraLife.position.x;
 			world.extraLife.bounds.y = world.extraLife.position.y;
-			
+
 		}
 	}
-	
-	
-	
+
 	/**
-	 * Returns a pseudo-random number between min and max, inclusive.
-	 * The difference between min and max can be at most
+	 * Returns a pseudo-random number between min and max, inclusive. The
+	 * difference between min and max can be at most
 	 * <code>Integer.MAX_VALUE - 1</code>.
-	 *
-	 * @param min Minimum value
-	 * @param max Maximum value.  Must be greater than min.
+	 * 
+	 * @param min
+	 *            Minimum value
+	 * @param max
+	 *            Maximum value. Must be greater than min.
 	 * @return Integer between min and max, inclusive.
 	 * @see java.util.Random#nextInt(int)
 	 */
 	public static int randInt(int min, int max) {
 
-	    // NOTE: Usually this should be a field rather than a method
-	    // variable so that it is not re-seeded every call.
-	    Random rand = new Random();
+		// NOTE: Usually this should be a field rather than a method
+		// variable so that it is not re-seeded every call.
+		Random rand = new Random();
 
-	    // nextInt is normally exclusive of the top value,
-	    // so add 1 to make it inclusive
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
+		// nextInt is normally exclusive of the top value,
+		// so add 1 to make it inclusive
+		int randomNum = rand.nextInt((max - min) + 1) + min;
 
-	    return randomNum;
+		return randomNum;
 	}
 }
