@@ -369,7 +369,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			Player.updateScore(world.level, world.score);
 			
 			//Automatically send results if score is higher than the 10th
-			if (Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
+			if (world.rankings.size()>0 && Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
 				uploadScore();
 			
 			
