@@ -16,8 +16,10 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
+import au.edu.unimelb.comp90018.brickbreaker.actors.ExtraLife;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Virus;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
@@ -28,6 +30,10 @@ public class World {
 
 	public static final float WORLD_WIDTH = 320;
 	public static final float WORLD_HEIGHT = 480;
+	
+	public static final float xPosLife = 77;
+	public static final float yPosLife = 453;
+	public static final float xSpanLife = 19;
 
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_LEVEL_END = 1;
@@ -39,10 +45,16 @@ public class World {
 	public List<BrickAdapter> bricks;
 	public List<Button> lives;
 	public Coin coin;
+	public Virus virus;
+	public ExtraLife extraLife;
 	public Button pauseButton, soundButton;
 	public float timeCounter;
 	public int coinShowTime;
+	public int virusShowTime;
+	public int extraLifeShowTime;
 	public boolean showCoin;
+	public boolean showVirus;
+	public boolean showExtraLife;
 
 	public final WorldListener listener;
 	public int level;
@@ -59,8 +71,12 @@ public class World {
 
 		timeCounter = 0;
 		coinShowTime = 15; //first coin will appear after 15sec
+		virusShowTime = 25; //first virus will appear after 25sec
+		extraLifeShowTime = 40; //first extra life will appear after 40sec
 		level = gameLevel;
 		showCoin=false;
+		showVirus=false;
+		showExtraLife=false;
 		// TODO: Ball's initial velocity must be a world's parameter. Even the
 		// initial position of the ball and paddle.
 	
@@ -68,6 +84,8 @@ public class World {
 		lives = new ArrayList<Button>();
 
 		coin = new Coin(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,10));
+		virus = new Virus(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,15));
+		extraLife = new ExtraLife(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,10));
 
 		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2 + 5,
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
@@ -128,11 +146,10 @@ public class World {
 		Random rand = new Random();
 		boolean error = false;
 		/*Set lives*/
-		float x = 77;
-		float y = 453;
+		float x = xPosLife;
 		for (int i = 1; i <= 3; i++) {
-			lives.add(new Button(x, y,ButtonSize.SMALL_SQUARE));
-			x += 19;
+			lives.add(new Button(x, yPosLife,ButtonSize.SMALL_SQUARE));
+			x += xSpanLife;
 		}
 
 		LevelDownloader ld = new LevelDownloader();
@@ -164,20 +181,20 @@ public class World {
 					new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));
 
 			/*Set bricks*/
-			x = 36;
-			y = 300;
+			float xTemp = 36;
+			float yTemp = 300;
 			for (int i = 1; i <= 3; i++) {
 				for (int j = 1; j <= 8; j++) {
 					if (rand.nextInt(2) == 1)
-						bricks.add(new BrickTypeI(x, y));
+						bricks.add(new BrickTypeI(xTemp, yTemp));
 					else
-						bricks.add(new BrickTypeII(x, y));
+						bricks.add(new BrickTypeII(xTemp, yTemp));
 					//				bricks.add(new Brick(x, y));
 
-					x += 35;
+					xTemp += 35;
 				}
-				x = 36;
-				y += 24;
+				xTemp = 36;
+				yTemp += 24;
 			}
 		}
 	}
@@ -191,8 +208,17 @@ public class World {
 			updateCoin(deltaTime);
 		}
 		
+		if (showVirus){ //start virus animation
+			updateVirus(deltaTime);
+		}
+		
 		checkCollisions();
 		checkLostLife();
+		
+		if (showExtraLife){ //start virus animation
+			updateExtraLife(deltaTime);
+		}
+		
 		checkGameOver();
 		checkNextLevel();
 	}
@@ -200,6 +226,15 @@ public class World {
 	private void updateCoin(float deltaTime){
 		coin.update(deltaTime);
 	}
+	
+	private void updateVirus(float deltaTime){
+		virus.update(deltaTime);
+	}
+	
+	private void updateExtraLife(float deltaTime){
+		extraLife.update(deltaTime);
+	}
+
 
 	private void updateBall(float deltaTime) {
 		ball.update(deltaTime);
@@ -244,6 +279,8 @@ public class World {
 		checkWallCollision();
 		checkPaddleCollision();
 		checkCoinCollision();
+		checkVirusColision();
+		checkExtraLifeCollision();
 		checkBrickCollision();
 	}
 
@@ -263,17 +300,39 @@ public class World {
 			ball.hitPaddle(paddle.velocity.x);
 			listener.hitPaddle();//play sound
 		}
-
 	}
-	
-	private void checkCoinCollision(){
 		
-		if (coin.bounds.overlaps(paddle.bounds)){
+	private void checkCoinCollision(){
+	if (coin.bounds.overlaps(paddle.bounds)){
 			coin.pulverize();
 			score++;
 			listener.getBonusCoins();//play sound
 		}
 	}
+	
+	private void checkVirusColision(){
+		if (virus.bounds.overlaps(paddle.bounds)) {
+			virus.pulverize();
+			score--;
+			listener.getBonusBad();// play sound
+		}
+	}
+	
+	private void checkExtraLifeCollision(){
+		if (extraLife.bounds.overlaps(paddle.bounds)) {
+			extraLife.pulverize();
+			score++;
+			
+			int nLives = lives.size();
+			float xPos = nLives * ButtonSize.SMALL_SQUARE.getButtonWidth()/2;
+			float spanTemp = nLives-1;
+			spanTemp *= xSpanLife; 
+			
+			lives.add(new Button(xPosLife+spanTemp+xPos, yPosLife,ButtonSize.SMALL_SQUARE));
+			listener.getBonusLife();// play sound
+		}
+	}
+
 
 	private void checkBrickCollision() {
 

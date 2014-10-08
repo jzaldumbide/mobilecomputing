@@ -8,7 +8,9 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
+import au.edu.unimelb.comp90018.brickbreaker.actors.ExtraLife;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Virus;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
@@ -83,6 +85,23 @@ public class WorldRenderer {
 				Coin.COIN_HEIGHT);
 		
 		}
+		
+		if (world.showVirus){
+			
+			Virus virus = world.virus;
+			batch.draw(Assets.virus, virus.position.x - Coin.COIN_WIDTH / 2,
+					virus.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
+					Coin.COIN_HEIGHT);
+			
+			}
+		
+		if (world.showExtraLife){
+			
+			ExtraLife extraLife = world.extraLife;
+			batch.draw(Assets.lives, extraLife.position.x - Coin.COIN_WIDTH / 2,
+					extraLife.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
+					Coin.COIN_HEIGHT);
+			}
 	
 	}
 	

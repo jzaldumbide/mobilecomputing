@@ -87,7 +87,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			@Override
 			public void getBonusBad() {
-				// Assets.playSound(Assets.badBonusSound);
+				Assets.playSound(Assets.lifeLostSound);
 			}
 
 			@Override
@@ -259,21 +259,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			updateRunning(deltaTime);
 			
-			if (world.timeCounter > world.coinShowTime){
-				world.showCoin = true;
-			}else{
-				world.showCoin =false;
-			}
-			
-			if (world.coin.position.y < 0 || world.coin.position.y == 10000){
-				world.coinShowTime = (int)world.timeCounter+randInt(10,20); //show coin every 10-20 seconds
-								
-				world.coin.position.x = World.WORLD_WIDTH/2 + randInt(-80,80);
-				world.coin.position.y = World.WORLD_HEIGHT/2;
-				world.coin.bounds.x = world.coin.position.x;
-				world.coin.bounds.y = world.coin.position.y;
-				
-			}
+			createRandomCoin();
+			createRandomVirus();
+			createRandomExtraLife();
 			
 			break;
 		case GAME_PAUSED:
@@ -367,7 +355,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			
 			world.level++;
 			
-			if (world.lives.size() == 3){ //if player has 3 lifes you get 3 bonus points!!
+			if (world.lives.size() >= 3){ //if player has 3 lifes you get 3 bonus points!!
 				world.score += 3;
 			}
 			
@@ -563,6 +551,62 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			}
 		}
 	}
+	
+	public void createRandomCoin(){
+		if (world.timeCounter > world.coinShowTime){
+			world.showCoin = true;
+		}else{
+			world.showCoin =false;
+		}
+		
+		if (world.coin.position.y < 0 || world.coin.position.y == -10000){
+			world.coinShowTime = (int)world.timeCounter+randInt(10,20); //show coin every 10-20 seconds
+							
+			world.coin.position.x = World.WORLD_WIDTH/2 + randInt(-80,80);
+			world.coin.position.y = World.WORLD_HEIGHT/2;
+			world.coin.bounds.x = world.coin.position.x;
+			world.coin.bounds.y = world.coin.position.y;
+			
+		}
+	}
+	
+	public void createRandomVirus(){
+		if (world.timeCounter > world.virusShowTime){
+			world.showVirus = true;
+		}else{
+			world.showVirus =false;
+		}
+		
+		if (world.virus.position.y < 0 || world.virus.position.y == -10000){
+			world.virusShowTime = (int)world.timeCounter+randInt(10,30); //show virus every 10-30 seconds
+							
+			world.virus.position.x = World.WORLD_WIDTH/2 + randInt(-100,100);
+			world.virus.position.y = World.WORLD_HEIGHT/2;
+			world.virus.bounds.x = world.virus.position.x;
+			world.virus.bounds.y = world.virus.position.y;
+			
+		}
+	}
+	
+	public void createRandomExtraLife(){
+		if (world.timeCounter > world.extraLifeShowTime){
+			world.showExtraLife = true;
+		}else{
+			world.showExtraLife =false;
+		}
+		
+		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000){
+			world.extraLifeShowTime = (int)world.timeCounter+randInt(10,20); //show extra life every 50-60 seconds
+							
+			world.extraLife.position.x = World.WORLD_WIDTH/2 + randInt(-100,100);
+			world.extraLife.position.y = World.WORLD_HEIGHT/2;
+			world.extraLife.bounds.x = world.extraLife.position.x;
+			world.extraLife.bounds.y = world.extraLife.position.y;
+			
+		}
+	}
+	
+	
 	
 	/**
 	 * Returns a pseudo-random number between min and max, inclusive.

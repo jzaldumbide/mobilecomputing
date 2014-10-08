@@ -48,6 +48,7 @@ public class Assets {
 	public static TextureRegion smallBlackBrick;
 	public static TextureRegion lives;
 	public static TextureRegion coin;
+	public static TextureRegion virus;
 	public static TextureRegion buttonMenu;
 	
 	/*Here declare buttons*/
@@ -171,6 +172,7 @@ public class Assets {
 		paddleSmall = new TextureRegion(items, 96, 32, 96, 32);
 		lives = new TextureRegion(items, 224, 0, 64, 64);
 		coin = new TextureRegion(items, 224, 64, 64, 64);
+		virus = new TextureRegion(items, 160, 64, 64, 64);
 		smallGreenBrick = new TextureRegion(items, 64, 0, 32, 16);
 		mediumGreenBrick = new TextureRegion(items, 80, 64, 32, 16);
 		smallOrangeBrick = new TextureRegion(items, 64, 16, 32, 16);

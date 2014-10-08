@@ -4,13 +4,13 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.DynamicGameObject;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class Coin extends DynamicGameObject {
+public class Virus extends DynamicGameObject {
 
-	public static final float COIN_WIDTH = 20;
-	public static final float COIN_HEIGHT = 20;
+	public static final float VIRUS_WIDTH = 25;
+	public static final float VIRUS_HEIGHT = 25;
 
-	public Coin(float x, float y, Vector2 velocity) {
-		super(x, y, COIN_WIDTH, COIN_HEIGHT);
+	public Virus(float x, float y, Vector2 velocity) {
+		super(x, y, VIRUS_WIDTH, VIRUS_HEIGHT);
 		this.velocity.set(velocity);
 	}
 
