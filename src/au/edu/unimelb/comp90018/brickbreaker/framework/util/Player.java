@@ -109,7 +109,7 @@ public class Player {
 		FileHandle filehandle = Gdx.files.external(file);
 		String[] strings = filehandle.readString().split("\n");
 		levelunlocked = Integer.parseInt(strings[level]);
-		Gdx.app.log("Unlocked level: ", Integer.toString(levelunlocked));
+		//Gdx.app.log("Unlocked level: ", Integer.toString(levelunlocked));
 
 		if (levelunlocked == 0)
 			return true;

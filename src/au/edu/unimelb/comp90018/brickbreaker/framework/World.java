@@ -31,7 +31,7 @@ public class World {
 	public static final float WORLD_WIDTH = 320;
 	public static final float WORLD_HEIGHT = 480;
 	
-	public static final float xPosLife = 77;
+	public static final float xPosLife = 70;
 	public static final float yPosLife = 453;
 	public static final float xSpanLife = 19;
 
@@ -250,6 +250,10 @@ public class World {
 		if (this.bricks.size()<1){
 			listener.gameWin();//play sound
 			this.state = WORLD_STATE_LEVEL_END;
+			
+			if (lives.size() >= 3){ //if player has 3 lives you get 3 bonus points!!
+				score += 3;
+			}
 		}
 	}
 	
@@ -331,11 +335,10 @@ public class World {
 			totalScore++;			
 			
 			int nLives = lives.size();
-			float xPos = nLives * ButtonSize.SMALL_SQUARE.getButtonWidth()/2;
-			float spanTemp = nLives-1;
-			spanTemp *= xSpanLife; 
+			float xPos = nLives * ButtonSize.SMALL_SQUARE.getButtonWidth();
+			float spanTemp = nLives * xSpanLife;
 			
-			lives.add(new Button(xPosLife+spanTemp+xPos, yPosLife,ButtonSize.SMALL_SQUARE));
+			lives.add(new Button(xPosLife+spanTemp, yPosLife,ButtonSize.SMALL_SQUARE));
 			listener.getBonusLife();// play sound
 			updateRanking(this.totalScore);
 		}

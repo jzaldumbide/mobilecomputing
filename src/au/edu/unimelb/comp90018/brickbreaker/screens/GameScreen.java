@@ -361,10 +361,6 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			
 			world.level++;
 			
-			if (world.lives.size() >= 3){ //if player has 3 lifes you get 3 bonus points!!
-				world.score += 3;
-			}
-			
 			Player.unlockLevel(world.level);
 			Player.updateScore(world.level, world.score);
 			
@@ -619,7 +615,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 		
 		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000){
-			world.extraLifeShowTime = (int)world.timeCounter+randInt(10,20); //show extra life every 50-60 seconds
+			world.extraLifeShowTime = (int)world.timeCounter+randInt(10,40); //show extra life every 50-60 seconds
 							
 			world.extraLife.position.x = World.WORLD_WIDTH/2 + randInt(-100,100);
 			world.extraLife.position.y = World.WORLD_HEIGHT/2;

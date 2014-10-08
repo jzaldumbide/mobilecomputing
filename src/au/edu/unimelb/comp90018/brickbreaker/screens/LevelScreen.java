@@ -122,7 +122,14 @@ public class LevelScreen extends ScreenAdapter {
 		game.batcher.begin();
 		game.batcher.draw(Assets.defaultBackground, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 		
+		renderLevelButtons();
+		
+		game.batcher.end();
+
+	}
 	
+	private void renderLevelButtons(){
+		
 		if (Player.isLevelUnlocked(1)){
 			game.batcher.draw(Assets.levelLocked_1,levelLockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}else{
@@ -183,8 +190,6 @@ public class LevelScreen extends ScreenAdapter {
 				ButtonSize.MEDIUM_SQUARE.getButtonWidth(), 
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
 		
-		game.batcher.end();
-
 	}
 
 	@Override
