@@ -260,6 +260,8 @@ public class World {
 			if (len != -1){
 				lives.remove(len); //life lost
 				score --; //reduce 1 point in score
+				this.totalScore--;
+				updateRanking(this.totalScore);
 				this.state = WORLD_STATE_GAME_LOST_LIFE;
 			}else{
 				this.state = WORLD_STATE_GAME_OVER;
@@ -306,6 +308,8 @@ public class World {
 	if (coin.bounds.overlaps(paddle.bounds)){
 			coin.pulverize();
 			score++;
+			this.totalScore++;
+			updateRanking(this.totalScore);
 			listener.getBonusCoins();//play sound
 		}
 	}
@@ -314,6 +318,8 @@ public class World {
 		if (virus.bounds.overlaps(paddle.bounds)) {
 			virus.pulverize();
 			score--;
+			this.totalScore--;
+			updateRanking(this.totalScore);
 			listener.getBonusBad();// play sound
 		}
 	}
@@ -322,6 +328,7 @@ public class World {
 		if (extraLife.bounds.overlaps(paddle.bounds)) {
 			extraLife.pulverize();
 			score++;
+			totalScore++;			
 			
 			int nLives = lives.size();
 			float xPos = nLives * ButtonSize.SMALL_SQUARE.getButtonWidth()/2;
@@ -330,6 +337,7 @@ public class World {
 			
 			lives.add(new Button(xPosLife+spanTemp+xPos, yPosLife,ButtonSize.SMALL_SQUARE));
 			listener.getBonusLife();// play sound
+			updateRanking(this.totalScore);
 		}
 	}
 
@@ -339,13 +347,14 @@ public class World {
 		int len = bricks.size();
 		for (int i = 0; i < len; i++) {
 			if (ball.bounds.overlaps(bricks.get(i).bounds)) {
-				score ++;
+				score++;
+				totalScore++;
 				listener.hitBrick();//play sound
 				ball.hitBrick(bricks.get(i).bounds);
 
 				// TODO: Don't know if this line needs to be included in ball.hitBrick
 				bricks.get(i).hitMe();
-				updateRanking(this.totalScore+score);
+				updateRanking(this.totalScore);
 				
 				if (bricks.get(i).isPulverised()){
 					bricks.remove(i);

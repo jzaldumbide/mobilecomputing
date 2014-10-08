@@ -52,6 +52,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	boolean toggleSound;
 	int lastScore;
 	String scoreString;
+	LevelDownloader ld;
 	// String ipServer = "192.168.1.13";
 	String ipServer = "10.9.163.225";
 
@@ -62,7 +63,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 	GameMode myMode;
 
 	public GameScreen(BrickBreaker game, GameMode mode, int level) {
-
+		this.ld = new LevelDownloader();
 		this.game = game;
 		state = GAME_READY;
 		
@@ -342,6 +343,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
+
+			//Automatically send results if score is higher than the 10th
+			if (Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
+				uploadScore();
+
 			// if (lastScore >= Settings.highscores[4])
 			// scoreString = "NEW HIGHSCORE: " + lastScore;
 			// else
@@ -362,7 +368,24 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			Player.unlockLevel(world.level);
 			Player.updateScore(world.level, world.score);
 			
+			//Automatically send results if score is higher than the 10th
+			if (Player.getTotalScore() > world.rankings.get(world.rankings.size()-1))
+				uploadScore();
+			
+			
 		}
+	}
+
+	private void uploadScore() {
+		try {
+			ld.submitHighScore(Player.getPlayerName(), Player.getTotalScore());
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 
 	private void updatePaused() {
