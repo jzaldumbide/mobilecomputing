@@ -35,7 +35,6 @@ public class BrickBreaker extends Game {
 
 		/* Initialize Settings and Assets */
 		batcher = new SpriteBatch();
-		Settings.load();
 		Assets.load();
 
 		// Initialize a LoadViewTask object and call the execute() method

@@ -3,6 +3,7 @@ package au.edu.unimelb.comp90018.brickbreaker.screens;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -247,13 +248,32 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (deltaTime > 0.1f)
 			deltaTime = 0.1f;
-
+		
 		switch (state) {
 		case GAME_READY:
 			updateReady();
 			break;
 		case GAME_RUNNING:
+			world.timeCounter += deltaTime;
+
 			updateRunning(deltaTime);
+			
+			if (world.timeCounter > world.coinShowTime){
+				world.showCoin = true;
+			}else{
+				world.showCoin =false;
+			}
+			
+			if (world.coin.position.y < 0 || world.coin.position.y == 10000){
+				world.coinShowTime = (int)world.timeCounter+randInt(10,20); //show coin every 10-20 seconds
+								
+				world.coin.position.x = World.WORLD_WIDTH/2 + randInt(-80,80);
+				world.coin.position.y = World.WORLD_HEIGHT/2;
+				world.coin.bounds.x = world.coin.position.x;
+				world.coin.bounds.y = world.coin.position.y;
+				
+			}
+			
 			break;
 		case GAME_PAUSED:
 			updatePaused();
@@ -499,6 +519,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	@Override
 	public void render(float delta) {
+		
 		if (myMode == GameMode.Server) {
 			update(delta);
 		}
@@ -530,5 +551,28 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * Returns a pseudo-random number between min and max, inclusive.
+	 * The difference between min and max can be at most
+	 * <code>Integer.MAX_VALUE - 1</code>.
+	 *
+	 * @param min Minimum value
+	 * @param max Maximum value.  Must be greater than min.
+	 * @return Integer between min and max, inclusive.
+	 * @see java.util.Random#nextInt(int)
+	 */
+	public static int randInt(int min, int max) {
+
+	    // NOTE: Usually this should be a field rather than a method
+	    // variable so that it is not re-seeded every call.
+	    Random rand = new Random();
+
+	    // nextInt is normally exclusive of the top value,
+	    // so add 1 to make it inclusive
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
+	    return randomNum;
 	}
 }

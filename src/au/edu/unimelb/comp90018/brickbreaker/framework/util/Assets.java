@@ -47,6 +47,7 @@ public class Assets {
 	public static TextureRegion smallPinkBrick;
 	public static TextureRegion smallBlackBrick;
 	public static TextureRegion lives;
+	public static TextureRegion coin;
 	public static TextureRegion buttonMenu;
 	
 	/*Here declare buttons*/
@@ -81,6 +82,12 @@ public class Assets {
 	public static TextureRegion levelUnlocked_1;
 	public static TextureRegion levelUnlocked_2;
 	public static TextureRegion levelUnlocked_3;
+	public static TextureRegion levelUnlocked_4;
+	public static TextureRegion levelUnlocked_5;
+	public static TextureRegion levelUnlocked_6;
+	public static TextureRegion levelUnlocked_7;
+	public static TextureRegion levelUnlocked_8;
+	public static TextureRegion levelUnlocked_9;
 
 	/*Here declare Screens*/
 	public static TextureRegion defaultScreen;
@@ -163,6 +170,7 @@ public class Assets {
 		paddleLarge = new TextureRegion(items, 96, 0, 128, 32);
 		paddleSmall = new TextureRegion(items, 96, 32, 96, 32);
 		lives = new TextureRegion(items, 224, 0, 64, 64);
+		coin = new TextureRegion(items, 224, 64, 64, 64);
 		smallGreenBrick = new TextureRegion(items, 64, 0, 32, 16);
 		mediumGreenBrick = new TextureRegion(items, 80, 64, 32, 16);
 		smallOrangeBrick = new TextureRegion(items, 64, 16, 32, 16);
@@ -189,6 +197,12 @@ public class Assets {
 		levelUnlocked_1 = new TextureRegion(itemsLevelsButtons, 0, 384, 128, 128);
 		levelUnlocked_2 = new TextureRegion(itemsLevelsButtons, 128, 384, 128, 128);
 		levelUnlocked_3 = new TextureRegion(itemsLevelsButtons, 256, 384, 128, 128);
+		levelUnlocked_4 = new TextureRegion(itemsLevelsButtons, 0, 512, 128, 128);
+		levelUnlocked_5 = new TextureRegion(itemsLevelsButtons, 128, 512, 128, 128);
+		levelUnlocked_6 = new TextureRegion(itemsLevelsButtons, 256, 512, 128, 128);
+		levelUnlocked_7 = new TextureRegion(itemsLevelsButtons, 0, 640, 128, 128);
+		levelUnlocked_8 = new TextureRegion(itemsLevelsButtons, 128, 640, 128, 128);
+		levelUnlocked_9 = new TextureRegion(itemsLevelsButtons, 256, 640, 128, 128);
 		
 		/*Here you should put all textures that comes from itemsButtons.png*/
 		itemsButtons = loadTexture("textures/itemsButtons.png");
