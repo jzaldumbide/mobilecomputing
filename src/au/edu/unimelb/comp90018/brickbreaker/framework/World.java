@@ -253,6 +253,7 @@ public class World {
 			
 			if (lives.size() >= 3){ //if player has 3 lives you get 3 bonus points!!
 				score += 3;
+				this.totalScore+=3;
 			}
 		}
 	}
