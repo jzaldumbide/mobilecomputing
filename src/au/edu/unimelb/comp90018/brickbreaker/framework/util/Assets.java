@@ -257,7 +257,7 @@ public class Assets {
 		//font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
 		
 		 FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-		 Gdx.files.internal("fonts/junegull.ttf"));
+		 Gdx.files.internal("fonts/font.ttf"));
 		 FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		 parameter.size = 40;
 		 font = generator.generateFont(parameter); 
