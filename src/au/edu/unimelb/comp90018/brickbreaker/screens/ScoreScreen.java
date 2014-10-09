@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class ScoreScreen extends ScreenAdapter {
 	BrickBreaker game;
@@ -31,6 +32,7 @@ public class ScoreScreen extends ScreenAdapter {
 	public ScoreScreen(BrickBreaker game) {
 
 		this.game = game;
+		this.scoreString = "";
 		
 		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
 				Settings.TARGET_HEIGHT);
@@ -41,6 +43,31 @@ public class ScoreScreen extends ScreenAdapter {
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
 
+		LevelDownloader ld = new LevelDownloader();
+		Gdx.app.log("Score Screen", "Constructor called");
+		try {
+			String hs = ld.downloadHighScores();
+			ld.persistScores(hs);
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			scoreString = ld.loadHighScores();
+		} catch (XmlPullParserException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		} catch (IOException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		} catch (GdxRuntimeException e){
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";			
+		}
+
+		
 	}
 
 	public void update() {
@@ -58,6 +85,7 @@ public class ScoreScreen extends ScreenAdapter {
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
+				dispose();
 				Gdx.app.log("", "click para regresar");
 
 				return;
@@ -119,25 +147,9 @@ public class ScoreScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
-		LevelDownloader ld = new LevelDownloader();
-		try {
-			ld.downloadHighScores();
-		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			scoreString = ld.loadHighScores();
-		} catch (XmlPullParserException e) {
-			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
-			e.printStackTrace();
-		} catch (IOException e) {
-			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
-			e.printStackTrace();
-		}		
+		super.show();
 
 	}	
+	
+	
 }

@@ -24,6 +24,7 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class World {
 
@@ -131,13 +132,14 @@ public class World {
 	 */
 	private void updateRanking(int totalScore) {
 		this.rank = 1;
-		
+		if (rankings != null){
 		for (Iterator<Integer> i = rankings.iterator(); i.hasNext(); ){
 			int score = i.next();
 			if ( score>totalScore ){
 				this.rank++;
 				this.nextScore = score;
 			}
+		}
 		}
 	}
 
@@ -173,6 +175,8 @@ public class World {
 			ex.printStackTrace();
 			error = true;
 
+		} catch (GdxRuntimeException e){
+			error = true;
 		}
 		if(error){
 			// TODO: paddle width is hard-coded
