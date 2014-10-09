@@ -5,7 +5,10 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 
 public class Paddle extends DynamicGameObject {
 
+	public static final int HEALTHY = 0;
+	public static final int INFECTED = 1;
 //	public static final float PADDLE_WIDTH = 96;
+	
 	public static final float PADDLE_HEIGHT = 16;
 	
 	public float width = 96;
@@ -19,7 +22,7 @@ public class Paddle extends DynamicGameObject {
 		super(x, y, width, PADDLE_HEIGHT);
 		this.width = width;
 		
-		state = 0;
+		state = HEALTHY;
 //		stateTime = 0;
 		
 //		rand = new Random();
@@ -65,4 +68,19 @@ public class Paddle extends DynamicGameObject {
 //		stateTime += deltaTime;
 	}	
 
+	public void infectMe() {
+				
+		width = width * 0.8f;
+		bounds.width = bounds.width * 0.8f;
+		
+		state = INFECTED;		
+	}
+	
+	public void healMe() {
+		
+		width = width * 1.25f;
+		bounds.width = bounds.width * 1.25f;
+		
+		state = HEALTHY;
+	}
 }

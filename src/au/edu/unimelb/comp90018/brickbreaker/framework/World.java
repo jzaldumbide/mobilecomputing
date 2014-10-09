@@ -323,13 +323,13 @@ public class World {
 	
 	private void checkVirusColision(){
 		if (virus.bounds.overlaps(paddle.bounds)) {
-			virus.pulverize();
 			
-			paddle.width = paddle.width * 0.8f;
-			paddle.bounds.width = paddle.bounds.width * 0.8f;
+			virus.pulverize();
+			paddle.infectMe();
 			
 			score--;
 			this.totalScore--;
+			
 			updateRanking(this.totalScore);
 			listener.getBonusBad();// play sound
 		}
@@ -337,7 +337,10 @@ public class World {
 	
 	private void checkExtraLifeCollision(){
 		if (extraLife.bounds.overlaps(paddle.bounds)) {
+			
 			extraLife.pulverize();
+			paddle.healMe();
+			
 			score++;
 			totalScore++;			
 			
