@@ -561,15 +561,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.coin.position.y < 0 || world.coin.position.y == -10000) {
-			world.coinShowTime = (int) world.timeCounter + randInt(10, 20); // show
-																			// coin
-																			// every
-																			// 10-20
-																			// seconds
+			world.coinShowTime = (int) world.timeCounter + randInt(10, 20); // show extra life every 10-20 seconds
 
 			world.coin.position.x = World.WORLD_WIDTH / 2 + randInt(-80, 80);
 			world.coin.position.y = World.WORLD_HEIGHT / 2;
-			world.coin.bounds.x = world.coin.position.x;
 			world.coin.bounds.y = world.coin.position.y;
 
 		}
@@ -583,15 +578,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.virus.position.y < 0 || world.virus.position.y == -10000) {
-			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show
-																				// virus
-																				// every
-																				// 10-30
-																				// seconds
-
+			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show extra life every 10-30 seconds
 			world.virus.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.virus.position.y = World.WORLD_HEIGHT / 2;
-			world.virus.bounds.x = world.virus.position.x;
 			world.virus.bounds.y = world.virus.position.y;
 
 		}
@@ -605,16 +594,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000) {
-			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show
-																					// extra
-																					// life
-																					// every
-																					// 50-60
-																					// seconds
-
+			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show extra life every 10-40 seconds
 			world.extraLife.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.extraLife.position.y = World.WORLD_HEIGHT / 2;
-			world.extraLife.bounds.x = world.extraLife.position.x;
 			world.extraLife.bounds.y = world.extraLife.position.y;
 
 		}

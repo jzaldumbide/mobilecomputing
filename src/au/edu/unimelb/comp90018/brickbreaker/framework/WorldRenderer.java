@@ -3,14 +3,12 @@ package au.edu.unimelb.comp90018.brickbreaker.framework;
 import java.util.List;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Bonus;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
-import au.edu.unimelb.comp90018.brickbreaker.actors.ExtraLife;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Virus;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
@@ -79,28 +77,28 @@ public class WorldRenderer {
 		
 		if (world.showCoin){
 		
-		Coin coin = world.coin;
-		batch.draw(Assets.coin, coin.position.x - Coin.COIN_WIDTH / 2,
-				coin.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
-				Coin.COIN_HEIGHT);
+		Bonus bonus = world.coin;
+		batch.draw(Assets.coin, bonus.position.x - bonus.getType().getBonusWidth() / 2,
+				bonus.position.y - bonus.getType().getBonusHeight() / 2, bonus.getType().getBonusWidth(),
+				bonus.getType().getBonusHeight());
 		
 		}
 		
 		if (world.showVirus){
 			
-			Virus virus = world.virus;
-			batch.draw(Assets.virus, virus.position.x - Coin.COIN_WIDTH / 2,
-					virus.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
-					Coin.COIN_HEIGHT);
+			Bonus virus = world.virus;
+			batch.draw(Assets.virus, virus.position.x - virus.getType().getBonusWidth() / 2,
+					virus.position.y - virus.getType().getBonusHeight() / 2, virus.getType().getBonusWidth(),
+					virus.getType().getBonusHeight());
 			
 			}
 		
 		if (world.showExtraLife){
 			
-			ExtraLife extraLife = world.extraLife;
-			batch.draw(Assets.lives, extraLife.position.x - Coin.COIN_WIDTH / 2,
-					extraLife.position.y - Coin.COIN_HEIGHT / 2, Coin.COIN_WIDTH,
-					Coin.COIN_HEIGHT);
+			Bonus extraLife = world.extraLife;
+			batch.draw(Assets.lives, extraLife.position.x - extraLife.getType().getBonusWidth() / 2,
+					extraLife.position.y - extraLife.getType().getBonusHeight() / 2, extraLife.getType().getBonusWidth(),
+					extraLife.getType().getBonusHeight());
 			}
 	
 	}

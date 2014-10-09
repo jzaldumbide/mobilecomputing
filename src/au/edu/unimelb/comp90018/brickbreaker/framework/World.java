@@ -10,16 +10,15 @@ import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Bonus;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Bonus.BonusType;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Coin;
-import au.edu.unimelb.comp90018.brickbreaker.actors.ExtraLife;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
-import au.edu.unimelb.comp90018.brickbreaker.actors.Virus;
 import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Player;
 
@@ -44,9 +43,9 @@ public class World {
 	public Paddle paddle;
 	public List<BrickAdapter> bricks;
 	public List<Button> lives;
-	public Coin coin;
-	public Virus virus;
-	public ExtraLife extraLife;
+	public Bonus coin;
+	public Bonus virus;
+	public Bonus extraLife;
 	public Button pauseButton, soundButton;
 	public float timeCounter;
 	public int coinShowTime;
@@ -83,9 +82,10 @@ public class World {
 		bricks = new ArrayList<BrickAdapter>();
 		lives = new ArrayList<Button>();
 
-		coin = new Coin(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,10));
-		virus = new Virus(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,15));
-		extraLife = new ExtraLife(WORLD_WIDTH/2,WORLD_HEIGHT/2,new Vector2(0,10));
+		/*Create here Bonuses*/
+		coin = new Bonus(WORLD_WIDTH/2,WORLD_HEIGHT/2+40,BonusType.COIN,new Vector2(0,10));
+		virus = new Bonus(WORLD_WIDTH/2,WORLD_HEIGHT/2+40,BonusType.VIRUS,new Vector2(0,15));
+		extraLife = new Bonus(WORLD_WIDTH/2,WORLD_HEIGHT/2+40,BonusType.EXTRA_LIFE,new Vector2(0,10));
 
 		soundButton = new Button(ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2 + 5,
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2 + 2, ButtonSize.MEDIUM_SQUARE);
