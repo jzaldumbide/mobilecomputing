@@ -16,6 +16,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 /**
  * BrickBreakerGame class that extends Game, which implements
@@ -135,6 +137,7 @@ public class BrickBreaker extends Game {
 			/* Download all the levels and the highscores */
 			int maxLevels = 3;
 			LevelDownloader ld = new LevelDownloader();
+			boolean error = false;
 			try {
 				for (int level = 1; level <= maxLevels; level++) {
 					String gameLevel;
@@ -147,15 +150,21 @@ public class BrickBreaker extends Game {
 				ld.persistScores(highScores);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
+				error = true;
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				error = true;
 				e.printStackTrace();
 			} catch (XmlPullParserException e) {
 				// TODO Auto-generated catch block
+				error = true;
 				e.printStackTrace();
 			}
 
+			if (error){
+				//Hande error here
+			}
 		}
 	}
 
