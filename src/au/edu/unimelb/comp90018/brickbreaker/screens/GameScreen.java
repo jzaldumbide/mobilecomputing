@@ -313,7 +313,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					);
 
 			// It is moving to the left
-//			world.paddle.position.x = touchPoint.x;
+			world.paddle.position.x = touchPoint.x;
 			
 //			if (touchPoint.x < world.paddle.position.x) {				
 //				accel = World.WORLD_WIDTH * 10f;
