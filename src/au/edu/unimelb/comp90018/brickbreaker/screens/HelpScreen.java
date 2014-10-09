@@ -74,16 +74,14 @@ public class HelpScreen extends ScreenAdapter {
 			if (btnLeft.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));
-				//counter=
+				//if(counter==0)counter=6;
 				counter = counter - 1;
 				
-				if (counter == 6) {
-					counter = 1;
-					screenshot = screenshot1;
-					
-					}
+				
 				textHeadline = Integer.toString(counter) + "/5";
 				textHint = "Hint" + Integer.toHexString(counter);
+				//if(counter==0)counter=6;
+				
 				if (counter==1)screenshot = screenshot1;
 				if (counter==2)screenshot = screenshot2;
 				if (counter==3)screenshot = screenshot3;
