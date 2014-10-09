@@ -31,7 +31,8 @@ public class HelpScreen extends ScreenAdapter {
 	String hint4; 
 	String hint5;
 	private Button btnBack;
-	private Button btnNext;
+	private Button btnLeft;
+	private Button btnRight;
 	int counter = 1;
 
 	public HelpScreen(BrickBreaker game) {
@@ -46,7 +47,9 @@ public class HelpScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
-		btnNext = new Button(290, 20, ButtonSize.MEDIUM_SQUARE);
+		btnLeft = new Button(290, 20+Settings.TARGET_WIDTH / 2, ButtonSize.MEDIUM_SQUARE);
+		btnRight = new Button(290, -20+Settings.TARGET_WIDTH / 2, ButtonSize.MEDIUM_SQUARE);
+		
 		screenshot1 = new Texture("helpscreens/help1.png");
 		screenshot2 = new Texture("helpscreens/help2.png");
 		screenshot3 = new Texture("helpscreens/help3.png");
@@ -68,7 +71,29 @@ public class HelpScreen extends ScreenAdapter {
 				game.setScreen(new MenuScreen(game));
 				return;
 			}
-			if (btnNext.bounds.contains(touchPoint.x, touchPoint.y)) {
+			if (btnLeft.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				// game.setScreen(new MenuScreen(game));
+				//counter=
+				counter = counter - 1;
+				
+				if (counter == 6) {
+					counter = 1;
+					screenshot = screenshot1;
+					
+					}
+				textHeadline = Integer.toString(counter) + "/5";
+				textHint = "Hint" + Integer.toHexString(counter);
+				if (counter==1)screenshot = screenshot1;
+				if (counter==2)screenshot = screenshot2;
+				if (counter==3)screenshot = screenshot3;
+				if (counter==4)screenshot = screenshot4;
+				if (counter==5||counter==0)screenshot = screenshot5;
+
+				return;
+			}
+			
+			if (btnRight.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));
 				counter = counter + 1;
@@ -79,7 +104,7 @@ public class HelpScreen extends ScreenAdapter {
 					}
 				textHeadline = Integer.toString(counter) + "/5";
 				textHint = "Hint" + Integer.toHexString(counter);
-				
+				if (counter==1)screenshot = screenshot1;
 				if (counter==2)screenshot = screenshot2;
 				if (counter==3)screenshot = screenshot3;
 				if (counter==4)screenshot = screenshot4;
@@ -87,6 +112,7 @@ public class HelpScreen extends ScreenAdapter {
 
 				return;
 			}
+
 
 		}
 	}
@@ -107,11 +133,11 @@ public class HelpScreen extends ScreenAdapter {
 		Assets.font.setColor(new Color(Color.WHITE));
 
 		game.batcher.setProjectionMatrix(guiCam.combined);
-		game.batcher.enableBlending();
+		//game.batcher.enableBlending();
 		game.batcher.begin();
 
 		//game.batcher.draw(Assets.defaultScreen, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
-		game.batcher.draw(screenshot, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		game.batcher.draw(screenshot, 50, 50, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 		game.batcher.draw(Assets.defaultNotification, 0, 0,
 				Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 
@@ -121,15 +147,26 @@ public class HelpScreen extends ScreenAdapter {
 						/ 2, ButtonSize.MEDIUM_SQUARE.getButtonWidth(),
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
 		
-		game.batcher.draw(Assets.back, btnNext.position.x
+		game.batcher.draw(Assets.arrowLeft, btnLeft.position.x
 				- ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2,
-				btnNext.position.y - ButtonSize.MEDIUM_SQUARE.getButtonHeight()
+				btnLeft.position.y - ButtonSize.MEDIUM_SQUARE.getButtonHeight()
 						/ 2, ButtonSize.MEDIUM_SQUARE.getButtonWidth(),
 				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
-
+		
+		
+		game.batcher.draw(Assets.arrowRight, btnRight.position.x
+				- ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2,
+				btnRight.position.y - ButtonSize.MEDIUM_SQUARE.getButtonHeight()
+						/ 2, ButtonSize.MEDIUM_SQUARE.getButtonWidth(),
+				ButtonSize.MEDIUM_SQUARE.getButtonHeight());
+		
+		
+		game.batcher.end();
+		game.batcher.begin();
+		game.batcher.enableBlending();
 		Assets.font.setScale(0.6f, 0.6f);
 		 Assets.font.drawMultiLine(game.batcher, textHeadline, 60, 350);
-		// Assets.font.drawMultiLine(game.batcher, screenshot, 60, 250);
+		
 		 Assets.font.drawMultiLine(game.batcher, textHint, 60, 150);
 
 		game.batcher.end();
