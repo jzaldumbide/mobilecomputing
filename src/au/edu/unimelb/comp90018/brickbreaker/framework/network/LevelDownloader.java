@@ -140,7 +140,9 @@ public class LevelDownloader {
                 	   int y = Integer.valueOf(xpp.getAttributeValue("", "y"));
                 	   int w = Integer.valueOf(xpp.getAttributeValue("", "w"));
                 	   //int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-                	   paddle = new Paddle(worldWidth / w, worldHeight * 0.15f);
+                	   // TODO: verify if works with the paddle width taken from the XML
+                	   // TODO: paddle width is hard-coded
+                	   paddle = new Paddle(worldWidth / w, worldHeight * 0.15f, w);
                 	   gameLevel.setPaddle(paddle);            	   }
             	   else if (tagName.equals("Ball")){
                 	//   int radius = Integer.valueOf(xpp.getAttributeValue("", "radius"));

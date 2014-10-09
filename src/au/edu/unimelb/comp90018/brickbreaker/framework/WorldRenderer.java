@@ -120,9 +120,9 @@ public class WorldRenderer {
 
 		Paddle paddle = world.paddle;
 		batch.draw(Assets.paddleSmall, 
-				paddle.position.x - Paddle.PADDLE_WIDTH / 2, 
+				paddle.position.x - paddle.width / 2, 
 				paddle.position.y - Paddle.PADDLE_HEIGHT / 2, 
-				Paddle.PADDLE_WIDTH, 
+				paddle.width, 
 				Paddle.PADDLE_HEIGHT
 				);
 	}

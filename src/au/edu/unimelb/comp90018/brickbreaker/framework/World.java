@@ -175,7 +175,8 @@ public class World {
 
 		}
 		if(error){
-			paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f);
+			// TODO: paddle width is hard-coded
+			paddle = new Paddle(WORLD_WIDTH / 2, WORLD_HEIGHT * 0.15f, 96f);
 
 			ball = new Ball(WORLD_WIDTH / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
 					new Vector2(WORLD_WIDTH * 0.4f, WORLD_HEIGHT * 0.4f));

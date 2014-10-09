@@ -1,19 +1,47 @@
 package au.edu.unimelb.comp90018.brickbreaker.actors;
 
+import java.util.Random;
+
 import au.edu.unimelb.comp90018.brickbreaker.framework.DynamicGameObject;
 import au.edu.unimelb.comp90018.brickbreaker.framework.World;
 
 public class Paddle extends DynamicGameObject {
 
-	public static final float PADDLE_WIDTH = 96;
+//	public static final float PADDLE_WIDTH = 96;
 	public static final float PADDLE_HEIGHT = 16;
+	
+	public float width = 96;
 
-	public Paddle(float x, float y) {
-		super(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
+	public final Random rand;
+	public int state;
+	float stateTime;
+	
+	public Paddle(float x, float y, float width) {
+		
+		super(x, y, width, PADDLE_HEIGHT);
+		this.width = width;
+		
+		state = 0;
+		stateTime = 0;
+		
+		rand = new Random();
 	}
 
 	public void update(float deltaTime, float accelX) {
 
+		if (rand.nextFloat() > 0.9f && stateTime > 5000) {
+			if (state == 0) {
+				width = width * 0.8f;
+				bounds.width = bounds.width * 0.8f;
+				state = 1;
+			} else if (state == 1) {
+				width = width * 1.25f;
+				bounds.width = bounds.width * 1.25f;
+				state = 0;				
+			}
+			stateTime = 0;
+		}
+		
 		if ((velocity.x < 0 && accelX >= 0) || (velocity.x > 0 && accelX <= 0)) {
 			velocity.x = 0;
 		} else {
@@ -22,17 +50,19 @@ public class Paddle extends DynamicGameObject {
 
 		position.add(velocity.x * deltaTime, 0);
 
-		if (position.x < PADDLE_WIDTH / 2) {
-			position.x = PADDLE_WIDTH / 2;
+		if (position.x < width / 2) {
+			position.x = width / 2;
 			velocity.x = 0;
 		}
 
-		if (position.x > (World.WORLD_WIDTH - PADDLE_WIDTH / 2)) {
-			position.x = World.WORLD_WIDTH - PADDLE_WIDTH / 2;
+		if (position.x > (World.WORLD_WIDTH - width / 2)) {
+			position.x = World.WORLD_WIDTH - width / 2;
 			velocity.x = 0;
 		}
 
-		bounds.x = position.x - bounds.width / 2;		
+		bounds.x = position.x - bounds.width / 2;
+		
+		stateTime += deltaTime;
 	}
 
 }
