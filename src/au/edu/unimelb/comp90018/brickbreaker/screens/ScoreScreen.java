@@ -2,6 +2,7 @@ package au.edu.unimelb.comp90018.brickbreaker.screens;
 
 import java.io.IOException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
@@ -39,16 +40,6 @@ public class ScoreScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
-		LevelDownloader ld = new LevelDownloader();
-		try {
-			scoreString = ld.loadHighScores();
-		} catch (XmlPullParserException e) {
-			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
-			e.printStackTrace();
-		} catch (IOException e) {
-			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
-			e.printStackTrace();
-		}		
 
 	}
 
@@ -125,4 +116,28 @@ public class ScoreScreen extends ScreenAdapter {
 	public void hide() {
 		super.dispose();
 	}
+
+	@Override
+	public void show() {
+		LevelDownloader ld = new LevelDownloader();
+		try {
+			ld.downloadHighScores();
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			scoreString = ld.loadHighScores();
+		} catch (XmlPullParserException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		} catch (IOException e) {
+			scoreString = "Scores\n\n1.- 1000\n2.- 950\n3.- 940\n4.- 930\n5.- 920";
+			e.printStackTrace();
+		}		
+
+	}	
 }

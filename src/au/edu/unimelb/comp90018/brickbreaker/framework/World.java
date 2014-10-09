@@ -119,7 +119,7 @@ public class World {
 		}		
 
 		//Test whats the current rank of the user based on the general score
-		this.totalScore = player.getTotalScore();
+		this.totalScore = player.getTotalScore()-player.getLevelScore(this.level);
 		updateRanking(this.totalScore);
 
 		this.score = 0;
@@ -255,6 +255,7 @@ public class World {
 			if (lives.size() >= 3){ //if player has 3 lives you get 3 bonus points!!
 				score += 3;
 				this.totalScore+=3;
+				updateRanking(this.totalScore);
 			}
 		}
 	}
