@@ -11,6 +11,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 public class HelpScreen extends ScreenAdapter {
@@ -21,7 +22,9 @@ public class HelpScreen extends ScreenAdapter {
 
 	String textHeadline = "1/5";
 	String textHint = "Hint1";
-	String screenshot = "help1.png";
+	
+	Texture screenshot,screenshot1,screenshot2,screenshot3,screenshot4,screenshot5;
+	
 	String hint1; 
 	String hint2;
 	String hint3; 
@@ -44,8 +47,12 @@ public class HelpScreen extends ScreenAdapter {
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
 		btnNext = new Button(290, 20, ButtonSize.MEDIUM_SQUARE);
-
-		
+		screenshot1 = new Texture("helpscreens/help1.png");
+		screenshot2 = new Texture("helpscreens/help2.png");
+		screenshot3 = new Texture("helpscreens/help3.png");
+		screenshot4 = new Texture("helpscreens/help4.png");
+		screenshot5 = new Texture("helpscreens/help5.png");
+		screenshot=screenshot1;
 	}
 
 	public void update() {
@@ -65,11 +72,18 @@ public class HelpScreen extends ScreenAdapter {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));
 				counter = counter + 1;
-				if (counter == 6)
+				if (counter == 6) {
 					counter = 1;
+					screenshot = screenshot1;
+					
+					}
 				textHeadline = Integer.toString(counter) + "/5";
 				textHint = "Hint" + Integer.toHexString(counter);
-				screenshot = "help" + Integer.toHexString(counter) + ".png";
+				
+				if (counter==2)screenshot = screenshot2;
+				if (counter==3)screenshot = screenshot3;
+				if (counter==4)screenshot = screenshot4;
+				if (counter==5)screenshot = screenshot5;
 
 				return;
 			}
@@ -96,8 +110,8 @@ public class HelpScreen extends ScreenAdapter {
 		game.batcher.enableBlending();
 		game.batcher.begin();
 
-		game.batcher.draw(Assets.defaultScreen, 0, 0, Settings.TARGET_WIDTH,
-				Settings.TARGET_HEIGHT);
+		//game.batcher.draw(Assets.defaultScreen, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
+		game.batcher.draw(screenshot, 0, 0, Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 		game.batcher.draw(Assets.defaultNotification, 0, 0,
 				Settings.TARGET_WIDTH, Settings.TARGET_HEIGHT);
 
@@ -115,7 +129,7 @@ public class HelpScreen extends ScreenAdapter {
 
 		Assets.font.setScale(0.6f, 0.6f);
 		 Assets.font.drawMultiLine(game.batcher, textHeadline, 60, 350);
-		 Assets.font.drawMultiLine(game.batcher, screenshot, 60, 250);
+		// Assets.font.drawMultiLine(game.batcher, screenshot, 60, 250);
 		 Assets.font.drawMultiLine(game.batcher, textHint, 60, 150);
 
 		game.batcher.end();

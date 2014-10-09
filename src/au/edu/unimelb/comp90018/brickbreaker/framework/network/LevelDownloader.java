@@ -136,25 +136,16 @@ public class LevelDownloader {
                }
                else{
             	   if (tagName.equals("Paddle")){
-                	   int x = Integer.valueOf(xpp.getAttributeValue("", "x"));
-                	   int y = Integer.valueOf(xpp.getAttributeValue("", "y"));
                 	   int w = Integer.valueOf(xpp.getAttributeValue("", "w"));
-                	   //int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-                	   // TODO: verify if works with the paddle width taken from the XML
-                	   // TODO: paddle width is hard-coded
                 	   paddle = new Paddle(worldWidth / 2, worldHeight * 0.15f, w);
                 	   gameLevel.setPaddle(paddle);            	   }
-            	   else if (tagName.equals("Ball")){
-                	//   int radius = Integer.valueOf(xpp.getAttributeValue("", "radius"));
-                	//   int speed = Integer.valueOf(xpp.getAttributeValue("", "speed"));
-                	   Ball ball = new Ball(worldWidth / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
-           					new Vector2(worldWidth * 0.4f, worldHeight * 0.4f));
-            		   gameLevel.setBall(ball);
-            	   }
                }
             }
          eventType = xpp.next();
         }
+    	   Ball ball = new Ball(worldWidth / 2, paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2,
+				new Vector2(worldWidth * 0.4f, worldHeight * 0.4f));
+		   gameLevel.setBall(ball);
 
 		return gameLevel;
 	}
