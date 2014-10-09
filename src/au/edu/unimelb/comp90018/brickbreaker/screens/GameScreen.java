@@ -313,25 +313,25 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					);
 
 			// It is moving to the left
-			world.paddle.position.x = touchPoint.x;
-			
-//			if (touchPoint.x < world.paddle.position.x) {				
-//				accel = World.WORLD_WIDTH * 10f;
-//			} 
-//			// It is moving to the right
-//			else if (touchPoint.x > world.paddle.position.x) { 
-//				accel = World.WORLD_WIDTH * -10f;
-//			}
+			if (touchPoint.x < world.paddle.position.x) {				
+				accel = World.WORLD_WIDTH * -5f;
+			} 
+			// It is moving to the right
+			else if (touchPoint.x > world.paddle.position.x) { 
+				accel = World.WORLD_WIDTH * 5f;
+			}
+//			world.paddle.position.x = touchPoint.x;
 		}
 
 		if (Settings.accelerometerEnabled) {
 			if (game.orientation == 0)
-				accel = Gdx.input.getAccelerometerX() * 200f;
+				accel = Gdx.input.getAccelerometerX() * -200f;
 			else if (game.orientation == 1)
-				accel = Gdx.input.getAccelerometerY() * -200f;
+				accel = Gdx.input.getAccelerometerY() * 200f;
+			world.update(deltaTime, accel, -1);
+		} else {
+			world.update(deltaTime, accel, touchPoint.x);
 		}
-
-		world.update(deltaTime, accel);
 		
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {

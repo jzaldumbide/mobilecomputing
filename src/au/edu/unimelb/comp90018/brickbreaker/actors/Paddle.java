@@ -21,7 +21,7 @@ public class Paddle extends DynamicGameObject {
 		state = HEALTHY;
 	}
 
-	public void update(float deltaTime, float accelX) {
+	public void update(float deltaTime, float accelX, float touchX) {
 		
 		if ((velocity.x < 0 && accelX >= 0) || (velocity.x > 0 && accelX <= 0)) {
 			velocity.x = 0;
@@ -29,7 +29,11 @@ public class Paddle extends DynamicGameObject {
 			velocity.add(accelX * deltaTime, 0);
 		}
 
-		position.add(velocity.x * deltaTime, 0);
+		if (touchX == -1) {
+			position.add(velocity.x * deltaTime, 0);
+		} else {
+			position.x = touchX;
+		}
 
 		if (position.x < width / 2) {
 			position.x = width / 2;

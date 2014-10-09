@@ -40,10 +40,16 @@ public class Ball extends DynamicGameObject {
 		bounds.y = position.y - bounds.height / 2;
 	}
 
-	public void hitPaddle(float paddleVelX) {
-		velocity.x += paddleVelX;
-		// TODO: Consider side of the collision
-		velocity.y *= -1;
+	public boolean hitPaddle(Rectangle2 paddleBounds, float paddleVelX) {
+
+		List<RectangleSide> sides = bounds.whichSidesOverlapMe(paddleBounds);
+
+		if (sides.contains(RectangleSide.Bottom)) {
+			velocity.x += paddleVelX;
+			velocity.y *= -1;
+			return true;
+		}
+		return false;
 	}
 
 	public void hitBrick(Rectangle2 brickBounds) {
