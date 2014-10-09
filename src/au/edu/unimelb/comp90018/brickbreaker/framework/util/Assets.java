@@ -20,8 +20,8 @@ public class Assets {
 	public static Texture menuBackground;
 	public static Texture background;
 	public static Texture items; //Main Texture with game sprites
-	public static Texture itemsButtons; //temporary Texture for buttons only
-	public static Texture itemsLevelsButtons; //temporary Texture for buttons only
+	//public static Texture itemsButtons; //temporary Texture for buttons only
+	//public static Texture itemsLevelsButtons; //temporary Texture for buttons only
 
 	/* Transparent Screens*/
 	public static TextureRegion defaultNotification;
@@ -160,16 +160,13 @@ public class Assets {
 		background = loadTexture("backgrounds/background.png");
 		gameBackground = new TextureRegion(background, 0, 0, 800, 1280);
 		
-		//Button template that goes behind text (used in menus):
-		Texture buttonMenuR = loadTexture("buttons/menuButton.png");
-		buttonMenu = new TextureRegion(buttonMenuR, 0, 0, 256, 64); //The button shown in the main menu
-			
+		
 		/*Here you should put all textures that comes from items.png*/
 		items = loadTexture("textures/items.png");
 		blueBall = new TextureRegion(items, 0, 0, 64, 64);
 		redBall = new TextureRegion(items, 0, 64, 64, 64);
-		paddleLarge = new TextureRegion(items, 96, 0, 128, 32);
-		paddleSmall = new TextureRegion(items, 96, 32, 96, 32);
+		paddleLarge = new TextureRegion(items, 160, 0, 352, 96);
+		paddleSmall = new TextureRegion(items, 96, 32, 128, 32);
 		lives = new TextureRegion(items, 224, 0, 64, 64);
 		coin = new TextureRegion(items, 224, 64, 64, 64);
 		virus = new TextureRegion(items, 160, 64, 64, 64);
@@ -183,47 +180,49 @@ public class Assets {
 		smallPurpleBrick = new TextureRegion(items, 64, 64, 32, 16);
 		smallPinkBrick = new TextureRegion(items, 64, 80, 32, 16);
 		smallBlackBrick = new TextureRegion(items, 64, 96, 32, 16);
+		//Button template that goes behind text (used in menus):
+		buttonMenu = new TextureRegion(items, 512, 769, 256, 64); //The button shown in the main menu
 		
 		/*Here you should load textures for locked levels*/
-		itemsLevelsButtons = loadTexture("textures/itemsLevelsButtons.png");
-		levelLocked_1 = new TextureRegion(itemsLevelsButtons, 0, 0, 128, 128);
-		levelLocked_2 = new TextureRegion(itemsLevelsButtons, 128, 0, 128, 128);
-		levelLocked_3 = new TextureRegion(itemsLevelsButtons, 256, 0, 128, 128);
-		levelLocked_4 = new TextureRegion(itemsLevelsButtons, 0, 128, 128, 128);
-		levelLocked_5 = new TextureRegion(itemsLevelsButtons, 128, 128, 128, 128);
-		levelLocked_6 = new TextureRegion(itemsLevelsButtons, 256, 128, 128, 128);
-		levelLocked_7 = new TextureRegion(itemsLevelsButtons, 0, 256, 128, 128);
-		levelLocked_8 = new TextureRegion(itemsLevelsButtons, 128, 256, 128, 128);
-		levelLocked_9 = new TextureRegion(itemsLevelsButtons, 256, 256, 128, 128);
+		levelLocked_1 = new TextureRegion(items, 0, 128, 128, 128);
+		levelLocked_2 = new TextureRegion(items, 128, 128, 128, 128);
+		levelLocked_3 = new TextureRegion(items, 256, 128, 128, 128);
+		levelLocked_4 = new TextureRegion(items, 0, 256, 128, 128);
+		levelLocked_5 = new TextureRegion(items, 128, 256, 128, 128);
+		levelLocked_6 = new TextureRegion(items, 256, 256, 128, 128);
+		levelLocked_7 = new TextureRegion(items, 0, 384, 128, 128);
+		levelLocked_8 = new TextureRegion(items, 128, 384, 128, 128);
+		levelLocked_9 = new TextureRegion(items, 256, 384, 128, 128);
 		
-		levelUnlocked_1 = new TextureRegion(itemsLevelsButtons, 0, 384, 128, 128);
-		levelUnlocked_2 = new TextureRegion(itemsLevelsButtons, 128, 384, 128, 128);
-		levelUnlocked_3 = new TextureRegion(itemsLevelsButtons, 256, 384, 128, 128);
-		levelUnlocked_4 = new TextureRegion(itemsLevelsButtons, 0, 512, 128, 128);
-		levelUnlocked_5 = new TextureRegion(itemsLevelsButtons, 128, 512, 128, 128);
-		levelUnlocked_6 = new TextureRegion(itemsLevelsButtons, 256, 512, 128, 128);
-		levelUnlocked_7 = new TextureRegion(itemsLevelsButtons, 0, 640, 128, 128);
-		levelUnlocked_8 = new TextureRegion(itemsLevelsButtons, 128, 640, 128, 128);
-		levelUnlocked_9 = new TextureRegion(itemsLevelsButtons, 256, 640, 128, 128);
+		levelUnlocked_1 = new TextureRegion(items, 384, 128, 128, 128);
+		levelUnlocked_2 = new TextureRegion(items, 512, 128, 128, 128);
+		levelUnlocked_3 = new TextureRegion(items, 640, 128, 128, 128);
+		levelUnlocked_4 = new TextureRegion(items, 384, 256, 128, 128);
+		levelUnlocked_5 = new TextureRegion(items, 512, 256, 128, 128);
+		levelUnlocked_6 = new TextureRegion(items, 640, 256, 128, 128);
+		levelUnlocked_7 = new TextureRegion(items, 384, 384, 128, 128);
+		levelUnlocked_8 = new TextureRegion(items, 512, 384, 128, 128);
+		levelUnlocked_9 = new TextureRegion(items, 640, 384, 128, 128);
 		
 		/*Here you should put all textures that comes from itemsButtons.png*/
-		itemsButtons = loadTexture("textures/itemsButtons.png");
-		musicOn = new TextureRegion(itemsButtons, 0, 0, 128, 128);
-		musicOff = new TextureRegion(itemsButtons, 128, 0, 128, 128);
-		accelOn = new TextureRegion(itemsButtons, 256, 0, 128, 128);
-		soundOn = new TextureRegion(itemsButtons, 384, 0, 128, 128);
-		soundOff = new TextureRegion(itemsButtons, 512, 0, 128, 128);
-		quit = new TextureRegion(itemsButtons, 640, 0, 128, 128);
-		settings = new TextureRegion(itemsButtons, 0, 128, 128, 128);
-		pause = new TextureRegion(itemsButtons, 128, 128, 128, 128);
-		back = new TextureRegion(itemsButtons, 256, 128, 128, 128);
-		help = new TextureRegion(itemsButtons, 384, 128, 128, 128);
-		multiplayer = new TextureRegion(itemsButtons, 512, 128, 128, 128);
-		connect = new TextureRegion(itemsButtons, 640, 128, 128, 128);
-		touchOn = new TextureRegion(itemsButtons, 0, 256, 128, 128);
-		soundGameOff = new TextureRegion(itemsButtons, 128, 256, 128, 128);
-		soundGameOn = new TextureRegion(itemsButtons, 256, 256, 128, 128);
-		pauseGame = new TextureRegion(itemsButtons, 384, 256, 128, 128);
+		musicOn = new TextureRegion(items, 0, 512, 128, 128);
+		musicOff = new TextureRegion(items, 128, 512, 128, 128);
+		accelOn = new TextureRegion(items, 256, 512, 128, 128);
+		soundOn = new TextureRegion(items, 384, 512, 128, 128);
+		soundOff = new TextureRegion(items, 512, 512, 128, 128);
+		quit = new TextureRegion(items, 640, 512, 128, 128);
+		
+		settings = new TextureRegion(items, 0, 640, 128, 128);
+		pause = new TextureRegion(items, 128, 640, 128, 128);
+		back = new TextureRegion(items, 256, 640, 128, 128);
+		help = new TextureRegion(items, 384, 640, 128, 128);
+		multiplayer = new TextureRegion(items, 512, 640, 128, 128);
+		connect = new TextureRegion(items, 640, 640, 128, 128);
+		
+		touchOn = new TextureRegion(items, 0, 768, 128, 128);
+		soundGameOff = new TextureRegion(items, 128, 769, 128, 128);
+		soundGameOn = new TextureRegion(items, 256, 769, 128, 128);
+		pauseGame = new TextureRegion(items, 384, 769, 128, 128);
 		
 		/*Here load Transparent Textures*/
 		Texture defaultNotificationR = loadTransparentTexture(320, 480, "backgrounds/default_notification.png");
