@@ -236,7 +236,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		case GAME_READY:
 			updateReady();
 			break;
+			
 		case GAME_RUNNING:
+			
 			world.timeCounter += deltaTime;
 
 			updateRunning(deltaTime);
@@ -311,13 +313,15 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					);
 
 			// It is moving to the left
-			if (touchPoint.x < world.paddle.position.x) { 
-				accel = World.WORLD_WIDTH * 10f;
-			} 
-			// It is moving to the right
-			else if (touchPoint.x > world.paddle.position.x) { 
-				accel = World.WORLD_WIDTH * -10f;
-			}
+//			world.paddle.position.x = touchPoint.x;
+			
+//			if (touchPoint.x < world.paddle.position.x) {				
+//				accel = World.WORLD_WIDTH * 10f;
+//			} 
+//			// It is moving to the right
+//			else if (touchPoint.x > world.paddle.position.x) { 
+//				accel = World.WORLD_WIDTH * -10f;
+//			}
 		}
 
 		if (Settings.accelerometerEnabled) {
