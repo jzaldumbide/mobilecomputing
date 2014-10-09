@@ -347,11 +347,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			state = GAME_READY;
 		} else if (world.state == World.WORLD_STATE_LEVEL_END) {
 			state = GAME_LEVEL_END;
-
-			world.level++;
-
-			Player.unlockLevel(world.level);
 			Player.updateScore(world.level, world.score);
+			world.level++;
+			Player.unlockLevel(world.level);
+			
 
 			// Automatically send results if score is higher than the 10th
 			if (world.rankings.size() > 0 && Player.getTotalScore() > world.rankings.get(world.rankings.size() - 1))
