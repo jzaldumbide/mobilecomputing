@@ -29,7 +29,7 @@ public class HelpScreen extends ScreenAdapter {
 	String hint5;
 	private Button btnBack;
 	private Button btnNext;
-	int counter = 0;
+	int counter = 1;
 
 	public HelpScreen(BrickBreaker game) {
 
@@ -43,7 +43,7 @@ public class HelpScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
-		btnNext = new Button(20, 50, ButtonSize.MEDIUM_SQUARE);
+		btnNext = new Button(290, 20, ButtonSize.MEDIUM_SQUARE);
 
 		
 	}
@@ -65,8 +65,8 @@ public class HelpScreen extends ScreenAdapter {
 				Assets.playSound(Assets.clickSound);
 				// game.setScreen(new MenuScreen(game));
 				counter = counter + 1;
-				if (counter == 5)
-					counter = 0;
+				if (counter == 6)
+					counter = 1;
 				textHeadline = Integer.toString(counter) + "/5";
 				textHint = "Hint" + Integer.toHexString(counter);
 				screenshot = "help" + Integer.toHexString(counter) + ".png";
