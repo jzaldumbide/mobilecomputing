@@ -236,7 +236,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		case GAME_READY:
 			updateReady();
 			break;
+			
 		case GAME_RUNNING:
+			
 			world.timeCounter += deltaTime;
 
 			updateRunning(deltaTime);
@@ -311,23 +313,25 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 					);
 
 			// It is moving to the left
-			if (touchPoint.x < world.paddle.position.x) { 
-				accel = World.WORLD_WIDTH * 10f;
+			if (touchPoint.x < world.paddle.position.x) {				
+				accel = World.WORLD_WIDTH * -5f;
 			} 
 			// It is moving to the right
 			else if (touchPoint.x > world.paddle.position.x) { 
-				accel = World.WORLD_WIDTH * -10f;
+				accel = World.WORLD_WIDTH * 5f;
 			}
+//			world.paddle.position.x = touchPoint.x;
 		}
 
 		if (Settings.accelerometerEnabled) {
 			if (game.orientation == 0)
-				accel = Gdx.input.getAccelerometerX() * 200f;
+				accel = Gdx.input.getAccelerometerX() * -200f;
 			else if (game.orientation == 1)
-				accel = Gdx.input.getAccelerometerY() * -200f;
+				accel = Gdx.input.getAccelerometerY() * 200f;
+			world.update(deltaTime, accel, -1);
+		} else {
+			world.update(deltaTime, accel, touchPoint.x);
 		}
-
-		world.update(deltaTime, accel);
 		
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
@@ -566,6 +570,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 			world.coin.position.x = World.WORLD_WIDTH / 2 + randInt(-80, 80);
 			world.coin.position.y = World.WORLD_HEIGHT / 2;
+			world.coin.bounds.x = world.coin.position.x;
 			world.coin.bounds.y = world.coin.position.y;
 
 		}
@@ -582,6 +587,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show extra life every 10-30 seconds
 			world.virus.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.virus.position.y = World.WORLD_HEIGHT / 2;
+			world.virus.bounds.x = world.virus.position.x;
 			world.virus.bounds.y = world.virus.position.y;
 
 		}
@@ -598,8 +604,8 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show extra life every 10-40 seconds
 			world.extraLife.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.extraLife.position.y = World.WORLD_HEIGHT / 2;
+			world.extraLife.bounds.x = world.extraLife.position.x;
 			world.extraLife.bounds.y = world.extraLife.position.y;
-
 		}
 	}
 

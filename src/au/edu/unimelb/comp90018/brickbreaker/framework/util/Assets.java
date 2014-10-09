@@ -20,9 +20,13 @@ public class Assets {
 	public static Texture menuBackground;
 	public static Texture background;
 	public static Texture items; //Main Texture with game sprites
-	//public static Texture itemsButtons; //temporary Texture for buttons only
-	//public static Texture itemsLevelsButtons; //temporary Texture for buttons only
+	public static Texture errorMessageB; 
+	public static Texture infoMessageB; 
 
+	/*Message Screens*/
+	public static TextureRegion errorMessage;
+	public static TextureRegion infoMessage;
+	
 	/* Transparent Screens*/
 	public static TextureRegion defaultNotification;
 	public static TextureRegion ready;
@@ -107,8 +111,7 @@ public class Assets {
 	
 	/* BitmapFonts */
 	public static BitmapFont font;
-	public static final String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"�`'<>";
-
+	
 	/* Sounds & Music */
 	public static Music music;
 
@@ -159,6 +162,12 @@ public class Assets {
 		
 		background = loadTexture("backgrounds/background.png");
 		gameBackground = new TextureRegion(background, 0, 0, 800, 1280);
+		
+		errorMessageB = loadTexture("backgrounds/errorBackground.png");
+		errorMessage = new TextureRegion(errorMessageB, 0, 0, 800, 1280);
+		
+		infoMessageB = loadTexture("backgrounds/infoBackground.png");
+		infoMessage = new TextureRegion(infoMessageB, 0, 0, 800, 1280);
 		
 		
 		/*Here you should put all textures that comes from items.png*/
@@ -251,10 +260,7 @@ public class Assets {
 		// new TextureRegion(items, 64, 192, 64, 16), new TextureRegion(items,
 		// 64, 208, 64, 16));
 
-		/* BitmapFont example */
-
-		//font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), Gdx.files.internal("fonts/font.png"), false);
-		
+		/* BitmapFont*/
 		 FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
 		 Gdx.files.internal("fonts/font.ttf"));
 		 FreeTypeFontParameter parameter = new FreeTypeFontParameter();

@@ -20,15 +20,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import au.edu.unimelb.comp90018.brickbreaker.BrickBreaker;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
+import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
+import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
@@ -40,13 +42,9 @@ public class MultiplayerScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
 
-	Rectangle serverBounds, joinBounds, backBounds;
-
+	private Button joinButton, serverButton, btnBack;
 	Vector3 touchPoint;
-
-	public static Texture btnserver, btnjoin, btnback;
-	public int screenWidth, screenHeight, btnsizeWidth, btnsizeHeight,
-			btnseparation;
+	
 	String ipAddress = null;
 	String ipServer = "192.168.56.101";
 
@@ -67,14 +65,20 @@ public class MultiplayerScreen extends ScreenAdapter {
 
 		this.game = game;
 
-		screenWidth = 320;
-		screenHeight = 480;
-		btnsizeWidth = 300;
-		btnsizeHeight = 32;
-		btnseparation = 8;
+		touchPoint = new Vector3();
 
-		// font = new BitmapFont(Gdx.files.internal("fonts/test/Arial-12.fnt"),
-		// Gdx.files.internal("fonts/test/fontgame.png"), false);
+		guiCam = new OrthographicCamera(Settings.TARGET_WIDTH,
+				Settings.TARGET_HEIGHT);
+		guiCam.position.set(Settings.TARGET_WIDTH / 2,
+				Settings.TARGET_HEIGHT / 2, 0);
+
+		serverButton = new Button(Settings.TARGET_WIDTH / 2,
+				Settings.TARGET_HEIGHT / 2, ButtonSize.XLARGE_RECTANGLE);
+		
+		joinButton = new Button(Settings.TARGET_WIDTH / 2,
+				Settings.TARGET_HEIGHT / 2 - 45, ButtonSize.XLARGE_RECTANGLE);
+
+		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
 
 		// network
 		// startBluetooth();
@@ -83,20 +87,6 @@ public class MultiplayerScreen extends ScreenAdapter {
 		ipAddress = getmyipNetwork();
 		// sendMessage();
 		//
-
-		guiCam = new OrthographicCamera(screenWidth, screenHeight);
-		guiCam.position.set(screenWidth / 2, screenHeight / 2, 0);
-		serverBounds = new Rectangle(10, 264, 300, 30);
-		joinBounds = new Rectangle(10, 220, 300, 30);
-		// gyrosBounds = new Rectangle(10, 176, 300, 30);
-		backBounds = new Rectangle(10, 10, 32, 32);
-
-		touchPoint = new Vector3();
-
-		btnserver = new Texture("buttons/btn_server.png");
-		btnjoin = new Texture("buttons/btn_join.png");
-		btnback = new Texture("buttons/back.png");
-
 	}
 
 	public void update() {
@@ -108,23 +98,25 @@ public class MultiplayerScreen extends ScreenAdapter {
 					game.viewport.x, game.viewport.y, game.viewport.width,
 					game.viewport.height);
 
-			if (serverBounds.contains(touchPoint.x, touchPoint.y)) {
+			if (serverButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Gdx.app.log("starting server", "starting server");
+				Assets.playSound(Assets.clickSound);
 
 				// Gdx.app.log("sever running?", "server running?");
 
 				return;
 			}
 
-			if (joinBounds.contains(touchPoint.x, touchPoint.y)) {
+			if (joinButton.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
 				// Gdx.app.log("joining", "joining");
 				// sendMessage();
 				return;
 			}
 
-			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
-
-				game.setScreen(new SelectScreen(game));
+			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				game.setScreen(new MenuScreen(game));
 				return;
 			}
 
@@ -143,23 +135,46 @@ public class MultiplayerScreen extends ScreenAdapter {
 
 		guiCam.update();
 
+		Assets.font.setScale(0.7f, 0.7f);
+		Assets.font.setColor(new Color(Color.WHITE));
+
 		game.batcher.setProjectionMatrix(guiCam.combined);
-
-		// game.batcher.disableBlending();
-		game.batcher.begin();
-		game.batcher.draw(Assets.menuScreen, 0, 0, 320, 480);
-		game.batcher.draw(btnserver, serverBounds.x, serverBounds.y,
-				serverBounds.width, serverBounds.height);
-		game.batcher.draw(btnjoin, joinBounds.x, joinBounds.y,
-				joinBounds.width, joinBounds.height);
-
-		game.batcher.draw(btnback, backBounds.x, backBounds.y,
-				backBounds.width, backBounds.height);
-		Assets.font.drawMultiLine(game.batcher, ipAddress, 10, 200);
-		game.batcher.end();
-
 		game.batcher.enableBlending();
 		game.batcher.begin();
+		game.batcher.draw(Assets.menuScreen, 0, 0, Settings.TARGET_WIDTH,
+				Settings.TARGET_HEIGHT);
+
+		game.batcher.draw(
+				Assets.buttonMenu,
+				serverButton.position.x
+						- ButtonSize.XLARGE_RECTANGLE.getButtonWidth() / 2,
+						serverButton.position.y
+						- ButtonSize.XLARGE_RECTANGLE.getButtonHeight() / 2,
+				ButtonSize.XLARGE_RECTANGLE.getButtonWidth(),
+				ButtonSize.XLARGE_RECTANGLE.getButtonHeight());
+		
+		game.batcher.draw(
+				Assets.buttonMenu,
+				joinButton.position.x
+						- ButtonSize.XLARGE_RECTANGLE.getButtonWidth() / 2,
+				joinButton.position.y
+						- ButtonSize.XLARGE_RECTANGLE.getButtonHeight() / 2,
+				ButtonSize.XLARGE_RECTANGLE.getButtonWidth(),
+				ButtonSize.XLARGE_RECTANGLE.getButtonHeight());
+
+		game.batcher.draw(Assets.back, 
+				btnBack.position.x - ButtonSize.MEDIUM_SQUARE.getButtonWidth() / 2,
+				btnBack.position.y - ButtonSize.MEDIUM_SQUARE.getButtonHeight() / 2,
+				ButtonSize.MEDIUM_SQUARE.getButtonWidth(), 
+				ButtonSize.MEDIUM_SQUARE.getButtonHeight());		
+
+		float posX = Settings.TARGET_WIDTH / 2;
+		float posY = Settings.TARGET_HEIGHT / 2;
+
+		Assets.font.draw(game.batcher, "Server", posX - 45, posY + 10);
+		Assets.font.draw(game.batcher, "Join", posX - 32, posY - 37);
+		Assets.font.drawMultiLine(game.batcher, ipAddress, 70, 120);
+
 		// sendMessage();
 		game.batcher.end();
 	}

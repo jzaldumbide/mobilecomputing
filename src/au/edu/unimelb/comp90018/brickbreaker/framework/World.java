@@ -203,11 +203,11 @@ public class World {
 			}
 		}
 	}
-
-	public void update(float deltaTime, float accelX) {
+	
+	public void update(float deltaTime, float accelX, float touchX) {
 				
 		updateBall(deltaTime);
-		updatePaddle(deltaTime, accelX);
+		updatePaddle(deltaTime, accelX, touchX);
 		
 		if (showCoin){ //start coin animation
 			updateCoin(deltaTime);
@@ -245,9 +245,8 @@ public class World {
 		ball.update(deltaTime);
 	}
 
-	private void updatePaddle(float deltaTime, float accelX) {
-		// TODO: Review factor of normalisation of the acceleration
-		paddle.update(deltaTime, -accelX);
+	private void updatePaddle(float deltaTime, float accelX, float touchX) {
+		paddle.update(deltaTime, accelX, touchX);
 	}
 
 	
@@ -308,10 +307,10 @@ public class World {
 		if (ball.velocity.y > 0)
 			return;
 
-		if (ball.bounds.overlaps(paddle.bounds)) {			
-			//			List<RectangleSide> sides = ball.bounds.whichSidesOverlapMe(paddle.bounds);			
-			ball.hitPaddle(paddle.velocity.x);
-			listener.hitPaddle();//play sound
+		if (ball.bounds.overlaps(paddle.bounds)) {
+			if (ball.hitPaddle(paddle.bounds, paddle.velocity.x)) {
+				listener.hitPaddle();// play sound
+			}
 		}
 	}
 		
