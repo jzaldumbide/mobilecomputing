@@ -62,8 +62,8 @@ public class Assets {
 	public static TextureRegion pause;
 	public static TextureRegion settings;
 	public static TextureRegion help;
-	public static TextureRegion multiplayer;
-	public static TextureRegion connect;
+	public static TextureRegion arrowRight;
+	public static TextureRegion arrowLeft;
 	public static TextureRegion touchOn;
 	public static TextureRegion soundGameOn;
 	public static TextureRegion soundGameOff;
@@ -216,8 +216,8 @@ public class Assets {
 		pause = new TextureRegion(items, 128, 640, 128, 128);
 		back = new TextureRegion(items, 256, 640, 128, 128);
 		help = new TextureRegion(items, 384, 640, 128, 128);
-		multiplayer = new TextureRegion(items, 512, 640, 128, 128);
-		connect = new TextureRegion(items, 640, 640, 128, 128);
+		arrowRight = new TextureRegion(items, 512, 640, 128, 128);
+		arrowLeft = new TextureRegion(items, 640, 640, 128, 128);
 		
 		touchOn = new TextureRegion(items, 0, 768, 128, 128);
 		soundGameOff = new TextureRegion(items, 128, 769, 128, 128);

@@ -20,8 +20,8 @@ public class SplashScreen extends ScreenAdapter implements TextInputListener {
 		// User user = null;
 
 		this.game = game;
-		guiCam = new OrthographicCamera(900, 1024);
-		guiCam.position.set(900 / 2, 1024 / 2, 0);
+		guiCam = new OrthographicCamera(800, 1280);
+		guiCam.position.set(800 / 2, 1280 / 2, 0);
 
 		startTime = TimeUtils.millis();
 
@@ -46,7 +46,7 @@ public class SplashScreen extends ScreenAdapter implements TextInputListener {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.splashScreen, 0, 0, 900, 1024);
+		game.batcher.draw(Assets.splashScreen, 0, 0, 800, 1280);
 		game.batcher.end();
 	}
 
