@@ -240,17 +240,16 @@ public class WorldRenderer {
 		}
 	}
 
-	private void resetPaddleBallPosition(){
-		
-		world.paddle.position.x = World.WORLD_WIDTH/2;
-		world.paddle.position.y = World.WORLD_HEIGHT * 0.15f;
-		
-		world.ball.position.x = World.WORLD_WIDTH/2;
-	    world.ball.position.y =	world.paddle.position.y + Paddle.PADDLE_HEIGHT/2 + Ball.BALL_HEIGHT/2;
-	    world.ball.accel.x = 0.0f;
-	    world.ball.accel.y = 0.0f;
+	private void resetPaddleBallPosition() {
 
-	    
+		world.paddle.position.x = World.WORLD_WIDTH / 2;
+		world.paddle.position.y = World.WORLD_HEIGHT * 0.15f;
+
+		world.ball.position.x = World.WORLD_WIDTH / 2;
+		world.ball.position.y = world.paddle.position.y + Paddle.PADDLE_HEIGHT / 2 + Ball.BALL_HEIGHT / 2;
+		world.ball.accel.x = 0.0f;
+		world.ball.accel.y = 0.0f;
+
 	}
 	
 }
