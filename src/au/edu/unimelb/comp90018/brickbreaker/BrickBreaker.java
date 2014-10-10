@@ -10,9 +10,11 @@ import au.edu.unimelb.comp90018.brickbreaker.framework.network.LevelDownloader;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Assets;
 import au.edu.unimelb.comp90018.brickbreaker.framework.util.Settings;
 import au.edu.unimelb.comp90018.brickbreaker.screens.MenuScreen;
+import au.edu.unimelb.comp90018.brickbreaker.screens.MessageScreen;
 import au.edu.unimelb.comp90018.brickbreaker.screens.SplashScreen;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +34,8 @@ public class BrickBreaker extends Game {
 	public SpriteBatch batcher;
 	public Rectangle viewport;
 	public int orientation;
+	public boolean error;
+	public String errorMsg;
 
 	@Override
 	public void create() {
@@ -128,7 +132,7 @@ public class BrickBreaker extends Game {
 		@Override
 		protected void onPostExecute(Void result) {
 			// initialize the View
-			setScreen(new MenuScreen(BrickBreaker.this));
+			//setScreen(new MenuScreen(BrickBreaker.this));
 			// setContentView(R.layout.main);
 		}
 
@@ -163,7 +167,13 @@ public class BrickBreaker extends Game {
 			}
 
 			if (error){
-				//Hande error here
+				Gdx.app.log("Hay error", "ERror");
+				setScreen(new MessageScreen(BrickBreaker.this,errorMsg,new MenuScreen(BrickBreaker.this)));
+				BrickBreaker.this.render();
+				errorMsg = "Error";				
+			}
+			else{
+				setScreen(new MenuScreen(BrickBreaker.this));
 			}
 		}
 	}
