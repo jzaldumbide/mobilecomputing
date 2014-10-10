@@ -435,7 +435,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			if (playAgainGameOver.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				// TODO: We should restart World here something like this:
-				world = new World(worldListener, 1);
+				world = new World(worldListener, world.level);
 				renderer = new WorldRenderer(game.batcher, world);
 				world.score = 0;
 				state = GAME_RUNNING;
