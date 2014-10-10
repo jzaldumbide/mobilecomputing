@@ -12,11 +12,5 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new BrickBreaker(), config);
-		//initialize(new TextureDemo(), config);
-
 	}
-	
-	
 }
-
-

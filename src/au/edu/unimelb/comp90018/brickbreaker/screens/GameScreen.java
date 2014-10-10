@@ -251,9 +251,6 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		case GAME_PAUSED:
 			updatePaused();
 			break;
-//		case GAME_LIFE_LOST:
-//			updateLifeLost();
-//			break;
 		case GAME_LEVEL_END:
 			updateLevelEnd();
 			break;
@@ -399,12 +396,6 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
-//	private void updateLifeLost() {
-//		if (Gdx.input.justTouched()) {
-//			state = GAME_LIFE_LOST;
-//		}
-//	}
-
 	private void updateLevelEnd() {
 
 		if (Gdx.input.justTouched()) {
@@ -438,6 +429,7 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 				world = new World(worldListener, world.level);
 				renderer = new WorldRenderer(game.batcher, world);
 				world.score = 0;
+				world.resetPaddleBallPosition();
 				state = GAME_RUNNING;
 				return;
 			}

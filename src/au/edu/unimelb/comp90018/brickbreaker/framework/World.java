@@ -124,6 +124,7 @@ public class World {
 		updateRanking(this.totalScore);
 
 		this.score = 0;
+		resetPaddleBallPosition();
 		this.state = WORLD_STATE_RUNNING;
 	}
 
@@ -271,6 +272,7 @@ public class World {
 				lives.remove(len); //life lost
 				score --; //reduce 1 point in score
 				this.totalScore--;
+				resetPaddleBallPosition();
 				updateRanking(this.totalScore);
 				this.state = WORLD_STATE_GAME_LOST_LIFE;
 			}else{
@@ -379,6 +381,19 @@ public class World {
 				break;
 			}
 		}
+	}
+	
+	public void resetPaddleBallPosition(){
+		paddle.position.x = World.WORLD_WIDTH/2;
+		paddle.position.y = World.WORLD_HEIGHT * 0.15f;
+		
+		ball.position.x = World.WORLD_WIDTH/2;
+	    ball.position.y =	paddle.position.y + Paddle.PADDLE_HEIGHT/2 + Ball.BALL_HEIGHT/2;
+	    
+	    if (this.state == WORLD_STATE_GAME_LOST_LIFE){
+	    	ball.velocity.x = WORLD_WIDTH * 0.4f;
+	    	ball.velocity.y = WORLD_HEIGHT * 0.4f;
+	    }
 	}
 }
 
