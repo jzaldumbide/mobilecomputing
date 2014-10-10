@@ -63,7 +63,7 @@ public class MessageScreen extends ScreenAdapter {
 		
 
 		game.batcher.draw(Assets.errorMessage, 0, 0, 800, 1280);
-		//Assets.font.draw(game.batcher, message, 50, 50);
+		Assets.font.draw(game.batcher, message, 50, 50);
 		game.batcher.end();
 	}
 	
