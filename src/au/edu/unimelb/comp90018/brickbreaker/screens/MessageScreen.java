@@ -27,8 +27,8 @@ public class MessageScreen extends ScreenAdapter {
 		Gdx.app.log("Called","YES");
 		this.game = game;
 		this.nextScreen = nextScreen;
-		guiCam = new OrthographicCamera(800, 1280);
-		guiCam.position.set(800 / 2, 1280 / 2, 0);	
+		guiCam = new OrthographicCamera(320, 480);
+		guiCam.position.set(320 / 2, 480 / 2, 0);	
 		this.message = message; 
 	}
 	public void update() {
@@ -54,16 +54,16 @@ public class MessageScreen extends ScreenAdapter {
 
 		guiCam.update();
 
-		Assets.font.setScale(0.7f, 0.7f);
+		Assets.font.setScale(0.6f, 0.6f);
 		Assets.font.setColor(new Color(Color.WHITE));
 
 		game.batcher.setProjectionMatrix(guiCam.combined);
-		game.batcher.disableBlending();
+		game.batcher.enableBlending();
 		game.batcher.begin();
 		
 
-		game.batcher.draw(Assets.errorMessage, 0, 0, 800, 1280);
-		Assets.font.draw(game.batcher, message, 50, 50);
+		game.batcher.draw(Assets.errorMessage, 0, 0, 320, 480);
+		Assets.font.draw(game.batcher, message, 120, 200);
 		game.batcher.end();
 	}
 	

@@ -168,7 +168,7 @@ public class BrickBreaker extends Game {
 
 			if (error){
 				Gdx.app.log("Hay error", "ERror");
-				errorMsg = "We've noticed you dont have network access. Brickbreaker will work better with an Internet connection";				
+				errorMsg = "No network!";				
 				setScreen(new MessageScreen(BrickBreaker.this,errorMsg,new MenuScreen(BrickBreaker.this)));
 				BrickBreaker.this.render();
 				
