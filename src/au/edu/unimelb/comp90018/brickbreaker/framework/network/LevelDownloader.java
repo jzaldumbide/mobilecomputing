@@ -40,8 +40,8 @@ public class LevelDownloader {
 	/**
 	 * String with the URI prefix where the levels are allocated
 	 */
-//	private static String URIPREFIX = "http://10.9.144.124/";
-	private static String URIPREFIX = "http://anchavesb.netne.net/";
+	private static String URIPREFIX = "http://192.168.2.100/";
+	//private static String URIPREFIX = "http://anchavesb.netne.net/";
 	/**
 	 * Default class constructor
 	 */
