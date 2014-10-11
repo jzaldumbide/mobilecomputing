@@ -74,11 +74,8 @@ Android (min vers. 8)
         │   │   ├── default_background.png
         │   │   ├── screen_menu.png
         │   │   └── screen_splash.png
-        │   └── win.png
-        ├── buttons
-        │   └── Thumbs.db
+        │   └── win.png      
         ├── fonts
-        │   ├── Thumbs.db
         │   └── font.ttf
         ├── helpscreens
         │   ├── help1.png
