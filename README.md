@@ -109,5 +109,5 @@ Android (min vers. 8)
         ├── brickbreaker_level2.xml 			:
         ├── brickbreaker_level3.xml 			:
         ├── brickbreaker_level4.xml 			:
-        ├── brickbreaker_test.xml 				:
-        └── highScore.php 						:
+        ├── brickbreaker_test.xml 			:
+        └── highScore.php 					:
