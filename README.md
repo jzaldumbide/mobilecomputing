@@ -43,21 +43,21 @@ Android (min vers. 8)
             │   │   └── LevelDownloader.java 	:
             │   └── util
             │       ├── Assets.java 			:
-            │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level
+            │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level.
             │       ├── Settings.java 			:
             │       └── TextureRegionSet.java 	:
             └── screens
-                ├── CreateUserScreen.java 		: 		
-                ├── GameScreen.java 			:
-                ├── HelpScreen.java 			:
-                ├── LevelScreen.java 			:
-                ├── MenuScreen.java 			:
-                ├── MessageScreen.java 			:
-                ├── MultiplayerScreen.java 		: It lets select from server or client (currently disabled).
-                ├── OptionScreen.java 			: This screen let us activate/unactivate sound, music and accelerometer.
+                ├── CreateUserScreen.java 	: 	It let us create the user with an input (actually deprecated) 
+                ├── GameScreen.java 			: It loads the main game
+                ├── HelpScreen.java 			: It show us the how-to-play guide
+                ├── LevelScreen.java 			: It let us select the levels unlocked
+                ├── MenuScreen.java 			: It show us the main menu option
+                ├── MessageScreen.java 		: Message Screen to display errors
+                ├── MultiplayerScreen.java 	: It lets select from server or client (currently disabled).
+                ├── OptionScreen.java 		: This screen let us activate/unactivate sound, music and accelerometer.
                 ├── ScoreScreen.java 			: It shows the top ten players, this top ten palyers are loaded from the remote server.
-                ├── SelectScreen.java 			:  
-                └── SplashScreen.java 			: This is the first screen that appears, downdload level runs on background.
+                ├── SelectScreen.java 		:  It let us choose multiplayer/singleplayer (actually deprecated) 
+                └── SplashScreen.java 		: This is the first screen that appears, downdload level runs on background.
 
 ### Other files used:
 
