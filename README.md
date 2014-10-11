@@ -1,6 +1,7 @@
 COMP90018 Mobile Computing Systems Programming
 ===============
 Mobile Computing Game: BrickBreaker
+
 Developers:
 1 Andres Chaves (Networking - Scoring - Levels XML )
 2 Oscar Correa (Framework Architecture - Game play & physics)
