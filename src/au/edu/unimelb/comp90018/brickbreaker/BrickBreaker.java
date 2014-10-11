@@ -18,8 +18,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 /**
  * BrickBreakerGame class that extends Game, which implements
@@ -107,13 +105,7 @@ public class BrickBreaker extends Game {
 			try {
 				// Get the current thread's token
 				synchronized (this) {
-					// Wait 850 milliseconds
-					// this.wait(10000);
-					// Increment the counter
-					// This value is going to be passed to the
-					// onProgressUpdate() method.
 					downloadLevels();
-					// publishProgress(counter*25);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -124,16 +116,13 @@ public class BrickBreaker extends Game {
 		// Update the progress
 		@Override
 		protected void onProgressUpdate(Integer... values) {
-			// set the current progress of the progress dialog
-			// progressDialog.setProgress(values[0]);
+
 		}
 
 		// after executing the code in the thread
 		@Override
 		protected void onPostExecute(Void result) {
-			// initialize the View
-			//setScreen(new MenuScreen(BrickBreaker.this));
-			// setContentView(R.layout.main);
+
 		}
 
 		/**
