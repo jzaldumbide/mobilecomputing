@@ -108,6 +108,7 @@ public class Assets {
 	/* TextureRegionSets -> Something similar to Animations */
 	public static TextureRegionSet brickTypeI;
 	public static TextureRegionSet brickTypeII;
+	public static TextureRegionSet brickTypeIII;
 	
 	/* BitmapFonts */
 	public static BitmapFont font;
@@ -253,6 +254,7 @@ public class Assets {
 		/* TextureRegionSets */
 		brickTypeI = new TextureRegionSet(smallOrangeBrick);
 		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick);
+		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick, smallGreenBrick, smallPurpleBrick);
 
 		// Animation example
 		// brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64,
