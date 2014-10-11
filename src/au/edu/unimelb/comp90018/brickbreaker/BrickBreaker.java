@@ -131,7 +131,7 @@ public class BrickBreaker extends Game {
 		private void downloadLevels() {
 
 			/* Download all the levels and the highscores */
-			int maxLevels = 3;
+			int maxLevels = 4;
 			LevelDownloader ld = new LevelDownloader();
 			boolean error = false;
 			try {
