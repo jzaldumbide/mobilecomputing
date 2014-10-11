@@ -17,6 +17,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -57,7 +60,9 @@ public class LevelDownloader {
 	 * @throws IOException
 	 */
 	public String makeHttpRequest (String levelName) throws ClientProtocolException, IOException{
-	    HttpClient httpclient = new DefaultHttpClient();
+		HttpParams httpParams = new BasicHttpParams();
+		HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
+	    HttpClient httpclient = new DefaultHttpClient(httpParams);
 	    HttpResponse response = httpclient.execute(new HttpGet(URIPREFIX+levelName));
 	    StatusLine statusLine = response.getStatusLine();
 	    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
