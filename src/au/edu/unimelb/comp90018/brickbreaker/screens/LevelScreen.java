@@ -15,6 +15,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Level Screen load the unlocked levels of a Player  
+ * @author Diego
+ *
+ */
 public class LevelScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;
@@ -55,7 +60,6 @@ public class LevelScreen extends ScreenAdapter {
 		levelUnlockedButton_7 = new Button(Settings.TARGET_WIDTH/2 - 32 - 64,Settings.TARGET_HEIGHT/2 -32 - 64,ButtonSize.XLARGE_SQUARE);
 		levelUnlockedButton_8 = new Button(Settings.TARGET_WIDTH/2,Settings.TARGET_HEIGHT/2 - 32 - 64,ButtonSize.XLARGE_SQUARE);
 		levelUnlockedButton_9 = new Button(Settings.TARGET_WIDTH/2 + 32 + 64,Settings.TARGET_HEIGHT/2 - 32 - 64,ButtonSize.XLARGE_SQUARE);
-
 		
 		btnBack = new Button(20, 20, ButtonSize.MEDIUM_SQUARE);
 	}
@@ -74,6 +78,7 @@ public class LevelScreen extends ScreenAdapter {
 					game.viewport.height
 					);
 
+			//Start verification of which levels are unlocked:
 			if (levelUnlockedButton_1.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				selectedLevel = 1;
@@ -160,6 +165,7 @@ public class LevelScreen extends ScreenAdapter {
 	
 	private void renderLevelButtons(){
 		
+		//Draw only unlocked games:
 		if (Player.isLevelUnlocked(1)){
 			game.batcher.draw(Assets.levelLocked_1,levelLockedButton_1.position.x-ButtonSize.XLARGE_SQUARE.getButtonWidth()/2,levelLockedButton_1.position.y-ButtonSize.XLARGE_SQUARE.getButtonHeight()/2,ButtonSize.XLARGE_SQUARE.getButtonWidth(),ButtonSize.XLARGE_SQUARE.getButtonHeight());
 		}else{
@@ -230,6 +236,6 @@ public class LevelScreen extends ScreenAdapter {
 
 	@Override
 	public void pause() {
-		// Settings.save();
+
 	}
 }
