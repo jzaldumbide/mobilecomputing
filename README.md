@@ -1,8 +1,8 @@
-COMP90018 Mobile Computing Systems Programming
+### COMP90018 Mobile Computing Systems Programming
 
 Mobile Computing Game: BrickBreaker
 
-Developers:
+### Developers:
 
 * Andres Chaves (Networking - Scoring - Levels XML )
 
@@ -59,3 +59,47 @@ Android (min vers. 8)
                 ├── SelectScreen.java
                 └── SplashScreen.java
 
+### Other files used:
+
+        ├── backgrounds
+        │   ├── background-basic.png
+        │   ├── background.png
+        │   ├── default_notification.png
+        │   ├── errorBackground.png
+        │   ├── gameover.png
+        │   ├── infoBackground.png
+        │   ├── pausemenu.png
+        │   ├── ready.png
+        │   ├── screens
+        │   │   ├── default_background.png
+        │   │   ├── screen_menu.png
+        │   │   └── screen_splash.png
+        │   └── win.png
+        ├── buttons
+        │   └── Thumbs.db
+        ├── fonts
+        │   ├── Thumbs.db
+        │   └── font.ttf
+        ├── helpscreens
+        │   ├── help1.png
+        │   ├── help2.png
+        │   ├── help3.png
+        │   ├── help4.png
+        │   ├── help5.png
+        │   └── helpbackground.png
+        ├── music
+        │   └── music.mp3
+        ├── sound
+        │   ├── click.wav
+        │   ├── coin.wav
+        │   ├── gameOverSound.ogg
+        │   ├── getLifeBonus.ogg
+        │   ├── lifeLost.ogg
+        │   ├── toggle.ogg
+        │   ├── touchBrick.ogg
+        │   ├── touchHardBrick.wav
+        │   ├── touchPaddle.wav
+        │   ├── touchWall.ogg
+        │   └── winnerSound.wav
+        └── textures
+            └── items.png
