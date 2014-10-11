@@ -27,6 +27,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeIII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
 
@@ -164,14 +165,13 @@ public class LevelDownloader {
             	   //int w = Integer.valueOf(xpp.getAttributeValue("", "w"));
             	   String type = xpp.getAttributeValue("", "t");
             	   
-            	   if (type.equals("typeI")){
-            		  //Gdx.app.log("Adding Brick Type I", "Adding Brick Type I");
-            	      gameLevel.addBrick(new BrickTypeI(x, y));
-            	   }
-            	   else{
-            		   //Gdx.app.log("Adding Brick Type II", "Adding Brick Type I");
-            		   gameLevel.addBrick(new BrickTypeII(x , y));
-            	   }
+					if (type.equals("typeI")) {
+						gameLevel.addBrick(new BrickTypeI(x, y));
+					} else if (type.equals("typeII")) {
+						gameLevel.addBrick(new BrickTypeII(x, y));
+					} else {
+						gameLevel.addBrick(new BrickTypeIII(x, y));
+					}
                }
                else{
             	   if (tagName.equals("Paddle")){
