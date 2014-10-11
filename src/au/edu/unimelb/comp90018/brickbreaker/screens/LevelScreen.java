@@ -89,6 +89,36 @@ public class LevelScreen extends ScreenAdapter {
 				selectedLevel = 3;
 				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
 			}
+			if (levelUnlockedButton_4.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 4;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelUnlockedButton_5.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 5;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelUnlockedButton_6.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 6;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelUnlockedButton_7.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 7;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelUnlockedButton_8.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 8;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
+			if (levelUnlockedButton_9.bounds.contains(touchPoint.x, touchPoint.y)) {
+				Assets.playSound(Assets.clickSound);
+				selectedLevel = 9;
+				game.setScreen(new GameScreen(game, GameMode.Server, selectedLevel));
+			}
 			if (btnBack.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MenuScreen(game));
