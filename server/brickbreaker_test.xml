@@ -1,0 +1,1 @@
+<GameLevel><Bricks><Brick x="5" y="5" w="8" t="none"/></Bricks><Paddle speed="1" x="10" y="5" w="10" /><Ball radius="1" speed="1" /></GameLevel>
