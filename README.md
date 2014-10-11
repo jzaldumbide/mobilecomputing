@@ -43,7 +43,7 @@ Android (min vers. 8)
             │   │   └── LevelDownloader.java 	:
             │   └── util
             │       ├── Assets.java 			:
-            │       ├── Player.java 			: It is bla bla bla
+            │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level
             │       ├── Settings.java 			:
             │       └── TextureRegionSet.java 	:
             └── screens
@@ -53,11 +53,11 @@ Android (min vers. 8)
                 ├── LevelScreen.java 			:
                 ├── MenuScreen.java 			:
                 ├── MessageScreen.java 			:
-                ├── MultiplayerScreen.java 		:
-                ├── OptionScreen.java 			:
-                ├── ScoreScreen.java 			:
-                ├── SelectScreen.java 			:
-                └── SplashScreen.java 			:
+                ├── MultiplayerScreen.java 		: It lets select from server or client (currently disabled).
+                ├── OptionScreen.java 			: This screen let us activate/unactivate sound, music and accelerometer.
+                ├── ScoreScreen.java 			: It shows the top ten players, this top ten palyers are loaded from the remote server.
+                ├── SelectScreen.java 			:  
+                └── SplashScreen.java 			: This is the first screen that appears, downdload level runs on background.
 
 ### Other files used:
 
