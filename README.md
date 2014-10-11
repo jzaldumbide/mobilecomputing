@@ -103,3 +103,14 @@ Android (min vers. 8)
         │   └── winnerSound.wav
         └── textures
             └── items.png
+
+
+###Server files:
+        .
+        ├── brickbreaker.dmp
+        ├── brickbreaker_level1.xml
+        ├── brickbreaker_level2.xml
+        ├── brickbreaker_level3.xml
+        ├── brickbreaker_level4.xml
+        ├── brickbreaker_test.xml
+        └── highScore.php
