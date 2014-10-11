@@ -11,3 +11,15 @@ Developers:
 4 Juan Zaldumbide (Screen Transitions - Player data & configuration)
 
 Framework: Android (min vers. 8)
+
+Folders
+src    : Source Files
+ 
+
+server : Server side files
+server/brickbreaker_level1.xml : GameLevel 1
+server/brickbreaker_level2.xml : GameLevel 2
+server/brickbreaker_level3.xml : GameLevel 3
+server/brickbreaker.dmp : Database dump
+server/highScore.php : High Score PHP Managing
+
