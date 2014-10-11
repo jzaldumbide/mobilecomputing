@@ -12,3 +12,8 @@ Developers:
 
 * Juan Zaldumbide (Screen Transitions - Player data & configuration)
 
+### Framework: 
+Android (min vers. 8)
+
+### Folders structure:
+
