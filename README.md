@@ -16,7 +16,7 @@ Developers:
 Android (min vers. 8)
 
 ### Folder structure:
-
+        
 └── brickbreaker
     ├── AndroidLauncher.java
     ├── BrickBreaker.java
