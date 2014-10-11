@@ -17,8 +17,8 @@ Android (min vers. 8)
 
 ### Folder structure:
 
-        └── brickbreaker
-             ├── AndroidLauncher.java
+└── brickbreaker
+    ├── AndroidLauncher.java
     ├── BrickBreaker.java
     ├── actors
     │   ├── Ball.java
