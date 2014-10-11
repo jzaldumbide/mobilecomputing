@@ -1,62 +1,56 @@
 COMP90018 Mobile Computing Systems Programming
 ===============
-
 Mobile Computing Game: BrickBreaker
-
 Developers:
-
 1 Andres Chaves (Networking - Scoring - Levels XML )
 2 Oscar Correa (Framework Architecture - Game play & physics)
 3 Diego Montufar (Graphic Design - Special Effects - Actions)
 4 Juan Zaldumbide (Screen Transitions - Player data & configuration)
-
 Framework: Android (min vers. 8)
-
 Folders
-server					: Server side files
-server/brickbreaker_level1.xml		: GameLevel 1
-server/brickbreaker_level2.xml		: GameLevel 2
-server/brickbreaker_level3.xml		: GameLevel 3
-server/brickbreaker.dmp			: Database dump
-server/highScore.php			: High Score PHP Managing
-
 src    : Source Files
+ 
+server : Server side files
+server/brickbreaker_level1.xml : GameLevel 1
+server/brickbreaker_level2.xml : GameLevel 2
+server/brickbreaker_level3.xml : GameLevel 3
+server/brickbreaker.dmp : Database dump
+server/highScore.php : High Score PHP Managing
 
-â”œâ”€â”€ AndroidLauncher.java
-â”œâ”€â”€ BrickBreaker.java
-â”œâ”€â”€ actors
-â”‚Â Â  â”œâ”€â”€ Ball.java
-â”‚Â Â  â”œâ”€â”€ Bonus.java
-â”‚Â Â  â”œâ”€â”€ Brick.java
-â”‚Â Â  â”œâ”€â”€ BrickAdapter.java
-â”‚Â Â  â”œâ”€â”€ BrickTypeI.java
-â”‚Â Â  â”œâ”€â”€ BrickTypeII.java
-â”‚Â Â  â”œâ”€â”€ Button.java
-â”‚Â Â  â”œâ”€â”€ GameLevel.java
-â”‚Â Â  â””â”€â”€ Paddle.java
-â”œâ”€â”€ framework
-â”‚Â Â  â”œâ”€â”€ DynamicGameObject.java
-â”‚Â Â  â”œâ”€â”€ GameObject.java
-â”‚Â Â  â”œâ”€â”€ Rectangle2.java
-â”‚Â Â  â”œâ”€â”€ World.java
-â”‚Â Â  â”œâ”€â”€ WorldListener.java
-â”‚Â Â  â”œâ”€â”€ WorldRenderer.java
-â”‚Â Â  â”œâ”€â”€ network
-â”‚Â Â  â”‚Â Â  â””â”€â”€ LevelDownloader.java	: Network Handling
-â”‚Â Â  â””â”€â”€ util
-â”‚Â Â      â”œâ”€â”€ Assets.java
-â”‚Â Â      â”œâ”€â”€ Player.java
-â”‚Â Â      â”œâ”€â”€ Settings.java
-â”‚Â Â      â””â”€â”€ TextureRegionSet.java
-â””â”€â”€ screens
-â”œâ”€â”€ CreateUserScreen.java
-â”œâ”€â”€ GameScreen.java
-â”œâ”€â”€ HelpScreen.java
-â”œâ”€â”€ LevelScreen.java
-â”œâ”€â”€ MenuScreen.java
-â”œâ”€â”€ MessageScreen.java
-â”œâ”€â”€ MultiplayerScreen.java
-â”œâ”€â”€ OptionScreen.java
-â”œâ”€â”€ ScoreScreen.java
-â”œâ”€â”€ SelectScreen.java
-â””â”€â”€ SplashScreen.java
+ÃÄÄ AndroidLauncher.java
+ÃÄÄ BrickBreaker.java
+ÃÄÄ actors
+³ÿÿ ÃÄÄ Ball.java
+³ÿÿ ÃÄÄ Bonus.java
+³ÿÿ ÃÄÄ Brick.java
+³ÿÿ ÃÄÄ BrickAdapter.java
+³ÿÿ ÃÄÄ BrickTypeI.java
+³ÿÿ ÃÄÄ BrickTypeII.java
+³ÿÿ ÃÄÄ Button.java
+³ÿÿ ÃÄÄ GameLevel.java
+³ÿÿ ÀÄÄ Paddle.java
+ÃÄÄ framework
+³ÿÿ ÃÄÄ DynamicGameObject.java
+³ÿÿ ÃÄÄ GameObject.java
+³ÿÿ ÃÄÄ Rectangle2.java
+³ÿÿ ÃÄÄ World.java
+³ÿÿ ÃÄÄ WorldListener.java
+³ÿÿ ÃÄÄ WorldRenderer.java
+³ÿÿ ÃÄÄ network
+³ÿÿ ³ÿÿ ÀÄÄ LevelDownloader.java
+³ÿÿ ÀÄÄ util
+³ÿÿ     ÃÄÄ Assets.java
+³ÿÿ     ÃÄÄ Player.java
+³ÿÿ     ÃÄÄ Settings.java
+³ÿÿ     ÀÄÄ TextureRegionSet.java
+ÀÄÄ screens
+ÃÄÄ CreateUserScreen.java
+ÃÄÄ GameScreen.java
+ÃÄÄ LevelScreen.java
+ÃÄÄ MenuScreen.java
+ÃÄÄ MessageScreen.java
+ÃÄÄ MultiplayerScreen.java
+ÃÄÄ OptionScreen.java
+ÃÄÄ ScoreScreen.java
+ÃÄÄ SelectScreen.java
+ÀÄÄ SplashScreen.java
