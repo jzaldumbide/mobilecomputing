@@ -20,32 +20,32 @@ Android (min vers. 8)
                 
         └── brickbreaker
             ├── AndroidLauncher.java 			:
-            ├── BrickBreaker.java 				:
+            ├── BrickBreaker.java 			:
             ├── actors
-            │   ├── Ball.java 					:
-            │   ├── Bonus.java 					:
-            │   ├── Brick.java 					:
-            │   ├── BrickAdapter.java 			:
+            │   ├── Ball.java 				:
+            │   ├── Bonus.java 				:
+            │   ├── Brick.java 				:
+            │   ├── BrickAdapter.java 		:
             │   ├── BrickTypeI.java 			:
             │   ├── BrickTypeII.java 			:
-            │   ├── BrickTypeIII.java 			:
+            │   ├── BrickTypeIII.java 		:
             │   ├── Button.java 				:
-            │   ├── GameLevel.java 				:
+            │   ├── GameLevel.java 			:
             │   └── Paddle.java 				:
             ├── framework
-            │   ├── DynamicGameObject.java 		:
+            │   ├── DynamicGameObject.java 	:
             │   ├── GameObject.java 			:
             │   ├── Rectangle2.java 			:
-            │   ├── World.java 					:
-            │   ├── WorldListener.java 			:
-            │   ├── WorldRenderer.java 			:
+            │   ├── World.java 				:
+            │   ├── WorldListener.java 		:
+            │   ├── WorldRenderer.java 		:
             │   ├── network
             │   │   └── LevelDownloader.java 	:
             │   └── util
             │       ├── Assets.java 			:
             │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level.
-            │       ├── Settings.java 			:
-            │       └── TextureRegionSet.java 	:
+            │       ├── Settings.java 		:
+            │       └── TextureRegionSet.java :
             └── screens
                 ├── CreateUserScreen.java 	: 	It let us create the user with an input (actually deprecated) 
                 ├── GameScreen.java 			: It loads the main game
@@ -63,43 +63,43 @@ Android (min vers. 8)
 
         ├── backgrounds
         │   ├── background-basic.png 			:
-        │   ├── background.png 					:
+        │   ├── background.png 				:
         │   ├── default_notification.png 		:
         │   ├── errorBackground.png 			:
         │   ├── gameover.png 					:
-        │   ├── infoBackground.png 				:
-        │   ├── pausemenu.png 					:
-        │   ├── ready.png 						:
+        │   ├── infoBackground.png 			:
+        │   ├── pausemenu.png 				:
+        │   ├── ready.png 					:
         │   ├── screens
-        │   │   ├── default_background.png 		:
+        │   │   ├── default_background.png 	:
         │   │   ├── screen_menu.png 			:
-        │   │   └── screen_splash.png 			:
+        │   │   └── screen_splash.png 		:
         │   └── win.png 						:      
         ├── fonts
         │   └── font.ttf 						:
         ├── helpscreens
-        │   ├── help1.png 						:
-        │   ├── help2.png 						:
-        │   ├── help3.png 						:
-        │   ├── help4.png 						:
-        │   ├── help5.png 						:
-        │   └── helpbackground.png 				:
+        │   ├── help1.png 					:
+        │   ├── help2.png 					:
+        │   ├── help3.png 					:
+        │   ├── help4.png 					:
+        │   ├── help5.png 					:
+        │   └── helpbackground.png 			:
         ├── music
-        │   └── music.mp3 						:
+        │   └── music.mp3 					:
         ├── sound
-        │   ├── click.wav 						:
+        │   ├── click.wav 					:
         │   ├── coin.wav 						:
-        │   ├── gameOverSound.ogg 				:
+        │   ├── gameOverSound.ogg 			:
         │   ├── getLifeBonus.ogg 				:
         │   ├── lifeLost.ogg 					:
-        │   ├── toggle.ogg 						:
-        │   ├── touchBrick.ogg 					:
-        │   ├── touchHardBrick.wav 				:
+        │   ├── toggle.ogg 					:
+        │   ├── touchBrick.ogg 				:
+        │   ├── touchHardBrick.wav 			:
         │   ├── touchPaddle.wav 				:
-        │   ├── touchWall.ogg 					:
+        │   ├── touchWall.ogg 				:
         │   └── winnerSound.wav 				:
         └── textures
-            └── items.png 						:
+            └── items.png 					:
 
 
 ###Server files:
