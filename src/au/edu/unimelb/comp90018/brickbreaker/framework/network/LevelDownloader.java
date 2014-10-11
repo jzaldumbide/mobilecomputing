@@ -75,9 +75,9 @@ public class LevelDownloader {
 	    }
 	}
 	/**
-	 * Downloads the game and generate the proper model classes that represents the XML
+	 * Downloads an xml level provided the name
 	 * @param levelName Name of the desired level
-	 * @return A model with all the parameters of the level
+	 * @return A string with the xml
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 * @throws XmlPullParserException
@@ -86,26 +86,60 @@ public class LevelDownloader {
 		String response = makeHttpRequest(levelName);
 		return response;
 	}
+	/**
+	 * Download High Scores and return the resultant XML
+	 * @return XML result with High Scores
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
 	public String downloadHighScores() throws ClientProtocolException, IOException{
 		String response = makeHttpRequest("highScore.php");
 		return response;
 	}
+	/**
+	 * Load a text file from the file system
+	 * @param fileName
+	 * @return A string with the file content
+	 */
 	private String loadFile (String fileName){
 		FileHandle filehandle = Gdx.files.external(fileName);
 		return filehandle.readString();
 	}
+	/**
+	 * Persists a text file in the file system
+	 * @param fileName File name
+	 * @param value Text to write
+	 */
 	private void persistFile (String fileName, String value){
 		FileHandle filehandle = Gdx.files.external(fileName);
 		filehandle.writeString(value, false);		
 	}
+	/**
+	 * Persist a level xml in the file system
+	 * @param levelName Name of the level
+	 * @param xml Xml with the file system
+	 */
 	public void persistGame (String levelName, String xml){
 		persistFile(levelName, xml);
 	}
 
+	/**
+	 * Persist high scores in the file system
+	 * @param highScores XML with the high scores
+	 */
 	public void persistScores(String highScores) {
 		persistFile("highScores.xml", highScores);
 	}
 
+	/**
+	 * Load a level from the file system and generate a properly constructed GameLevel
+	 * @param levelName Level Name
+	 * @param worldWidth World Width
+	 * @param worldHeight World Height
+	 * @return A GameLevel constructed
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	public GameLevel loadLevel(String levelName, float worldWidth, float worldHeight) throws XmlPullParserException, IOException {
 		String levelXml = loadFile(levelName);
 		GameLevel gameLevel = new GameLevel();
@@ -149,6 +183,14 @@ public class LevelDownloader {
 
 		return gameLevel;
 	}
+	/**
+	 * Load High Scores from the file system
+	 * @return A string with high scores formatted like this:
+	 *              1. Player: Score
+	 *              2. Player: Score
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	public String loadHighScores() throws XmlPullParserException, IOException {
 		String highScores = loadFile("highScores.xml");
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -178,6 +220,12 @@ public class LevelDownloader {
         }
 		return sb.toString();
 	}
+	/**
+	 * Load High Scores from the file system and return them as a List of Integers
+	 * @return A list of integers with the top 10 scores
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	public List<Integer> loadHighScoresAsList() throws XmlPullParserException, IOException {
 		String highScores = loadFile("highScores.xml");
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -201,6 +249,13 @@ public class LevelDownloader {
 		return scores;
 	}
 
+	/**
+	 * Submits a new high score to the server
+	 * @param name Player's name
+	 * @param score Player's score
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
 	public void submitHighScore(String name, int score) throws ClientProtocolException, IOException {
 		String url = "highScore.php?action=add&name="+URLEncoder.encode(name, "utf-8")+"&score="+score;
 		makeHttpRequest(url);		

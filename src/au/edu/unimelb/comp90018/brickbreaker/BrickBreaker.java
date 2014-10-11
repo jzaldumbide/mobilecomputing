@@ -136,6 +136,9 @@ public class BrickBreaker extends Game {
 			// setContentView(R.layout.main);
 		}
 
+		/**
+		 * Attempts to download levels and highscores at the start
+		 */
 		private void downloadLevels() {
 
 			/* Download all the levels and the highscores */
@@ -164,16 +167,20 @@ public class BrickBreaker extends Game {
 				// TODO Auto-generated catch block
 				error = true;
 				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				error = true;
+				e.printStackTrace();
 			}
 
-			if (error){
+			if (error){ // There was some kind of error downloading levels
 				Gdx.app.log("Hay error", "ERror");
 				errorMsg = "No network!";				
 				setScreen(new MessageScreen(BrickBreaker.this,errorMsg,new MenuScreen(BrickBreaker.this)));
 				BrickBreaker.this.render();
 				
 			}
-			else{
+			else{ //Everything ok, we can set up the menu
 				setScreen(new MenuScreen(BrickBreaker.this));
 			}
 		}

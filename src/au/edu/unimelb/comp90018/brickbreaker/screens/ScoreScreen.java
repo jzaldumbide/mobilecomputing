@@ -20,15 +20,39 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+/**
+ * Screen to display high scores
+ *
+ */
 public class ScoreScreen extends ScreenAdapter {
+	/**
+	 * Brick Breaker Game
+	 */
 	BrickBreaker game;
 
+	/**
+	 * Otrhographic Camera
+	 */
 	OrthographicCamera guiCam;
+	/**
+	 * Vector to store the touch point for the back button
+	 */
 	Vector3 touchPoint;
 
+	/**
+	 * Message to be rendered
+	 */
 	String scoreString;
+	
+	/**
+	 *  Back Button
+	 */
 	private Button btnBack;
 
+	/**
+	 * Screen Constructor
+	 * @param game BrickBreaker Game
+	 */
 	public ScoreScreen(BrickBreaker game) {
 
 		this.game = game;
@@ -70,6 +94,9 @@ public class ScoreScreen extends ScreenAdapter {
 		
 	}
 
+	/**
+	 * Check whether the back button has been touched or not. If touched render the menu again
+	 */
 	public void update() {
 		
 		if (Gdx.input.justTouched()) {
@@ -94,6 +121,9 @@ public class ScoreScreen extends ScreenAdapter {
 		}
 	}
 
+	/**
+	 * Draw the screen with the high scores
+	 */
 	public void draw() {
 		
 		GL20 gl = Gdx.gl;
@@ -134,17 +164,26 @@ public class ScoreScreen extends ScreenAdapter {
 		game.batcher.end();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.ScreenAdapter#render(float)
+	 */
 	@Override
 	public void render(float delta) {
 		draw();
 		update();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.ScreenAdapter#hide()
+	 */
 	@Override
 	public void hide() {
 		super.dispose();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.badlogic.gdx.ScreenAdapter#show()
+	 */
 	@Override
 	public void show() {
 		super.show();
