@@ -4,3 +4,11 @@ Mobile Computing Game: BrickBreaker
 
 Developers:
 
+* Andres Chaves (Networking - Scoring - Levels XML )
+
+* Oscar Correa (Framework Architecture - Game play & physics)
+
+* Diego Montufar (Graphic Design - Special Effects - Actions)
+
+* Juan Zaldumbide (Screen Transitions - Player data & configuration)
+
