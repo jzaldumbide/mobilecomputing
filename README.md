@@ -43,7 +43,7 @@ Android (min vers. 8)
             │   │   └── LevelDownloader.java
             │   └── util
             │       ├── Assets.java
-            │       ├── Player.java 	:It is bla bla bla
+            │       ├── Player.java				:It is bla bla bla
             │       ├── Settings.java
             │       └── TextureRegionSet.java
             └── screens
