@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Extension of Rectangle class in order to control which side(s) of the object
+ * was(were) hit. This is particularly important for the collision between the
+ * ball and the brick as ball's direction depends deeply on its hit side.
+ * 
+ */
 public class Rectangle2 extends Rectangle {
 
 	private static final long serialVersionUID = 1954831445984396570L;

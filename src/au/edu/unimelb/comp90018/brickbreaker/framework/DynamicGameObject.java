@@ -1,12 +1,10 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework;
 
-
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Some Objects may have movement characteristics as velocity and accel.
- * 
- * @author Diego
+ * Some objects may have movement characteristics as velocity and acceleration,
+ * e.g. ball and paddle.
  * 
  */
 public class DynamicGameObject extends GameObject {
@@ -19,10 +17,4 @@ public class DynamicGameObject extends GameObject {
 		velocity = new Vector2();
 		accel = new Vector2();
 	}
-
-	// @Override
-	// public void dispose() {
-	//
-	// }
-
 }

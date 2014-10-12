@@ -1,13 +1,10 @@
 package au.edu.unimelb.comp90018.brickbreaker.framework;
 
-
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Every GameObject has associated position and bounds. Bounds helps to keep
  * track of collisions.
- * 
- * @author Diego
  * 
  */
 public class GameObject {
