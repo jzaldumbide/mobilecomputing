@@ -21,10 +21,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * BrickBreakerGame class that extends Game, which implements
- * ApplicationListener. It will be used as the "Main" libgdx class, the starting
- * point basically, in the core libgdx project.
- * 
- * @author Diego
+ * ApplicationListener. It will be used as the "Main" libGDX class, the starting
+ * point basically, in the core libGDX project.
  * 
  */
 public class BrickBreaker extends Game {
@@ -71,19 +69,14 @@ public class BrickBreaker extends Game {
 
 		float w = (float) Settings.TARGET_WIDTH * scale;
 		float h = (float) Settings.TARGET_HEIGHT * scale;
-		
+
 		viewport = new Rectangle(crop.x, crop.y, w, h);
-		
+
 		if (height > width)
 			orientation = 0;
 		else
 			orientation = 1;
 	}
-
-	// @Override
-	// public void dispose() {
-	// batcher.dispose();
-	// }
 
 	// To use the AsyncTask, it must be subclassed
 	private class LoadViewTask extends AsyncTask<Void, Integer, Void> {
@@ -137,10 +130,8 @@ public class BrickBreaker extends Game {
 			try {
 				for (int level = 1; level <= maxLevels; level++) {
 					String gameLevel;
-					gameLevel = ld.downloadGame("brickbreaker_level" + level
-							+ ".xml");
-					ld.persistGame("brickbreaker_level" + level + ".xml",
-							gameLevel);
+					gameLevel = ld.downloadGame("brickbreaker_level" + level + ".xml");
+					ld.persistGame("brickbreaker_level" + level + ".xml", gameLevel);
 				}
 				String highScores = ld.downloadHighScores();
 				ld.persistScores(highScores);
@@ -162,17 +153,15 @@ public class BrickBreaker extends Game {
 				e.printStackTrace();
 			}
 
-			if (error){ // There was some kind of error downloading levels
+			if (error) { // There was some kind of error downloading levels
 				Gdx.app.log("Hay error", "ERror");
-				errorMsg = "No network!";				
-				setScreen(new MessageScreen(BrickBreaker.this,errorMsg,new MenuScreen(BrickBreaker.this)));
+				errorMsg = "No network!";
+				setScreen(new MessageScreen(BrickBreaker.this, errorMsg, new MenuScreen(BrickBreaker.this)));
 				BrickBreaker.this.render();
-				
-			}
-			else{ //Everything ok, we can set up the menu
+
+			} else { // Everything ok, we can set up the menu
 				setScreen(new MenuScreen(BrickBreaker.this));
 			}
 		}
 	}
-
 }
