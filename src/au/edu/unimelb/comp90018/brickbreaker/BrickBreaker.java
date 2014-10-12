@@ -22,7 +22,10 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * BrickBreakerGame class that extends Game, which implements
  * ApplicationListener. It will be used as the "Main" libGDX class, the starting
- * point basically, in the core libGDX project.
+ * point basically, in the core libGDX project. Its VIEWPORT and BATCHER are
+ * used by the all screens. The Viewport is updated when the device's
+ * orientation is changed. The Batcher is created once since it is memory
+ * expensive.
  * 
  */
 public class BrickBreaker extends Game {
