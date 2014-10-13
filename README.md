@@ -30,7 +30,7 @@ Android (min vers. 8)
             │   ├── BrickTypeII.java 			: Double brick break
             │   ├── BrickTypeIII.java 			: Quadruple brick break
             │   ├── Button.java 				: Generic touch button
-            │   ├── GameLevel.java 				: 
+            │   ├── GameLevel.java 				: Represents a Level of the Game in terms of Paddle, Ball and Bricks
             │   └── Paddle.java 				: Object Paddle
             ├── framework
             │   ├── DynamicGameObject.java 		: Generic class for dynamic objects with accel
@@ -38,11 +38,11 @@ Android (min vers. 8)
             │   ├── Rectangle2.java 			: Implements object Bounds 
             │   ├── World.java 					: Implements 
             │   ├── WorldListener.java 			: Basic listeners while the game is running
-            │   ├── WorldRenderer.java 			: Renders testures on the screen every 6fps
+            │   ├── WorldRenderer.java 			: Renders textures on the screen every 6fps
             │   ├── network
-            │   │   └── LevelDownloader.java 	:
+            │   │   └── LevelDownloader.java 	: Manage access to the network, level and high score downlading and uploading and ile system reading. Manages also XML parsing.
             │   └── util
-            │       ├── Assets.java 			: This class handles all asstes like textures, sounds, animations and music.
+            │       ├── Assets.java 			: This class handles all assests like textures, sounds, animations and music.
             │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level.
             │       ├── Settings.java 			: Static clas with some parameters for configuration
             │       └── TextureRegionSet.java 	: Used for asign textures to Objects
@@ -55,7 +55,7 @@ Android (min vers. 8)
                 ├── MessageScreen.java 			: Message Screen to display errors
                 ├── MultiplayerScreen.java 		: It lets select from server or client (currently disabled).
                 ├── OptionScreen.java 			: This screen let us activate/unactivate sound, music and accelerometer.
-                ├── ScoreScreen.java 			: It shows the top ten players, this top ten palyers are loaded from the remote server.
+                ├── ScoreScreen.java 			: It shows the top ten players, this top ten players are loaded from the remote server.
                 ├── SelectScreen.java 			:  It let us choose multiplayer/singleplayer (actually deprecated) 
                 └── SplashScreen.java 			: This is the first screen that appears, downdload level runs on background.
 
@@ -104,10 +104,10 @@ Android (min vers. 8)
 
 ###Server files:
         .
-        ├── brickbreaker.dmp 				:
-        ├── brickbreaker_level1.xml 		:
-        ├── brickbreaker_level2.xml 		:
-        ├── brickbreaker_level3.xml 		:
-        ├── brickbreaker_level4.xml 		:
-        ├── brickbreaker_test.xml 			:
-        └── highScore.php 					:
+        ├── brickbreaker.dmp 				: SQL Dump of the database
+        ├── brickbreaker_level1.xml 		: Level 1 of the game
+        ├── brickbreaker_level2.xml 		: Level 2 of the game
+        ├── brickbreaker_level3.xml 		: Level 3 of the game
+        ├── brickbreaker_level4.xml 		: Level 4 of the game
+        ├── brickbreaker_test.xml 			: Test Level
+        └── highScore.php 					: A php page to insert and show high scores
