@@ -29,6 +29,11 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
+/**
+ * Screen where the game is performed. It receives the input from the player and
+ * communicates it to the World.
+ * 
+ */
 public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 	static final int GAME_READY = 0;
@@ -146,6 +151,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		myMode = mode;
 	}
 
+	/**
+	 * Starts a new server thread for collaborative playing. WARNING: Still in
+	 * construction!
+	 */
 	public void startServerThread() {
 
 		new Thread(new Runnable() {
@@ -191,6 +200,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}).start();
 	}
 
+	/**
+	 * Start a new client thread for collaborative playing. WARNING: Still in
+	 * construction!
+	 */
 	public void startClientThread() {
 
 		new Thread(new Runnable() {
@@ -227,6 +240,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}).start();
 	}
 
+	/**
+	 * Method called each frame by OpenGL.
+	 * 
+	 * @param deltaTime
+	 */
 	public void update(float deltaTime) {
 
 		if (deltaTime > 0.1f)
@@ -236,9 +254,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		case GAME_READY:
 			updateReady();
 			break;
-			
+
 		case GAME_RUNNING:
-			
+
 			world.timeCounter += deltaTime;
 
 			updateRunning(deltaTime);
@@ -260,22 +278,28 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
+	/**
+	 * Method called when the state is GAME_READY. If the screen is touched, the
+	 * state changes to GAME_RUNNING.
+	 */
 	private void updateReady() {
 		if (Gdx.input.justTouched()) {
 			state = GAME_RUNNING;
 		}
 	}
 
+	/**
+	 * Updates the World objects based on the input of the player and the
+	 * elapsed time provided that the state is GAME_RUNNING.
+	 * 
+	 * @param deltaTime
+	 */
 	private void updateRunning(float deltaTime) {
 
 		if (Gdx.input.justTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), game.viewport.x, game.viewport.y,
+					game.viewport.width, game.viewport.height);
 
 			if (world.pauseButton.bounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
@@ -302,22 +326,18 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 
 		if (Gdx.input.isTouched()) {
 
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), 
-					game.viewport.x, 
-					game.viewport.y,
-					game.viewport.width, 
-					game.viewport.height
-					);
+			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0), game.viewport.x, game.viewport.y,
+					game.viewport.width, game.viewport.height);
 
 			// It is moving to the left
-			if (touchPoint.x < world.paddle.position.x) {				
+			if (touchPoint.x < world.paddle.position.x) {
 				accel = World.WORLD_WIDTH * -5f;
-			} 
+			}
 			// It is moving to the right
-			else if (touchPoint.x > world.paddle.position.x) { 
+			else if (touchPoint.x > world.paddle.position.x) {
 				accel = World.WORLD_WIDTH * 5f;
 			}
-//			world.paddle.position.x = touchPoint.x;
+			// world.paddle.position.x = touchPoint.x;
 		}
 
 		if (Settings.accelerometerEnabled) {
@@ -329,13 +349,15 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		} else {
 			world.update(deltaTime, accel, touchPoint.x);
 		}
-		
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
 
 			// Automatically send results if score is higher than the 10th
-			if (world.rankings!=null && world.rankings.size() > 0  && (world.rankings.size()<10 || Player.getTotalScore() > world.rankings.get(world.rankings.size() - 1)))
+			if (world.rankings != null
+					&& world.rankings.size() > 0
+					&& (world.rankings.size() < 10 || Player.getTotalScore() > world.rankings
+							.get(world.rankings.size() - 1)))
 				uploadScore();
 
 			// if (lastScore >= Settings.highscores[4])
@@ -351,17 +373,23 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 			Player.updateScore(world.level, world.score);
 			world.level++;
 			Player.unlockLevel(world.level);
-			
 
 			// Automatically send results if score is higher than the 10th
-			if (world.rankings!=null && world.rankings.size() > 0  && (world.rankings.size()<10 || Player.getTotalScore() > world.rankings.get(world.rankings.size() - 1)))
+			if (world.rankings != null
+					&& world.rankings.size() > 0
+					&& (world.rankings.size() < 10 || Player.getTotalScore() > world.rankings
+							.get(world.rankings.size() - 1)))
 				uploadScore();
-			if (world.rankings!=null && world.rankings.size()==0)
+			if (world.rankings != null && world.rankings.size() == 0)
 				uploadScore();
 
 		}
 	}
 
+	/**
+	 * Method called when the player successfully finishes a level or if the
+	 * total score is within the top ten.
+	 */
 	private void uploadScore() {
 		try {
 			ld.submitHighScore(Player.getPlayerName(), Player.getTotalScore());
@@ -374,6 +402,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
+	/**
+	 * Method called when the state of the game is GAME_PAUSED. Resumes the game
+	 * or returns to the MenuScreen depending on which button was pressed.
+	 */
 	private void updatePaused() {
 
 		if (Gdx.input.justTouched()) {
@@ -396,6 +428,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
+	/**
+	 * When the player successfully finishes a level, she is presented a
+	 * Continue button. If the player presses that button, the LevelScreen is
+	 * shown.
+	 */
 	private void updateLevelEnd() {
 
 		if (Gdx.input.justTouched()) {
@@ -414,6 +451,11 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
+	/**
+	 * When the game is over, 2 buttons are presented: "Play Again" and "Quit".
+	 * This method shows either the GameScreen or MenuScreen depending on the
+	 * pressed button. The local score is reset.
+	 */
 	private void updateGameOver() {
 
 		if (Gdx.input.justTouched()) {
@@ -444,6 +486,10 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 	}
 
+	/**
+	 * This method, in conjunction with update(), is called every frame. It
+	 * draws the world depending on the state of the game.
+	 */
 	public void draw() {
 
 		GL20 gl = Gdx.gl;
@@ -514,6 +560,9 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		Assets.font.draw(game.batcher, String.valueOf(world.score), 175, 211);
 	}
 
+	/**
+	 * Method called every frame. It both updates and draw the World objects.
+	 */
 	@Override
 	public void render(float delta) {
 
@@ -558,7 +607,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.coin.position.y < 0 || world.coin.position.y == -10000) {
-			world.coinShowTime = (int) world.timeCounter + randInt(10, 20); // show extra life every 10-20 seconds
+			world.coinShowTime = (int) world.timeCounter + randInt(10, 20); // show
+																			// extra
+																			// life
+																			// every
+																			// 10-20
+																			// seconds
 
 			world.coin.position.x = World.WORLD_WIDTH / 2 + randInt(-80, 80);
 			world.coin.position.y = World.WORLD_HEIGHT / 2;
@@ -576,7 +630,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.virus.position.y < 0 || world.virus.position.y == -10000) {
-			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show extra life every 10-30 seconds
+			world.virusShowTime = (int) world.timeCounter + randInt(10, 30); // show
+																				// extra
+																				// life
+																				// every
+																				// 10-30
+																				// seconds
 			world.virus.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.virus.position.y = World.WORLD_HEIGHT / 2;
 			world.virus.bounds.x = world.virus.position.x;
@@ -593,7 +652,12 @@ public class GameScreen extends ScreenAdapter implements TextInputListener {
 		}
 
 		if (world.extraLife.position.y < 0 || world.extraLife.position.y == -10000) {
-			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show extra life every 10-40 seconds
+			world.extraLifeShowTime = (int) world.timeCounter + randInt(10, 40); // show
+																					// extra
+																					// life
+																					// every
+																					// 10-40
+																					// seconds
 			world.extraLife.position.x = World.WORLD_WIDTH / 2 + randInt(-100, 100);
 			world.extraLife.position.y = World.WORLD_HEIGHT / 2;
 			world.extraLife.bounds.x = world.extraLife.position.x;
