@@ -74,6 +74,7 @@ public class World {
 	public List<Integer> rankings; // List with top 10 rankings to beat
 	Player player; // Object to handle total score
 
+	@SuppressWarnings("static-access")
 	public World(WorldListener listener, int gameLevel) {
 
 		timeCounter = 0;

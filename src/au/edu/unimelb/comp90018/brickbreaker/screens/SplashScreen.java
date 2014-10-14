@@ -10,8 +10,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.TimeUtils;
 
+/**
+ * Splash screen shown at the begining of the game
+ * @author Diego
+ *
+ */
 public class SplashScreen extends ScreenAdapter implements TextInputListener {
 	BrickBreaker game;
+	@SuppressWarnings("unused")
 	private long startTime;
 
 	OrthographicCamera guiCam;

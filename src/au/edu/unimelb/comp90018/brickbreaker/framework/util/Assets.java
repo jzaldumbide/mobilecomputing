@@ -11,6 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+/**
+ * Handles all assets: Textures, sounds, music and Animations.
+ * @author Diego
+ *
+ */
 public class Assets {
 
 	/* Textures - there must be less possible */
@@ -296,6 +301,10 @@ public class Assets {
 		toggleSound = Gdx.audio.newSound(Gdx.files.internal("sound/toggle.ogg"));
 	}
 
+	/**
+	 * Play sound
+	 * @param sound
+	 */
 	public static void playSound(Sound sound) {
 		if (Settings.soundEnabled)
 			sound.play(1);

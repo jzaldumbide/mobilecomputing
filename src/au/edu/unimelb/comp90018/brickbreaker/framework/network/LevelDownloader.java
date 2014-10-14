@@ -231,6 +231,7 @@ public class LevelDownloader {
 	 * @throws XmlPullParserException
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unused")
 	public List<Integer> loadHighScoresAsList() throws XmlPullParserException, IOException {
 		String highScores = loadFile("highScores.xml");
 		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();

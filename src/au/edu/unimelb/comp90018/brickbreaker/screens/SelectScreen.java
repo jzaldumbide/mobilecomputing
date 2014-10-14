@@ -13,6 +13,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Screen where you can select if you want to play single or multiplayer
+ * @author Diego
+ *
+ */
 public class SelectScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;

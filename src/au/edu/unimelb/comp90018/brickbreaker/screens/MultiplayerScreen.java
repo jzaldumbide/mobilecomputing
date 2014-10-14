@@ -40,6 +40,7 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
+@SuppressWarnings("unused")
 public class MultiplayerScreen extends ScreenAdapter {
 
 	BrickBreaker game;
@@ -57,6 +58,7 @@ public class MultiplayerScreen extends ScreenAdapter {
 	// bluetooth variables
 	private BluetoothAdapter mBluetoothAdapter;
 	private ServerThread myServer;
+	
 	private boolean isServer = true;
 	private static final UUID MY_UUID = UUID
 			.fromString("00001101-0000-1000-8000-00805F9B34FB"); // UUID for
@@ -441,7 +443,8 @@ public class MultiplayerScreen extends ScreenAdapter {
             mySocket = tmp;
         }
 
-        public void run() {
+        @SuppressWarnings("deprecation")
+		public void run() {
             InputStream inStream = null;
             OutputStream outStream = null;
             mBluetoothAdapter.cancelDiscovery();

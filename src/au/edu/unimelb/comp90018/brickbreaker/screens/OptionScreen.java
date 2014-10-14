@@ -12,6 +12,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Options screen
+ * @author Diego
+ *
+ */
 public class OptionScreen extends ScreenAdapter {
 	BrickBreaker game;
 	OrthographicCamera guiCam;

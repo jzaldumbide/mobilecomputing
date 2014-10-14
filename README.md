@@ -2,18 +2,28 @@
 
 Mobile Computing Game: BrickBreaker
 
+### Description:
+BrickBreaker is a breakout Android game developed with libgdx (openGL 2.0). 
+Once installed and when the player starts the game you'll have to enter your name, the game detects if is the first time you are playing, 
+so you only have to enter your name once. That's the way the game can know who you are in order to submit your scores and update your rank. 
+The game will show you a splash screen while the levels are downloaded from a server in a background process (from a cloud or local server).
+If something goes wrong, the game will let you know through error and info messages, however you'll be able to play with default configurations and
+levels. Else, you are ready to play the downloaded levels!
+You can go through the game options and menus where you can enable/disable sound, music or decide if you want to control your paddle with accelerometer 
+or just touch. If you need help about some option of the game you can enter to the help menu. 
+If you select Scores you will see a top 10 list of current ranked players, this list gets updated always. Check what is the player you want to beat and
+start the game by touching the Play! menu. Then the game will let you select the level you want to play, if is the first time you only will have the level
+1 enabled, the rest of them will open when you win each level. Then you can start playing the game. Each level has different configuration and difficulty which 
+are defined in the XML files, if you want to make your own, just edit some of them and have fun! While you are playing, the game will give you free bonuses, some of
+them give you extra points and other make you lose. Scores and Rankings are updated while you're playing you can check yours at the top of the screen.
+
 ### Developers:
-
 * Andres Chaves (Networking - Scoring - Levels XML )
-
 * Oscar Correa (Framework Architecture - Game play & physics)
+* Diego Montufar (Graphic Design - Special Effects - Actions/Animations)
+* Juan Zaldumbide (Networking - Screen Transitions - Player data & configuration)
 
-* Diego Montufar (Graphic Design - Special Effects - Actions)
-
-* Juan Zaldumbide (Screen Transitions - Player data & configuration)
-
-### Framework: 
-Android (min vers. 8)
+### Group ID:  
 
 ### Folder structure:
 
@@ -33,18 +43,18 @@ Android (min vers. 8)
             │   ├── GameLevel.java 				: Represents a Level of the Game in terms of Paddle, Ball and Bricks
             │   └── Paddle.java 				: Object Paddle
             ├── framework
-            │   ├── DynamicGameObject.java 		: Generic class for dynamic objects with accel
-            │   ├── GameObject.java 			: Generic class for objects with position and velocity
-            │   ├── Rectangle2.java 			: Implements object Bounds 
-            │   ├── World.java 					: Implements 
+            │   ├── DynamicGameObject.java 		: Generic class for dynamic objects with accel and velocity
+            │   ├── GameObject.java 			: Every GameObject has associated position and bounds. Bounds helps to keep track of collisions.
+            │   ├── Rectangle2.java 			: Extension of Rectangle class in order to control which side(s) of the object were hit
+            │   ├── World.java 					: Represents the world where the game is performed. It updates the states of every actor within it for each delta time.
             │   ├── WorldListener.java 			: Basic listeners while the game is running
-            │   ├── WorldRenderer.java 			: Renders textures on the screen every 6fps
+            │   ├── WorldRenderer.java 			: We were trying to apply MVC model, thus this class is the VIEW part whereas the World is a kind of CONTROLLER.
             │   ├── network
             │   │   └── LevelDownloader.java 	: Manage access to the network, level and high score downlading and uploading and ile system reading. Manages also XML parsing.
             │   └── util
             │       ├── Assets.java 			: This class handles all assests like textures, sounds, animations and music.
-            │       ├── Player.java 			: Creates a file that contains player name, level score and status of each level.
-            │       ├── Settings.java 			: Static clas with some parameters for configuration
+            │       ├── Player.java 			: Creates and manages a file (brickbreaker.data) that contains player name, level score and status of each level.
+            │       ├── Settings.java 			: Static class with some configuration parameters like sound enable, accelerometer, etc.
             │       └── TextureRegionSet.java 	: Used for asign textures to Objects
             └── screens
                 ├── CreateUserScreen.java 		: It let us create the user with an input (actually deprecated) 
@@ -62,44 +72,44 @@ Android (min vers. 8)
 ### Other files used:
 
         ├── backgrounds
-        │   ├── background-basic.png 			:
-        │   ├── background.png 					:
-        │   ├── default_notification.png 		:
-        │   ├── errorBackground.png 			:
-        │   ├── gameover.png 					:
-        │   ├── infoBackground.png 				:
-        │   ├── pausemenu.png 					:
-        │   ├── ready.png 						:
+        │   ├── background-basic.png 			: Basic/Default background for the screens
+        │   ├── background.png 					: World background
+        │   ├── default_notification.png 		: Default background to show notifications
+        │   ├── errorBackground.png 			: Used for error notifications
+        │   ├── gameover.png 					: Game over message
+        │   ├── infoBackground.png 				: Info message
+        │   ├── pausemenu.png 					: Pause message
+        │   ├── ready.png 						: Ready message
         │   ├── screens
-        │   │   ├── default_background.png 		:
-        │   │   ├── screen_menu.png 			:
-        │   │   └── screen_splash.png 			:
-        │   └── win.png 						:      
+        │   │   ├── default_background.png 		: Default background for screens
+        │   │   ├── screen_menu.png 			: Default background for menus
+        │   │   └── screen_splash.png 			: Splash Screen
+        │   └── win.png 						: Win message
         ├── fonts
         │   └── font.ttf 						: The font used in texts of the game
         ├── helpscreens
-        │   ├── help1.png 					:
-        │   ├── help2.png 					:
-        │   ├── help3.png 					:
-        │   ├── help4.png 					:
-        │   ├── help5.png 					:
-        │   └── helpbackground.png 			:
+        │   ├── help1.png 						: Help Screen
+        │   ├── help2.png 						: Help Screen
+        │   ├── help3.png 						: Help Screen
+        │   ├── help4.png 						: Help Screen
+        │   ├── help5.png 						: Help Screen
+        │   └── helpbackground.png 				: Help Screen background
         ├── music
-        │   └── music.mp3 					: 
+        │   └── music.mp3 						: Background music by Joe Jeremiah (Tribute to Daft Punk - A-bit of Daft Punk) https://www.youtube.com/channel/UCVUADDzjYdnGJTuEdUcRt9g
         ├── sound
-        │   ├── click.wav 					:
-        │   ├── coin.wav 					:
-        │   ├── gameOverSound.ogg 			:
-        │   ├── getLifeBonus.ogg 			:
-        │   ├── lifeLost.ogg 				:
-        │   ├── toggle.ogg 					:
-        │   ├── touchBrick.ogg 				:
-        │   ├── touchHardBrick.wav 			:
-        │   ├── touchPaddle.wav 			:
-        │   ├── touchWall.ogg 				:
-        │   └── winnerSound.wav 			:
+        │   ├── click.wav 						: click sound (for buttons)
+        │   ├── coin.wav 						: Bonus coin
+        │   ├── gameOverSound.ogg 				: Game Over sound
+        │   ├── getLifeBonus.ogg 				: Get extra life Bonus
+        │   ├── lifeLost.ogg 					: Life Lost sound
+        │   ├── toggle.ogg 						: Toggle options sound
+        │   ├── touchBrick.ogg 					: Touch brick sound
+        │   ├── touchHardBrick.wav 				: Touck double brick sound
+        │   ├── touchPaddle.wav 				: Touch paddle sound
+        │   ├── touchWall.ogg 					: Touch wall sound
+        │   └── winnerSound.wav 				: Win Game sound
         └── textures
-            └── items.png 					:
+            └── items.png 						: This is the main Texture with all the main game objects. 
 
 
 ###Server files:

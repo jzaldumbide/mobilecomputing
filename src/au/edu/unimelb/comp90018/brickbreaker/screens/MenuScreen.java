@@ -16,6 +16,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Main menu screen
+ * @author Diego
+ *
+ */
 public class MenuScreen extends ScreenAdapter {
 
 	BrickBreaker game;
@@ -60,6 +65,7 @@ public class MenuScreen extends ScreenAdapter {
 						Player.create(cname);// archivo creado
 					}
 
+					@SuppressWarnings("unused")
 					@Override
 					public void canceled() {
 						String message = "canceled by user";
