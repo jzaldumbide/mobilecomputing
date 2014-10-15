@@ -2,6 +2,8 @@
 
 Mobile Computing Game: BrickBreaker
 
+https://github.com/jzaldumbide/mobilecomputing.git
+
 ### Description:
 BrickBreaker is a breakout Android game developed with libgdx (openGL 2.0). 
 Once installed and when the player starts the game you'll have to enter your name, the game detects if is the first time you are playing, 
