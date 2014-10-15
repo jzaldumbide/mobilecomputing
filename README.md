@@ -23,7 +23,7 @@ them give you extra points and other make you lose. Scores and Rankings are upda
 * Diego Montufar (Graphic Design - Special Effects - Actions/Animations)
 * Juan Zaldumbide (Networking - Screen Transitions - Player data & configuration)
 
-### Group ID:  
+### Group ID:  2
 
 ### Folder structure:
 
