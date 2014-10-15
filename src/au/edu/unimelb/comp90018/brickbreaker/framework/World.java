@@ -15,6 +15,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Bonus.BonusType;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeIII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.GameLevel;
@@ -205,12 +206,18 @@ public class World {
 			float yTemp = 300;
 			for (int i = 1; i <= 3; i++) {
 				for (int j = 1; j <= 8; j++) {
-					if (rand.nextInt(2) == 1)
+					int type = rand.nextInt(3);
+					switch (type) {
+					case 0:
 						bricks.add(new BrickTypeI(xTemp, yTemp));
-					else
+						break;
+					case 1:
 						bricks.add(new BrickTypeII(xTemp, yTemp));
-					// bricks.add(new Brick(x, y));
-
+						break;
+					case 2:
+						bricks.add(new BrickTypeIII(xTemp, yTemp));
+						break;
+					}
 					xTemp += 35;
 				}
 				xTemp = 36;

@@ -6,6 +6,7 @@ import au.edu.unimelb.comp90018.brickbreaker.actors.Ball;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Bonus;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickAdapter;
 import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeI;
+import au.edu.unimelb.comp90018.brickbreaker.actors.BrickTypeII;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Button.ButtonSize;
 import au.edu.unimelb.comp90018.brickbreaker.actors.Paddle;
@@ -158,12 +159,18 @@ public class WorldRenderer {
 			TextureRegion brickTexture;
 			if (bricks.get(i) instanceof BrickTypeI) {
 				brickTexture = Assets.brickTypeI.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
-			} else {
+			} else if (bricks.get(i) instanceof BrickTypeII) {
 				brickTexture = Assets.brickTypeII.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
+			} else {
+				brickTexture = Assets.brickTypeIII.getTexture(bricks.get(i).hitsLeftToPulverise - 1);
 			}
 
-			batch.draw(brickTexture, bricks.get(i).position.x - bricks.get(i).width / 2, bricks.get(i).position.y
-					- bricks.get(i).height / 2, bricks.get(i).width, bricks.get(i).height);
+			batch.draw(brickTexture, 
+					bricks.get(i).position.x - bricks.get(i).width / 2, 
+					bricks.get(i).position.y - bricks.get(i).height / 2, 
+					bricks.get(i).width, 
+					bricks.get(i).height
+					);
 		}
 	}
 

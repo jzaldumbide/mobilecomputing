@@ -259,7 +259,7 @@ public class Assets {
 		/* TextureRegionSets */
 		brickTypeI = new TextureRegionSet(smallOrangeBrick);
 		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick);
-		brickTypeII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick, smallGreenBrick, smallPurpleBrick);
+		brickTypeIII = new TextureRegionSet(smallOrangeBrick, smallYellowBrick, smallGreenBrick, smallPurpleBrick);
 
 		// Animation example
 		// brakingPlatform = new Animation(0.2f, new TextureRegion(items, 64,
